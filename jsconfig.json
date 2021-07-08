@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@components/*": ["components/*"],
+            "@layouts/*": ["layouts/*"],
+            "@container": ["layouts/page.jsx"],
+            "@styled": ["./stitches.config"],
+        }
+    }
+}
