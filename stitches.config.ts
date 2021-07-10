@@ -19,7 +19,8 @@ const { css, styled, global, getCssString } = createCss({
       small: '0.6rem'
     },
     transitions: {
-      medium: '0.25s'
+      medium: '0.25s',
+      fast: '0.1s',
     }
   },
   media: {
