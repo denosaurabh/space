@@ -43,6 +43,8 @@ const Home: React.FC = () => {
   const handleAddNewNoteClick = () => {
     addNote({
       position: { x: 40, y: 40 },
+      size: { width: 100, height: 200 },
+      text: '',
     });
   };
 

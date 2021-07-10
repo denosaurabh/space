@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { Rnd } from 'react-rnd';
 import { styled } from '@styled';
 import { Note } from '@lib/notes';
+import useNotes from '@state/notes';
 
 const NoteContainer = styled('div', {
   width: '100%',
@@ -52,16 +53,38 @@ const NoteContent = styled('textarea', {
   outline: 'none',
 });
 
-const NoteBox: React.FC<Note> = ({ position, id }) => {
-  console.log(id);
+const NoteBox: React.FC<Note> = ({ id, position, size, text }) => {
+  const updateNote = useNotes((state) => state.updateNote);
+
+  const onNoteDragStop = (e, data) => {
+    const { x, y } = data;
+
+    updateNote(id, { position: { x, y }, size, text });
+  };
+
+  const onNoteResizeStop = (e, dir, el, delta, updatedPosition) => {
+    const updatedWidth = size.width + delta.width;
+    const updatedHeight = size.height + delta.height;
+
+    updateNote(id, {
+      position: updatedPosition,
+      size: { width: updatedWidth, height: updatedHeight },
+      text,
+    });
+  };
+
+  const onNoteTextChange = (e) => {
+    const { value } = e.target;
+    updateNote(id, { position, size, text: value });
+  };
 
   return (
     <Rnd
       default={{
         x: position.x,
         y: position.y,
-        width: 200,
-        height: 300,
+        width: size.width,
+        height: size.height,
       }}
       minWidth={200}
       minHeight={100}
@@ -79,6 +102,8 @@ const NoteBox: React.FC<Note> = ({ position, id }) => {
         topRight: false,
         bottomRight: true,
       }}
+      onDragStop={onNoteDragStop}
+      onResizeStop={onNoteResizeStop}
     >
       <NoteContainer>
         <NoteHeader className="drag-header">
@@ -91,7 +116,11 @@ const NoteBox: React.FC<Note> = ({ position, id }) => {
           />
         </NoteHeader>
 
-        <NoteContent placeholder="Type something here ....." />
+        <NoteContent
+          placeholder="Type something here ....."
+          value={text}
+          onChange={onNoteTextChange}
+        />
       </NoteContainer>
     </Rnd>
   );

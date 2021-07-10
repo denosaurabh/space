@@ -1,9 +1,16 @@
-const MyApp = ({ Component, pageProps }) => {
-    return <Component {...pageProps} />
-}
+import { IdProvider } from '@radix-ui/react-id';
+import { AppProps, NextWebVitalsMetric } from 'next/app';
 
-export function reportWebVitals(metric) {
-    console.log(`${metric.name}: ${metric.value}`)
+const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
+  return (
+    <IdProvider>
+      <Component {...pageProps} />
+    </IdProvider>
+  );
+};
+
+export function reportWebVitals(metric: NextWebVitalsMetric): void {
+  console.log(`${metric.name}: ${metric.value}`);
 }
 
 export default MyApp;
