@@ -55,19 +55,19 @@ const Home: React.FC = () => {
       </Head>
 
       <AllNotesContainer className="notes-container">
-        {Object.values(notes).map((note: Note) => (
-          <NoteBox key={note.id} {...note} />
+        {Object.values(notes).map((note: Note, i) => (
+          <NoteBox key={i} {...note} />
         ))}
-
-        <AddNote onClick={handleAddNewNoteClick}>
-          <Image
-            src="/icons/Plus.svg"
-            width={15}
-            height={15}
-            alt="Add new Note"
-          />
-        </AddNote>
       </AllNotesContainer>
+
+      <AddNote onClick={handleAddNewNoteClick}>
+        <Image
+          src="/icons/Plus.svg"
+          width={15}
+          height={15}
+          alt="Add new Note"
+        />
+      </AddNote>
     </Page>
   );
 };

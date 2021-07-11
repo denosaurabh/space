@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { styled } from '@styled';
 import IconBox from '@components/iconBox';
 import Badge from './badge';
+import Link from 'next/link';
 
 const HeaderStyled = styled('header', {
   width: '100%',
@@ -50,16 +51,20 @@ const Header: React.FC = () => (
       <IconBox icon={'S'} href="/todo" />
     </HeaderNav>
 
-    <Badge>
-      Early Development (Alpha)
-      <Image
-        className="badge-icon"
-        src="/icons/External-Link.svg"
-        alt="External Link"
-        width={15}
-        height={15}
-      />
-    </Badge>
+    <Link href="https://github.com/DenoSaurabh/space">
+      <a target="_blank">
+        <Badge>
+          Early Development (Alpha)
+          <Image
+            className="badge-icon"
+            src="/icons/External-Link.svg"
+            alt="External Link"
+            width={15}
+            height={15}
+          />
+        </Badge>
+      </a>
+    </Link>
   </HeaderStyled>
 );
 

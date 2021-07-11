@@ -58,8 +58,22 @@ const globalStyles = global({
 
     fontFamily: '$system',
   },
+  a: {
+    textDecoration: 'none',
+  },
   body: {
     fontSize: '62.5%',
+  },
+  '::-webkit-scrollbar': {
+    width: '3px',
+  },
+  '::-webkit-scrollbar-track': {
+    borderRadius: '10px',
+  },
+
+  '::-webkit-scrollbar-thumb': {
+    background: '$grey',
+    borderRadius: '10px',
   },
 });
 
