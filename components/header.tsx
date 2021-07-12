@@ -10,7 +10,7 @@ const HeaderStyled = styled('header', {
   display: 'flex',
   alignItems: 'center',
   gap: '2rem',
-  padding: '1rem',
+  padding: '1rem 1.5rem',
   borderBottom: '1px solid $headerBorderBottom',
 });
 
@@ -22,6 +22,14 @@ const HeaderNav = styled('div', {
 
 const HeaderLogo = styled(Image, {
   marginRight: '2rem',
+});
+
+const Settings = styled(Image, {
+  transition: '$medium',
+  '&:hover': {
+    cursor: 'pointer',
+    transform: 'rotate(40deg)',
+  },
 });
 
 const Header: React.FC = () => (
@@ -36,19 +44,51 @@ const Header: React.FC = () => (
 
     <HeaderNav>
       <IconBox
+        name="Notes"
         icon={
           <Image
             src="/icons/Reader.svg"
             alt="All Notes"
-            width={18}
-            height={18}
+            width={22}
+            height={22}
           />
         }
         href="/"
       />
-      <IconBox icon={'A'} href="/todo" />
-      <IconBox icon={'G'} href="/" />
-      <IconBox icon={'S'} href="/todo" />
+      <IconBox
+        name="Todo"
+        icon={
+          <Image src="/icons/Todo.svg" alt="All Notes" width={20} height={20} />
+        }
+        href="/todo"
+        soon
+      />
+      <IconBox
+        name="Calender"
+        icon={
+          <Image
+            src="/icons/Calender.svg"
+            alt="All Notes"
+            width={20}
+            height={20}
+          />
+        }
+        href="/"
+        soon
+      />
+      <IconBox
+        name="Pomodoro"
+        icon={
+          <Image
+            src="/icons/Timer.svg"
+            alt="All Notes"
+            width={20}
+            height={20}
+          />
+        }
+        href="/todo"
+        soon
+      />
     </HeaderNav>
 
     <Link href="https://github.com/DenoSaurabh/space">
@@ -65,6 +105,7 @@ const Header: React.FC = () => (
         </Badge>
       </a>
     </Link>
+    <Settings src="/icons/Gear.svg" alt="Settings" width={25} height={25} />
   </HeaderStyled>
 );
 

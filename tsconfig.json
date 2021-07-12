@@ -5,6 +5,7 @@
       "@components/*": ["components/*"],
       "@layouts/*": ["layouts/*"],
       "@state/*": ["state/*"],
+      "@shared/*": ["shared/*"],
       "@container": ["layouts/page.tsx"],
       "@styled": ["./stitches.config.ts"],
       "@lib/*": ["lib/*"]

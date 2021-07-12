@@ -1,12 +1,19 @@
 import Head from 'next/head';
 import Image from 'next/image';
+import { styled } from '@styled';
 
 import Page from '@container';
 import NoteBox from '@components/noteBox';
-import { styled } from '@styled';
+import NotesCollection from '@shared/notes/collections';
+
 import useNotes from '@state/notes';
 
 import { Note, NotesState } from '@lib/notes';
+
+const HomeContainer = styled('div', {
+  display: 'flex',
+  height: '100%',
+});
 
 const AllNotesContainer = styled('div', {
   width: '100%',
@@ -16,8 +23,8 @@ const AllNotesContainer = styled('div', {
 
 const AddNote = styled('div', {
   position: 'fixed',
-  right: '2%',
-  top: '12%',
+  right: '5%',
+  top: '10%',
 
   width: '3rem',
   height: '3rem',
@@ -38,7 +45,10 @@ const AddNote = styled('div', {
 });
 
 const Home: React.FC = () => {
-  const { notes, addNote } = useNotes((state: NotesState) => state);
+  const { notesState, currentCollection, addNote } = useNotes(
+    (state: NotesState) => state
+  );
+  console.log(notesState, currentCollection);
 
   const handleAddNewNoteClick = () => {
     addNote({
@@ -54,20 +64,26 @@ const Home: React.FC = () => {
         <title>Space</title>
       </Head>
 
-      <AllNotesContainer className="notes-container">
-        {Object.values(notes).map((note: Note, i) => (
-          <NoteBox key={i} {...note} />
-        ))}
-      </AllNotesContainer>
+      <HomeContainer>
+        <AllNotesContainer className="notes-container">
+          {Object.values(notesState[currentCollection].notes).map(
+            (note: Note, i) => (
+              <NoteBox key={i} {...note} />
+            )
+          )}
+        </AllNotesContainer>
+
+        <NotesCollection />
+      </HomeContainer>
 
       <AddNote onClick={handleAddNewNoteClick}>
-        <Image
-          src="/icons/Plus.svg"
-          width={15}
-          height={15}
-          alt="Add new Note"
-        />
-      </AddNote>
+          <Image
+            src="/icons/Plus.svg"
+            width={15}
+            height={15}
+            alt="Add new Note"
+          />
+        </AddNote>
     </Page>
   );
 };

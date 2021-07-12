@@ -15,6 +15,15 @@ const { css, styled, global, getCssString } = createCss({
       headerBorderBottom: '#dee2e6',
       green: '#34a0a4',
       lightGreen: '#52b69a',
+      'grey-100': '#f8f9fa',
+      'grey-200': '#e9ecef',
+      'grey-300': '#dee2e6',
+      'grey-400': '#ced4da',
+      'grey-500': '#adb5bd',
+      'grey-600': '#6c757d',
+      'grey-700': '#495057',
+      'grey-800': '#343a40',
+      'grey-900': '#212529',
     },
     borderStyles: {
       note: '2px solid #343a40',
@@ -39,6 +48,10 @@ const { css, styled, global, getCssString } = createCss({
       alignItems: 'center',
       justifyContent: `${justifyContent}`,
     }),
+    size: () => (size) => ({
+      width: `${size}`,
+      height: `${size}`,
+    }),
   },
   media: {
     bp1: '@media (min-width: 520px)',
@@ -60,6 +73,14 @@ const globalStyles = global({
   },
   a: {
     textDecoration: 'none',
+  },
+  button: {
+    outline: 'none',
+    border: 'none',
+  },
+  input: {
+    border: 'none',
+    outline: 'none',
   },
   body: {
     fontSize: '62.5%',

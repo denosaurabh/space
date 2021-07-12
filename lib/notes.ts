@@ -19,6 +19,13 @@ export interface Notes {
   [key: string]: Note;
 }
 
+export interface NotesCollection {
+  id: string;
+  name: string;
+  icon: string;
+  notes: Notes;
+}
+
 export interface NewNote {
   position: NotePosition;
   size: NoteSize;
@@ -26,7 +33,12 @@ export interface NewNote {
 }
 
 export interface NotesState {
-  notes: Notes;
+  currentCollection: string;
+  notesState: {
+    [key: string]: NotesCollection;
+  };
+  changeCurrentCollection: (collectionNo: string) => void;
+  createCollection: (data: { name: string }) => void;
   addNote: (newNote: NewNote) => void;
   updateNote: (
     id: number,

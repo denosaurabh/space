@@ -1,5 +1,10 @@
 import Link from 'next/link';
-import { Root, Trigger, Content, Arrow } from '@radix-ui/react-tooltip';
+import {
+  Root,
+  TooltipTrigger,
+  StyledContent,
+  Arrow,
+} from '@components/tooltip';
 
 import { styled } from '@styled';
 import { IconBoxI } from '@lib/components/iconBox';
@@ -17,31 +22,29 @@ const Icon = styled('div', {
     cursor: 'pointer',
     backgroundColor: '$iconHover',
   },
+  variants: {
+    soon: {
+      true: {
+        backgroundColor: 'transparent',
+        opacity: 0.4,
+        '&:hover': {
+          cursor: 'wait',
+        },
+      },
+    },
+  },
 });
 
-const TooltipTrigger = styled(Trigger, {
-  outline: 'none',
-  border: 'none',
-  backgroundColor: 'transparent',
-});
-
-const StyledContent = styled(Content, {
-  padding: '1rem',
-  backgroundColor: '#000',
-  fontFamily: '$system',
-  color: '#fff',
-});
-
-const IconBox: React.FC<IconBoxI> = ({ icon, href }) => {
+const IconBox: React.FC<IconBoxI> = ({ name, icon, href, soon }) => {
   return (
     <Root>
       <TooltipTrigger>
-        <Link href={href} passHref>
-          <Icon>{icon}</Icon>
+        <Link href={soon ? '/' : href} passHref>
+          <Icon soon={soon}>{icon}</Icon>
         </Link>
       </TooltipTrigger>
-      <StyledContent>
-        Home
+      <StyledContent soon={soon}>
+        {soon ? 'Coming Soon!' : name}
         <Arrow />
       </StyledContent>
     </Root>

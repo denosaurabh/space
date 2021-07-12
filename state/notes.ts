@@ -6,26 +6,72 @@ import { NotesState } from '@lib/notes';
 const useNotes = create<NotesState>(
   persist(
     (set) => ({
-      notes: {},
-      addNote: (newNote) => {
+      currentCollection: '0',
+      notesState: { '0': { id: '0', name: 'Home', icon: '', notes: {} } },
+      changeCurrentCollection: (collectionNumber) => {
+        set((state) => ({
+          ...state,
+          currentCollection: collectionNumber,
+        }));
+      },
+      createCollection: (data) =>
         set((state) => {
-          const allNotesIDs = Object.keys(state.notes);
-          const newNoteId = allNotesIDs.length;
+          const { name } = data;
+
+          const newCollectionId = Object.keys(state.notesState).length;
 
           return {
-            notes: {
-              ...state.notes,
-              [newNoteId]: { id: newNoteId, ...newNote },
+            ...state,
+            notesState: {
+              ...state.notesState,
+              [newCollectionId]: {
+                id: newCollectionId,
+                name,
+                icon: '',
+                notes: {},
+              },
+            },
+          };
+        }),
+      addNote: (newNote) => {
+        set((state) => {
+          const allNotesIDs = Object.keys(
+            state.notesState[state.currentCollection].notes
+          );
+          const newNoteId = allNotesIDs.length;
+
+          const { notesState, currentCollection } = state;
+          const currentCollectionData = notesState[currentCollection];
+
+          return {
+            notesState: {
+              ...notesState,
+              [currentCollection]: {
+                ...currentCollectionData,
+                notes: {
+                  ...currentCollectionData.notes,
+                  [newNoteId]: { id: newNoteId, ...newNote },
+                },
+              },
             },
           };
         });
       },
       updateNote: (id, data) => {
         set((state) => {
+          const { notesState, currentCollection } = state;
+          const currentCollectionData = notesState[currentCollection];
+
           return {
-            notes: {
-              ...state.notes,
-              [id]: { ...state.notes[id], ...data },
+            notesState: {
+              ...notesState,
+              [currentCollection]: {
+                ...currentCollectionData,
+                notes: {
+                  ...currentCollectionData.notes,
+                  [id]: { ...currentCollectionData.notes[id], ...data },
+                },
+              },
             },
           };
         });
@@ -39,7 +85,7 @@ const useNotes = create<NotesState>(
 );
 
 useNotes.subscribe((state) => {
-  console.log(state.notes);
+  console.log(state.notesState);
 });
 
 export default useNotes;
