@@ -1,6 +1,6 @@
 # Space (Name might will Change)
 
-Space, a personalized Productivity & Mamagement tool.
+Space, a personalized Productivity & Management tool.
 
 ## Stack
 
