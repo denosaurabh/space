@@ -5,6 +5,7 @@ import { styled } from '@styled';
 import Page from '@container';
 import NoteBox from '@components/noteBox';
 import NotesCollection from '@shared/notes/collections';
+import GridCanvas from '@shared/notes/gridCanvas';
 
 import useNotes from '@state/notes';
 
@@ -66,6 +67,8 @@ const Home: React.FC = () => {
 
       <HomeContainer>
         <AllNotesContainer className="notes-container">
+          <GridCanvas />
+
           {Object.values(notesState[currentCollection].notes).map(
             (note: Note, i) => (
               <NoteBox key={i} {...note} />
@@ -77,13 +80,13 @@ const Home: React.FC = () => {
       </HomeContainer>
 
       <AddNote onClick={handleAddNewNoteClick}>
-          <Image
-            src="/icons/Plus.svg"
-            width={15}
-            height={15}
-            alt="Add new Note"
-          />
-        </AddNote>
+        <Image
+          src="/icons/Plus.svg"
+          width={15}
+          height={15}
+          alt="Add new Note"
+        />
+      </AddNote>
     </Page>
   );
 };

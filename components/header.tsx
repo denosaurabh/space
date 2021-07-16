@@ -105,7 +105,9 @@ const Header: React.FC = () => (
         </Badge>
       </a>
     </Link>
-    <Settings src="/icons/Gear.svg" alt="Settings" width={25} height={25} />
+    <Link href="/settings" passHref>
+      <Settings src="/icons/Gear.svg" alt="Settings" width={25} height={25} />
+    </Link>
   </HeaderStyled>
 );
 

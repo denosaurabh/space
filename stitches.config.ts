@@ -1,6 +1,6 @@
 import { createCss } from '@stitches/react';
 
-const { css, styled, global, getCssString } = createCss({
+const { css, styled, global, getCssString, theme } = createCss({
   theme: {
     fonts: {
       system: 'system-ui',
@@ -59,6 +59,26 @@ const { css, styled, global, getCssString } = createCss({
   },
 });
 
+const darkTheme = theme({
+  colors: {
+    grey: '#343a40',
+    icon: '#f8f9fa',
+    iconHover: '#e9ecef',
+    headerBorderBottom: '#dee2e6',
+    green: '#34a0a4',
+    lightGreen: '#52b69a',
+    'grey-900': '#f8f9fa',
+    'grey-800': '#e9ecef',
+    'grey-700': '#dee2e6',
+    'grey-600': '#ced4da',
+    'grey-500': '#adb5bd',
+    'grey-400': '#6c757d',
+    'grey-300': '#495057',
+    'grey-200': '#343a40',
+    'grey-100': '#212529',
+  },
+});
+
 const globalStyles = global({
   '*': {
     margin: 0,
@@ -69,7 +89,7 @@ const globalStyles = global({
     width: '100%',
     height: '100%',
 
-    fontFamily: '$system',
+    fontFamily: '$inter',
   },
   a: {
     textDecoration: 'none',
@@ -98,4 +118,4 @@ const globalStyles = global({
   },
 });
 
-export { css, styled, global, getCssString, globalStyles };
+export { css, styled, global, getCssString, globalStyles, darkTheme };

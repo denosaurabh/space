@@ -45,7 +45,7 @@ const IconBox: React.FC<IconBoxI> = ({ name, icon, href, soon }) => {
       </TooltipTrigger>
       <StyledContent soon={soon}>
         {soon ? 'Coming Soon!' : name}
-        <Arrow />
+        {soon ? null : <Arrow />}
       </StyledContent>
     </Root>
   );

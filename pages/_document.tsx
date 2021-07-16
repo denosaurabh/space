@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import NextDocument, { Html, Head, Main, NextScript } from 'next/document';
-import { getCssString, globalStyles } from '../stitches.config';
+import { darkTheme, getCssString, globalStyles } from '@styled';
 
 export default class Document extends NextDocument {
   render(): ReactElement {

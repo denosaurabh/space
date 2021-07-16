@@ -1231,6 +1231,17 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
+"@radix-ui/react-label@0.0.14":
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-label/-/react-label-0.0.14.tgz#32928a0f5d72e3a24b99021f5c6805e96f3d9395"
+  integrity sha512-gtrEpON6Ye8OBYtOEJBEuB/n/h6x07VPs7JR/1t34LaB74GJ+gACcafLcg5gMGWku3Gbc3eaDwfhOkxhTuJdYQ==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@radix-ui/react-compose-refs" "0.0.5"
+    "@radix-ui/react-id" "0.0.6"
+    "@radix-ui/react-polymorphic" "0.0.12"
+    "@radix-ui/react-primitive" "0.0.14"
+
 "@radix-ui/react-menu@0.0.21":
   version "0.0.21"
   resolved "https://registry.yarnpkg.com/@radix-ui/react-menu/-/react-menu-0.0.21.tgz#a0a2402e1bd11537af5a43f82a7a6f113abf00c6"
@@ -1327,6 +1338,22 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
     "@radix-ui/react-compose-refs" "0.0.5"
+
+"@radix-ui/react-switch@^0.0.14":
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-switch/-/react-switch-0.0.14.tgz#544b5269fe3e680205801a5ed2fadc61a9fae58a"
+  integrity sha512-AU7kLGmhsyTWO6dkNVxxICHWrqSaJ4S9peKT3+Dl5S7tx5jdvq2DjbiXwLiFTl8L16g489kXarWPwhuUNoPqiQ==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@radix-ui/primitive" "0.0.5"
+    "@radix-ui/react-compose-refs" "0.0.5"
+    "@radix-ui/react-context" "0.0.5"
+    "@radix-ui/react-label" "0.0.14"
+    "@radix-ui/react-polymorphic" "0.0.12"
+    "@radix-ui/react-primitive" "0.0.14"
+    "@radix-ui/react-use-controllable-state" "0.0.6"
+    "@radix-ui/react-use-previous" "0.0.5"
+    "@radix-ui/react-use-size" "0.0.6"
 
 "@radix-ui/react-tooltip@^0.0.20":
   version "0.0.20"
