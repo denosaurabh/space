@@ -40,6 +40,7 @@ export interface NotesState {
   changeCurrentCollection: (collectionNo: string) => void;
   createCollection: (data: { name: string }) => void;
   addNote: (newNote: NewNote) => void;
+  removeNote: (noteId: number) => void;
   updateNote: (
     id: number,
     data: {

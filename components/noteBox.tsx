@@ -1,8 +1,18 @@
+import { memo } from 'react';
 import Image from 'next/image';
 import { Rnd } from 'react-rnd';
 import { styled } from '@styled';
 import { Note } from '@lib/notes';
 import useNotes from '@state/notes';
+
+import {
+  Root as PopoverRoot,
+  StyledTrigger as PopoverTrigger,
+  Anchor as PopoverAnchor,
+  StyledContent as PopoverContent,
+  StyledClose as PopoverClose,
+  Arrow as PopoverArrow,
+} from '@components/popover';
 
 const NoteContainer = styled('div', {
   width: '100%',
@@ -14,6 +24,8 @@ const NoteContainer = styled('div', {
   transition: 'box-shadow 0.25s',
   // position: 'relative',
   zIndex: 1,
+  userSelect: 'none',
+
   '&:active': {
     boxShadow: '5px 5px 10px 0px #E9ECEF',
   },
@@ -54,7 +66,10 @@ const NoteContent = styled('textarea', {
 });
 
 const NoteBox: React.FC<Note> = ({ id, position, size, text }) => {
-  const updateNote = useNotes((state) => state.updateNote);
+  const { updateNote, removeNote } = useNotes((state) => ({
+    updateNote: state.updateNote,
+    removeNote: state.removeNote,
+  }));
 
   const onNoteDragStop = (e, data) => {
     const { x, y } = data;
@@ -76,6 +91,11 @@ const NoteBox: React.FC<Note> = ({ id, position, size, text }) => {
   const onNoteTextChange = (e) => {
     const { value } = e.target;
     updateNote(id, { position, size, text: value });
+  };
+
+  const onRemoveNoteClickHandler = () => {
+    const noteId = id;
+    removeNote(noteId);
   };
 
   return (
@@ -103,13 +123,26 @@ const NoteBox: React.FC<Note> = ({ id, position, size, text }) => {
     >
       <NoteContainer>
         <NoteHeader className="drag-header">
-          <Image
-            className="note-header-dot"
-            src="/icons/Dot.svg"
-            width={15}
-            height={15}
-            alt="Note Menu"
-          />
+          <PopoverRoot>
+            <PopoverTrigger>
+              <Image
+                className="note-header-dot"
+                src="/icons/Dot.svg"
+                width={15}
+                height={15}
+                alt="Note Menu"
+              />
+            </PopoverTrigger>
+            <PopoverAnchor />
+
+            <PopoverContent>
+              Do you want to remove this note?
+              <PopoverArrow />
+              <PopoverClose onClick={onRemoveNoteClickHandler}>
+                Yes
+              </PopoverClose>
+            </PopoverContent>
+          </PopoverRoot>
         </NoteHeader>
 
         <NoteContent
@@ -122,4 +155,4 @@ const NoteBox: React.FC<Note> = ({ id, position, size, text }) => {
   );
 };
 
-export default NoteBox;
+export default memo(NoteBox);

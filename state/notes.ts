@@ -76,6 +76,31 @@ const useNotes = create<NotesState>(
           };
         });
       },
+      removeNote: (id) => {
+        set((state) => {
+          const { notesState, currentCollection } = state;
+          const currentCollectionData = notesState[currentCollection];
+
+          const { [id]: removedNote, ...restNotes } =
+            currentCollectionData.notes;
+
+          if (process.env.NODE_ENV === 'development') {
+            console.log(removedNote);
+          }
+
+          return {
+            notesState: {
+              ...notesState,
+              [currentCollection]: {
+                ...currentCollectionData,
+                notes: {
+                  ...restNotes,
+                },
+              },
+            },
+          };
+        });
+      },
     }),
     {
       name: 'notesStorage',
@@ -85,7 +110,9 @@ const useNotes = create<NotesState>(
 );
 
 useNotes.subscribe((state) => {
-  console.log(state.notesState);
+  if (process.env.NODE_ENV === 'development') {
+    console.log(state.notesState);
+  }
 });
 
 export default useNotes;
