@@ -39,7 +39,7 @@ const IconBox: React.FC<IconBoxI> = ({ name, icon, href, soon }) => {
   return (
     <Root>
       <TooltipTrigger>
-        <Link href={soon ? '/' : href} passHref>
+        <Link href={soon ? '/home' : href} passHref>
           <Icon soon={soon}>{icon}</Icon>
         </Link>
       </TooltipTrigger>

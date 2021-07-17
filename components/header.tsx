@@ -53,7 +53,7 @@ const Header: React.FC = () => (
             height={22}
           />
         }
-        href="/"
+        href="/notes"
       />
       <IconBox
         name="Todo"
@@ -73,7 +73,7 @@ const Header: React.FC = () => (
             height={20}
           />
         }
-        href="/"
+        href="/calendar"
         soon
       />
       <IconBox
@@ -86,7 +86,7 @@ const Header: React.FC = () => (
             height={20}
           />
         }
-        href="/todo"
+        href="/pomodoro"
         soon
       />
     </HeaderNav>

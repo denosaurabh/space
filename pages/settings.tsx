@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import { styled } from '@styled';
 
 import Page from '@container';

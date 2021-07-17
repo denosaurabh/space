@@ -1,7 +1,36 @@
-import { useEffect, useRef } from 'react';
+import useNotes from '@state/notes';
+import { styled } from '@styled';
+import { useEffect, useRef, useState } from 'react';
+
+const Selection = styled('div', {
+  position: 'absolute',
+
+  backgroundColor: '$grey-200',
+});
 
 const GridCanvas: React.FC = () => {
+  const [selection, setSelection] = useState({
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+  });
   const canvasRef = useRef<HTMLCanvasElement>();
+  const selectionRef = useRef<HTMLDivElement>();
+
+  const addNote = useNotes(({ addNote }) => addNote);
+
+  let mouseDownPos;
+  let selectionBox = {
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+  };
+  let parentRectPosition = {
+    top: 0,
+    left: 0,
+  };
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -25,60 +54,89 @@ const GridCanvas: React.FC = () => {
     }
   }, [canvasRef]);
 
-  //   function handleBoardDragMove(e) {
-  //     if (!canvasRef.current) return;
+  const handleDragMove = (e) => {
+    console.log('drag moving');
 
-  //     const context = canvasRef.current;
-  //     const canvas = canvasRef.current.getContext('2d');
+    if (!selectionRef.current) return;
+    setSelection({
+      x: mouseDownPos.x,
+      y: mouseDownPos.y,
+      width: e.clientX - mouseDownPos.y,
+      height: e.clientY - mouseDownPos.x,
+    });
 
-  //     const rect = context.getBoundingClientRect();
-  //     console.log(e, rect);
+    selectionBox = {
+      x: mouseDownPos.x,
+      y: mouseDownPos.y,
+      width: e.clientX - mouseDownPos.y,
+      height: e.clientY - mouseDownPos.x,
+    };
+  };
 
-  //     console.log(
-  //       e.clientX,
-  //       e.clientY,
-  //       e.clientX - rect.left,
-  //       e.clientY - rect.top
-  //     );
+  const onDragStartHandler = (e) => {
+    const { top, left } = e.target.getBoundingClientRect();
+    parentRectPosition = { top, left };
 
-  //     const absWidth = e.clientX - rect.left;
-  //     const absHeight = e.clientY - rect.top;
+    mouseDownPos = { x: e.clientY, y: e.clientX };
+    setSelection({ ...selection, x: e.clientY, y: e.clientX });
 
-  //     canvas.fillStyle = '#adb5bd';
-  //     canvas.beginPath();
-  //     canvas.rect(e.clientX, absHeight, absWidth, absHeight);
-  //     canvas.fill();
-  //   }
+    document.addEventListener('mousemove', handleDragMove);
+    document.addEventListener('mouseup', onDragEndHandler);
+  };
 
-  //   const onDragStartHandler = (e) => {
-  //     e.preventDefault();
-  //     e.stopPropagation();
+  const onDragEndHandler = () => {
+    console.log('drag ended');
 
-  //     // console.log(e.target.className);
-  //     console.log(
-  //       // e.target.className.includes('notes-container') ? 'dragged' : 'not',
-  //       e.target
-  //     );
+    const { top, left } = parentRectPosition;
 
-  //     document.addEventListener('mousemove', handleBoardDragMove);
-  //     document.addEventListener('mouseup', onDragEndHandler);
-  //   };
+    if (selectionBox.width >= 200 && selectionBox.height >= 100) {
+      addNote({
+        position: { x: selectionBox.y - left, y: selectionBox.x - top },
+        size: { width: selectionBox.width, height: selectionBox.height },
+        text: '',
+      });
+    }
 
-  //   const onDragEndHandler = (e) => {
-  //     // console.log(e);
+    mouseDownPos = { x: 0, y: 0 };
+    setSelection({
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0,
+    });
 
-  //     document.removeEventListener('mousemove', handleBoardDragMove);
-  //     document.removeEventListener('mouseup', handleBoardDragMove); // onDragStartHandler
-  //   };
+    document.removeEventListener('mousemove', handleDragMove, {
+      capture: false,
+    });
+    document.removeEventListener('mouseup', onDragEndHandler, {
+      capture: false,
+    });
+  };
+
+  const onMouseDownHandler = (e) => {
+    if (e.target.className.includes('grid-canvas')) {
+      onDragStartHandler(e);
+    }
+  };
 
   return (
-    <canvas
-      ref={canvasRef}
-      id="grid-canvas"
-      draggable
-      //   onDragStart={onDragStartHandler}
-      //   onDragEnd={onDragEndHandler}
-    />
+    <>
+      <canvas
+        ref={canvasRef}
+        className="grid-canvas"
+        onMouseDown={onMouseDownHandler}
+      />
+
+      <Selection
+        ref={selectionRef}
+        css={{
+          top: `${selection.x}px`,
+          left: `${selection.y}px`,
+          width: `${selection.width}px`,
+          height: `${selection.height}px`,
+        }}
+      />
+    </>
   );
 };
 

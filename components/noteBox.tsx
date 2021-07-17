@@ -80,12 +80,6 @@ const NoteBox: React.FC<Note> = ({ id, position, size, text }) => {
 
   return (
     <Rnd
-      // default={{
-      //   x: position.x,
-      //   y: position.y,
-      //   width: size.width,
-      //   height: size.height,
-      // }}
       size={{ width: size.width, height: size.height }}
       position={{ x: position.x, y: position.y }}
       minWidth={200}

@@ -1,3 +1,6 @@
+import dynamic from 'next/dynamic';
+import { styled } from '@styled';
+
 import {
   Root,
   Arrow,
@@ -13,10 +16,15 @@ import {
 } from '@components/contextMenu';
 
 import CollectionBox from '@shared/notes/collectionBox';
+// import CreateCollection from '@shared/notes/createCollection';
+
+const CreateCollection = dynamic(
+  () => import('@shared/notes/createCollection'),
+  { ssr: false }
+);
 
 import useNotes from '@state/notes';
-import { styled } from '@styled';
-import CreateCollection from '@shared/notes/createCollection';
+import React from 'react';
 
 const NotesCollectionContainer = styled('div', {
   width: '5rem',
