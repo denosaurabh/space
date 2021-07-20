@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Image from 'next/image';
 
 import {
@@ -24,6 +24,8 @@ const CreateCollection: React.FC = () => {
   }));
 
   const onAddedNewCollectionClick = () => {
+    if (name.length === 0) return;
+
     createCollection({ name });
   };
 
@@ -48,10 +50,16 @@ const CreateCollection: React.FC = () => {
             type="name"
             placeholder="Work Notes"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setName(e.target.value)
+            }
+            required
           />
         </AlertDialogDescription>
-        <AlertDialogAction onClick={() => onAddedNewCollectionClick()}>
+        <AlertDialogAction
+          onClick={() => onAddedNewCollectionClick()}
+          disabled={name.length === 0}
+        >
           Create Collection
         </AlertDialogAction>
         <AlertDialogCancel>Cancel</AlertDialogCancel>

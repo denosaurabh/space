@@ -6,17 +6,16 @@ import Link from 'next/link';
 
 const HeaderStyled = styled('header', {
   width: '100%',
-  height: '$header',
   display: 'flex',
   alignItems: 'center',
   gap: '2rem',
-  padding: '1rem 1.5rem',
+  padding: '1.4rem 1.5rem',
   borderBottom: '1px solid $headerBorderBottom',
 });
 
 const HeaderNav = styled('div', {
   flexRow: '',
-  gap: '1.2rem',
+  gap: '1.6rem',
   marginRight: 'auto',
 });
 
@@ -38,8 +37,8 @@ const Header: React.FC = () => (
       className="header-logo"
       src="/space.png"
       alt="Space - Productivity & Management Tool"
-      width={22}
-      height={22}
+      width={26}
+      height={26}
     />
 
     <HeaderNav>
@@ -49,8 +48,8 @@ const Header: React.FC = () => (
           <Image
             src="/icons/Reader.svg"
             alt="All Notes"
-            width={22}
-            height={22}
+            width={25}
+            height={25}
           />
         }
         href="/notes"
@@ -58,7 +57,7 @@ const Header: React.FC = () => (
       <IconBox
         name="Todo"
         icon={
-          <Image src="/icons/Todo.svg" alt="All Notes" width={20} height={20} />
+          <Image src="/icons/Todo.svg" alt="All Notes" width={24} height={24} />
         }
         href="/todo"
         soon
@@ -69,8 +68,8 @@ const Header: React.FC = () => (
           <Image
             src="/icons/Calender.svg"
             alt="All Notes"
-            width={20}
-            height={20}
+            width={22}
+            height={22}
           />
         }
         href="/calendar"
@@ -82,8 +81,8 @@ const Header: React.FC = () => (
           <Image
             src="/icons/Timer.svg"
             alt="All Notes"
-            width={20}
-            height={20}
+            width={22}
+            height={22}
           />
         }
         href="/pomodoro"
@@ -99,8 +98,8 @@ const Header: React.FC = () => (
             className="badge-icon"
             src="/icons/External-Link.svg"
             alt="External Link"
-            width={15}
-            height={15}
+            width={18}
+            height={18}
           />
         </Badge>
       </a>

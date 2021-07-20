@@ -5,24 +5,24 @@ const StyledSwitch = styled(Root, {
   appearance: 'none',
   border: 'none',
   padding: 0,
-  width: '3rem',
-  height: '1.4rem',
+  width: '6rem',
+  height: '2.4rem',
   backgroundColor: '$grey-200',
   borderRadius: '2rem',
   position: 'relative',
   '&:focus': {
     outline: 'none',
-    boxShadow: '0 0 0 2px #0077b6',
+    boxShadow: '0 0 0 2px #343a40',
   },
   '&[data-state="checked"]': {
-    backgroundColor: '#0077b6',
+    backgroundColor: '$grey-800',
   },
 });
 
 const StyledThumb = styled(Thumb, {
   display: 'block',
-  width: '1rem',
-  height: '1.1rem',
+  width: '2rem',
+  height: '2rem',
   backgroundColor: 'white',
   borderRadius: '2rem',
   boxShadow: 'rgba(0, 0, 0, 0.3) 0px 0px 2px',
@@ -31,16 +31,8 @@ const StyledThumb = styled(Thumb, {
   willChange: 'transform',
 
   '&[data-state="checked"]': {
-    transform: 'translateX(1.8rem)',
+    transform: 'translateX(3.8rem)',
   },
 });
 
-const Switch: React.FC = () => {
-  return (
-    <StyledSwitch>
-      <StyledThumb />
-    </StyledSwitch>
-  );
-};
-
-export default Switch;
+export { StyledSwitch as Switch, StyledThumb as Thumb };

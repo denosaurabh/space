@@ -9,18 +9,17 @@ const InputContainer = styled('div', {
 
 const InputLabel = styled('label', {
   fontFamily: '$inter',
-  fontSize: '0.9rem',
+  fontSize: '1.4rem',
   marginBottom: '0.8rem',
 });
 
 const StyledInput = styled('input', {
   width: '100%',
-  height: '0.9rem',
 
   fontFamily: '$inter',
-  fontSize: '1rem',
+  fontSize: '1.5rem',
 
-  padding: '1.6rem 1rem',
+  padding: '1.6rem 1.5rem',
 
   border: '1px solid $grey-700',
   borderRadius: '0.8rem',

@@ -7,6 +7,7 @@ const { css, styled, global, getCssString, theme } = createCss({
       mono: 'monospace',
       inter:
         "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
+      indie: 'IndieFlower',
     },
     colors: {
       grey: '#343a40',
@@ -24,14 +25,21 @@ const { css, styled, global, getCssString, theme } = createCss({
       'grey-700': '#495057',
       'grey-800': '#343a40',
       'grey-900': '#212529',
+
+      'dreamy-gradients-yellow-first': `linear-gradient(180deg, #85FFBD 0%, rgba(255, 251, 125, 0.46) 100%)`,
+      'dreamy-gradients-yellow-second': `linear-gradient(180deg, #85FFBD 0%, rgba(245, 138, 37, 0) 100%, #FFFB7D 100%)`,
+
+      'dreamy-gradients-orange-first': `linear-gradient(180deg, #F6D365 0%, rgba(245, 138, 37, 0) 100%, #FDA085 100%);`,
+      'dreamy-gradients-orange-second': `linear-gradient(180deg, #F6D365 0%, rgba(253, 160, 133, 0.46) 100%)`,
     },
     borderStyles: {
       note: '2px solid #343a40',
     },
     radii: {
-      small: '0.6rem',
+      small: '1.1rem',
     },
     transitions: {
+      slow: '0.45s',
       medium: '0.25s',
       fast: '0.1s',
     },
@@ -52,6 +60,18 @@ const { css, styled, global, getCssString, theme } = createCss({
       width: `${size}`,
       height: `${size}`,
     }),
+    annoPos: () => (position: string) => {
+      const [top, right, bottom, left] = position.split(' ');
+
+      return {
+        '.anno': {
+          top,
+          right,
+          bottom,
+          left,
+        },
+      };
+    },
   },
   media: {
     bp1: '@media (min-width: 520px)',
@@ -87,9 +107,13 @@ const globalStyles = global({
   },
   'html, body, #__next': {
     width: '100%',
-    height: '100%',
+    height: 'fit-content',
+    fontSize: '62.5%',
 
     fontFamily: '$inter',
+    fontWeight: 400,
+    fontFeatureSettings: 'kern',
+    textRendering: 'optimizeLegibility',
   },
   a: {
     textDecoration: 'none',
@@ -102,8 +126,15 @@ const globalStyles = global({
     border: 'none',
     outline: 'none',
   },
-  body: {
-    fontSize: '62.5%',
+
+  '@font-face': {
+    fontFamily: 'IndieFlower',
+    src: `url('/assets/fonts/IndieFlower-Regular.woff2') format('woff2'),
+        url('/assets/fonts/IndieFlower.woff') format('woff'),
+        url('/assets/fonts/IndieFlower.ttf') format('truetype'),
+        url('/assets/fonts/IndieFlower-Regular.eot?#iefix') format('embedded-opentype')`,
+    fontWeight: 'normal',
+    fontStyle: 'normal',
   },
   '::-webkit-scrollbar': {
     width: '3px',
@@ -118,4 +149,4 @@ const globalStyles = global({
   },
 });
 
-export { css, styled, global, getCssString, globalStyles, darkTheme };
+export { css, styled, global, getCssString, globalStyles, darkTheme, theme };

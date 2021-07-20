@@ -25,13 +25,13 @@ const CreateCollection = dynamic(
 
 import useNotes from '@state/notes';
 import React from 'react';
+import { NotesCollection } from '@lib/store/notes';
 
 const NotesCollectionContainer = styled('div', {
-  width: '5rem',
   height: '100%',
   backgroundColor: '$grey-100',
 
-  padding: '1rem 0',
+  padding: '2rem 1.6rem',
 
   display: 'flex',
   flexDirection: 'column',
@@ -39,7 +39,7 @@ const NotesCollectionContainer = styled('div', {
   gap: '1.4rem',
 });
 
-const NotesCollection: React.FC = () => {
+const NotesCollectionSidebar: React.FC = () => {
   const { currentCollection, changeCurrentCollection, notesState } = useNotes(
     (state) => ({
       currentCollection: state.currentCollection,
@@ -54,7 +54,7 @@ const NotesCollection: React.FC = () => {
 
   return (
     <NotesCollectionContainer>
-      {Object.values(notesState).map((el, i) => {
+      {Object.values(notesState).map((el: NotesCollection, i) => {
         const firstString = el.name[0];
 
         const isCurrentCollection = el.id == currentCollection;
@@ -95,4 +95,4 @@ const NotesCollection: React.FC = () => {
   );
 };
 
-export default NotesCollection;
+export default NotesCollectionSidebar;

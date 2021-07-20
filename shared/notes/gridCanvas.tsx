@@ -1,14 +1,34 @@
-import useNotes from '@state/notes';
 import { styled } from '@styled';
 import { useEffect, useRef, useState } from 'react';
 
-const Selection = styled('div', {
-  position: 'absolute',
+import { NotePosition, NoteSize } from '@lib/store/notes';
 
+const Selection = styled('div', {
+  position: 'fixed',
   backgroundColor: '$grey-200',
 });
 
-const GridCanvas: React.FC = () => {
+interface GridCanvasI {
+  className: string;
+  width: number;
+  height: number;
+  gridSize: number;
+  onSelectionComplete: ({
+    position,
+    size,
+  }: {
+    position: NotePosition;
+    size: NoteSize;
+  }) => void;
+}
+
+const GridCanvas: React.FC<GridCanvasI> = ({
+  className,
+  width,
+  height,
+  gridSize,
+  onSelectionComplete,
+}) => {
   const [selection, setSelection] = useState({
     x: 0,
     y: 0,
@@ -17,8 +37,6 @@ const GridCanvas: React.FC = () => {
   });
   const canvasRef = useRef<HTMLCanvasElement>();
   const selectionRef = useRef<HTMLDivElement>();
-
-  const addNote = useNotes(({ addNote }) => addNote);
 
   let mouseDownPos;
   let selectionBox = {
@@ -35,29 +53,24 @@ const GridCanvas: React.FC = () => {
   useEffect(() => {
     if (!canvasRef.current) return;
 
-    const { innerWidth: width, innerHeight: height } = window;
-
     canvasRef.current.width = width;
     canvasRef.current.height = height;
 
-    console.log(canvasRef.current);
-
     const context = canvasRef.current.getContext('2d');
 
-    for (let x = 0; x <= width; x += 10) {
-      for (let y = 0; y <= height; y += 10) {
+    for (let x = 0; x <= width; x += gridSize) {
+      for (let y = 0; y <= height; y += gridSize) {
         context.fillStyle = '#212529';
         context.beginPath();
         context.rect(x, y, 1, 1);
         context.fill();
       }
     }
-  }, [canvasRef]);
+  }, [canvasRef, width, height, gridSize]);
 
   const handleDragMove = (e) => {
-    console.log('drag moving');
-
     if (!selectionRef.current) return;
+
     setSelection({
       x: mouseDownPos.x,
       y: mouseDownPos.y,
@@ -85,17 +98,13 @@ const GridCanvas: React.FC = () => {
   };
 
   const onDragEndHandler = () => {
-    console.log('drag ended');
-
     const { top, left } = parentRectPosition;
 
-    if (selectionBox.width >= 200 && selectionBox.height >= 100) {
-      addNote({
-        position: { x: selectionBox.y - left, y: selectionBox.x - top },
-        size: { width: selectionBox.width, height: selectionBox.height },
-        text: '',
-      });
-    }
+    // Calling the Func
+    onSelectionComplete({
+      position: { x: selectionBox.y - left, y: selectionBox.x - top },
+      size: { width: selectionBox.width, height: selectionBox.height },
+    });
 
     mouseDownPos = { x: 0, y: 0 };
     setSelection({
@@ -108,13 +117,14 @@ const GridCanvas: React.FC = () => {
     document.removeEventListener('mousemove', handleDragMove, {
       capture: false,
     });
+
     document.removeEventListener('mouseup', onDragEndHandler, {
       capture: false,
     });
   };
 
   const onMouseDownHandler = (e) => {
-    if (e.target.className.includes('grid-canvas')) {
+    if (e.target.className.includes(className)) {
       onDragStartHandler(e);
     }
   };
@@ -123,8 +133,9 @@ const GridCanvas: React.FC = () => {
     <>
       <canvas
         ref={canvasRef}
-        className="grid-canvas"
+        className={className}
         onMouseDown={onMouseDownHandler}
+        style={{ zIndex: 100 }}
       />
 
       <Selection

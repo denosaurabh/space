@@ -1,105 +1,74 @@
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
+import produce from 'immer';
 
-import { NotesState } from '@lib/notes';
+import { NotesState } from '@lib/store/notes';
 
 const useNotes = create<NotesState>(
   persist(
     (set) => ({
       currentCollection: '0',
-      notesState: { '0': { id: '0', name: 'Home', icon: '', notes: {} } },
-      changeCurrentCollection: (collectionNumber) => {
-        set((state) => ({
-          ...state,
-          currentCollection: collectionNumber,
-        }));
+      notesState: {
+        '0': { id: '0', name: 'Home', icon: '', notes: {} },
       },
-      createCollection: (data) =>
-        set((state) => {
-          const { name } = data;
+      changeCurrentCollection: (collectionNumber) => {
+        set(
+          produce((draft) => {
+            draft.currentCollection = collectionNumber;
+          })
+        );
+      },
+      createCollection: (data) => {
+        set(
+          produce((draft) => {
+            const newCollectionId = Object.keys(draft.notesState).length;
 
-          const newCollectionId = Object.keys(state.notesState).length;
-
-          return {
-            ...state,
-            notesState: {
-              ...state.notesState,
-              [newCollectionId]: {
-                id: newCollectionId,
-                name,
-                icon: '',
-                notes: {},
-              },
-            },
-          };
-        }),
+            draft.notesState[newCollectionId] = {
+              id: newCollectionId,
+              name: data.name,
+              icon: '',
+              notes: {},
+            };
+          })
+        );
+      },
       addNote: (newNote) => {
-        set((state) => {
-          const allNotesIDs = Object.keys(
-            state.notesState[state.currentCollection].notes
-          );
-          const newNoteId = allNotesIDs.length;
+        set(
+          produce((draft) => {
+            const collectionDraft = draft.notesState[draft.currentCollection];
 
-          const { notesState, currentCollection } = state;
-          const currentCollectionData = notesState[currentCollection];
+            console.log(collectionDraft);
 
-          return {
-            notesState: {
-              ...notesState,
-              [currentCollection]: {
-                ...currentCollectionData,
-                notes: {
-                  ...currentCollectionData.notes,
-                  [newNoteId]: { id: newNoteId, ...newNote },
-                },
-              },
-            },
-          };
-        });
+            const allNotesIDs = Object.keys(collectionDraft.notes);
+            const newNoteId = allNotesIDs.length;
+
+            collectionDraft.notes[newNoteId] = {
+              id: newNoteId,
+              ...newNote,
+            };
+          })
+        );
       },
       updateNote: (id, data) => {
-        set((state) => {
-          const { notesState, currentCollection } = state;
-          const currentCollectionData = notesState[currentCollection];
+        set(
+          produce((draft) => {
+            const collectionDraft = draft.notesState[draft.currentCollection];
 
-          return {
-            notesState: {
-              ...notesState,
-              [currentCollection]: {
-                ...currentCollectionData,
-                notes: {
-                  ...currentCollectionData.notes,
-                  [id]: { ...currentCollectionData.notes[id], ...data },
-                },
-              },
-            },
-          };
-        });
+            collectionDraft.notes[id] = {
+              ...collectionDraft.notes[id],
+              ...data,
+            };
+          })
+        );
       },
       removeNote: (id) => {
-        set((state) => {
-          const { notesState, currentCollection } = state;
-          const currentCollectionData = notesState[currentCollection];
+        set(
+          produce((draft) => {
+            const collectionDraft = draft.notesState[draft.currentCollection];
 
-          const { [id]: removedNote, ...restNotes } =
-            currentCollectionData.notes;
-
-          if (process.env.NODE_ENV === 'development') {
-            console.log(removedNote);
-          }
-
-          return {
-            notesState: {
-              ...notesState,
-              [currentCollection]: {
-                ...currentCollectionData,
-                notes: {
-                  ...restNotes,
-                },
-              },
-            },
-          };
-        });
+            delete collectionDraft.notes[id];
+          })
+        );
       },
     }),
     {
@@ -111,7 +80,7 @@ const useNotes = create<NotesState>(
 
 useNotes.subscribe((state) => {
   if (process.env.NODE_ENV === 'development') {
-    console.log(state.notesState);
+    console.log(state.notesState, state.currentCollection);
   }
 });
 

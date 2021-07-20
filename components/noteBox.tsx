@@ -2,8 +2,7 @@ import { memo } from 'react';
 import Image from 'next/image';
 import { Rnd } from 'react-rnd';
 import { styled } from '@styled';
-import { Note } from '@lib/notes';
-import useNotes from '@state/notes';
+import { NewNote, Note } from '@lib/store/notes';
 
 import {
   Root as PopoverRoot,
@@ -11,7 +10,7 @@ import {
   Anchor as PopoverAnchor,
   StyledContent as PopoverContent,
   StyledClose as PopoverClose,
-  Arrow as PopoverArrow,
+  StyledArrow as PopoverArrow,
 } from '@components/popover';
 
 const NoteContainer = styled('div', {
@@ -36,8 +35,8 @@ const NoteHeader = styled('div', {
   justifyContent: 'flex-end',
   alignItems: 'center',
   width: '100%',
-  height: '20px',
-  padding: '0 0.2rem',
+  height: '2.4rem',
+  padding: '0 0.4rem',
   borderBottom: '1px solid #000',
   backgroundColor: '#fff',
   borderTopLeftRadius: '$small',
@@ -56,32 +55,52 @@ const NoteHeader = styled('div', {
 const NoteContent = styled('textarea', {
   width: '100%',
   height: '100%',
-  padding: '1rem',
+  padding: '1.2rem',
   fontFamily: '$mono',
-  fontSize: '0.8rem',
+  fontSize: '1.4rem',
   borderRadius: '$small',
   resize: 'none',
   border: 'none',
   outline: 'none',
 });
 
-const NoteBox: React.FC<Note> = ({ id, position, size, text }) => {
-  const { updateNote, removeNote } = useNotes((state) => ({
-    updateNote: state.updateNote,
-    removeNote: state.removeNote,
-  }));
+interface NoteBoxProps extends Note {
+  boundClassName: string;
+  gridSize: number;
+  onDragStop: (id: number, data: NewNote) => void;
+  onResizeStop: (id: number, data: NewNote) => void;
+  onTextChange: (id: number, data: NewNote) => void;
+  onRemoveClick: (noteId: number) => void;
+}
+
+const NoteBox: React.FC<NoteBoxProps> = ({
+  id,
+  position,
+  size,
+  text,
+  boundClassName,
+  onDragStop,
+  onResizeStop,
+  onTextChange,
+  onRemoveClick,
+  gridSize,
+}) => {
+  // const { updateNote, removeNote } = useNotes((state) => ({
+  //   updateNote: state.updateNote,
+  //   removeNote: state.removeNote,
+  // }));
 
   const onNoteDragStop = (e, data) => {
     const { x, y } = data;
 
-    updateNote(id, { position: { x, y }, size, text });
+    onDragStop(id, { position: { x, y }, size, text });
   };
 
   const onNoteResizeStop = (e, dir, el, delta, updatedPosition) => {
     const updatedWidth = size.width + delta.width;
     const updatedHeight = size.height + delta.height;
 
-    updateNote(id, {
+    onResizeStop(id, {
       position: updatedPosition,
       size: { width: updatedWidth, height: updatedHeight },
       text,
@@ -90,12 +109,12 @@ const NoteBox: React.FC<Note> = ({ id, position, size, text }) => {
 
   const onNoteTextChange = (e) => {
     const { value } = e.target;
-    updateNote(id, { position, size, text: value });
+    onTextChange(id, { position, size, text: value });
   };
 
   const onRemoveNoteClickHandler = () => {
     const noteId = id;
-    removeNote(noteId);
+    onRemoveClick(noteId);
   };
 
   return (
@@ -104,10 +123,10 @@ const NoteBox: React.FC<Note> = ({ id, position, size, text }) => {
       position={{ x: position.x, y: position.y }}
       minWidth={200}
       minHeight={100}
-      resizeGrid={[10, 10]}
-      dragGrid={[10, 10]}
+      resizeGrid={[gridSize, gridSize]}
+      dragGrid={[gridSize, gridSize]}
       dragHandleClassName="drag-header"
-      bounds=".notes-container"
+      bounds={`.${boundClassName}`}
       enableResizing={{
         bottom: false,
         bottomLeft: false,

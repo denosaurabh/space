@@ -7,11 +7,12 @@ import {
 } from '@components/tooltip';
 
 import { styled } from '@styled';
+
 import { IconBoxI } from '@lib/components/iconBox';
 
 const Icon = styled('div', {
-  width: '3rem',
-  height: '3rem',
+  width: '5.2rem',
+  height: '5.2rem',
   backgroundColor: '$icon',
   borderRadius: '$small',
   display: 'grid',
@@ -27,9 +28,6 @@ const Icon = styled('div', {
       true: {
         backgroundColor: 'transparent',
         opacity: 0.4,
-        '&:hover': {
-          cursor: 'wait',
-        },
       },
     },
   },

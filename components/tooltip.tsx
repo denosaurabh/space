@@ -8,12 +8,12 @@ const TooltipTrigger = styled(Trigger, {
 });
 
 const StyledContent = styled(Content, {
-  padding: '0.6rem 1rem',
+  padding: '1rem 1.6rem',
   backgroundColor: '#000',
   fontFamily: '$inter',
-  fontSize: '0.8rem',
+  fontSize: '1.4rem',
   color: '#fff',
-  borderRadius: '0.5rem',
+  borderRadius: '1rem',
   variants: {
     soon: {
       true: {

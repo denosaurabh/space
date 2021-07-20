@@ -1,15 +1,15 @@
 import { styled } from '@styled';
 
 const CollectionBox = styled('div', {
-  size: '3rem',
-  borderRadius: '0.5rem',
+  size: '5rem',
+  borderRadius: '1rem',
   backgroundColor: '$grey-200',
 
   display: 'grid',
   placeItems: 'center',
 
   fontFamily: '$system',
-  fontSize: '1.4rem',
+  fontSize: '2rem',
 
   transition: '$medium',
 

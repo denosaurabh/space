@@ -2,17 +2,17 @@ import { styled } from '@styled';
 
 const StyledBadge = styled('div', {
   width: 'fit-content',
-  padding: '0.8rem 1.4rem',
+  padding: '1.4rem 2.2rem',
   display: 'flex',
   alignItems: 'center',
-  gap: '0.5rem',
+  gap: '1rem',
 
   borderRadius: '1000px',
   backgroundColor: '#d8f3dc',
 
   fontFamily: '$inter',
   color: '#40916c',
-  fontSize: '0.8rem',
+  fontSize: '1.2rem',
   fontWeight: 'bolder',
   transition: 'background-color $medium',
 

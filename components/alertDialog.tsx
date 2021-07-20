@@ -25,32 +25,32 @@ const StyledContent = styled(Content, {
   left: '50%',
   transform: 'translate(-50%, -50%)',
 
-  width: '30rem',
+  width: '50rem',
   backgroundColor: 'white',
-  borderRadius: '1.2rem',
-  padding: '2rem',
+  borderRadius: '1.6rem',
+  padding: '4rem 3.5rem',
 });
 
 const StyledTitle = styled(Title, {
   fontFamily: '$inter',
-  fontSize: '2rem',
-  marginBottom: '2rem',
+  fontSize: '4rem',
+  marginBottom: '3rem',
 });
 
 const StyledDescription = styled(Description, {
-  marginBottom: '3rem',
+  marginBottom: '4rem',
 });
 
 const StyledCancel = styled(Cancel, {
   fontFamily: '$inter',
-  fontSize: '0.9rem',
+  fontSize: '1.4rem',
   fontWeight: 'bold',
 
-  padding: '1rem 1.2rem',
+  padding: '1.4rem 2rem',
 
   backgroundColor: '$grey-100',
   color: '$grey-900',
-  borderRadius: '0.5rem',
+  borderRadius: '1rem',
 
   transition: '$medium background-color',
 
@@ -62,21 +62,25 @@ const StyledCancel = styled(Cancel, {
 
 const StyledAction = styled(Action, {
   fontFamily: '$inter',
-  fontSize: '0.9rem',
+  fontSize: '1.4rem',
   fontWeight: 'bold',
 
-  padding: '1rem 1.2rem',
+  padding: '1.4rem 2rem',
   marginRight: '1rem',
 
   backgroundColor: '$grey-800',
   color: '$grey-100',
-  borderRadius: '0.5rem',
+  borderRadius: '1rem',
 
   transition: '$medium background-color',
 
   '&:hover': {
     cursor: 'pointer',
     backgroundColor: '$grey-900',
+  },
+
+  '&:disabled': {
+    cursor: 'not-allowed',
   },
 });
 

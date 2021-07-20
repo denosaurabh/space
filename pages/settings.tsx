@@ -1,8 +1,10 @@
 import Head from 'next/head';
 import { styled } from '@styled';
 
+import Seperator from '@components/separator';
+import NotesSettings from '@shared/settings/notes';
+
 import Page from '@container';
-import Switch from '@components/switch';
 
 const SettingsContainer = styled('div', {
   width: '100%',
@@ -17,11 +19,10 @@ const SettingsContainer = styled('div', {
 
 const MidContainer = styled('div', {
   width: '30%',
-  // maxWidth: '20rem',
 });
 
 const Heading = styled('h1', {
-  fontSize: '3rem',
+  fontSize: '5rem',
   fontFamily: '$inter',
 });
 
@@ -36,7 +37,8 @@ const Settings: React.FC = () => {
         <MidContainer>
           <Heading>Settings</Heading>
 
-          <Switch />
+          <NotesSettings />
+          <Seperator />
         </MidContainer>
       </SettingsContainer>
     </Page>

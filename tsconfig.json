@@ -8,7 +8,8 @@
       "@shared/*": ["shared/*"],
       "@container": ["layouts/page.tsx"],
       "@styled": ["./stitches.config.ts"],
-      "@lib/*": ["lib/*"]
+      "@lib/*": ["lib/*"],
+      "@annotations/*": ["annotations/*"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],

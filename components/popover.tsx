@@ -17,24 +17,28 @@ const StyledTrigger = styled(Trigger, {
 });
 
 const StyledContent = styled(Content, {
+  display: 'flex',
+  placeItems: 'center',
+  gap: '1rem',
+
   backgroundColor: '$grey-800',
-  padding: '0.6rem 0.7rem 0.6rem 1.2rem',
-  borderRadius: '1rem',
+  padding: '1rem 1rem 1rem 2rem',
+  borderRadius: '1.4rem',
 
   fontFamily: '$inter',
-  fontSize: '0.8rem',
+  fontSize: '1.4rem',
   color: '$grey-100',
 });
 
 const StyledClose = styled(Close, {
-  padding: '0.5rem 0.7rem',
+  padding: '1rem 1.4rem',
   marginLeft: '1rem',
 
-  borderRadius: '0.6rem',
+  borderRadius: '1rem',
   backgroundColor: '$grey-100',
 
   fontFamily: '$inter',
-  fontSize: '0.8rem',
+  fontSize: '1.4rem',
   fontWeight: 'bold',
   color: '$grey-900',
 
@@ -46,4 +50,8 @@ const StyledClose = styled(Close, {
   },
 });
 
-export { Root, StyledTrigger, Anchor, StyledContent, StyledClose, Arrow };
+const StyledArrow = styled(Arrow, {
+  color: '$grey-800',
+});
+
+export { Root, StyledTrigger, Anchor, StyledContent, StyledClose, StyledArrow };
