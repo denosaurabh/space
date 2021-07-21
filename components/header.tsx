@@ -33,13 +33,17 @@ const Settings = styled(Image, {
 
 const Header: React.FC = () => (
   <HeaderStyled>
-    <HeaderLogo
-      className="header-logo"
-      src="/space.png"
-      alt="Space - Productivity & Management Tool"
-      width={26}
-      height={26}
-    />
+    <Link href="/" passHref>
+      <a>
+        <HeaderLogo
+          className="header-logo"
+          src="/space.png"
+          alt="Space - Productivity & Management Tool"
+          width={26}
+          height={26}
+        />
+      </a>
+    </Link>
 
     <HeaderNav>
       <IconBox
@@ -91,7 +95,7 @@ const Header: React.FC = () => (
     </HeaderNav>
 
     <Link href="https://github.com/DenoSaurabh/space">
-      <a target="_blank">
+      <a target="_blank" rel="noreferer">
         <Badge>
           Early Development (Alpha)
           <Image
@@ -105,7 +109,9 @@ const Header: React.FC = () => (
       </a>
     </Link>
     <Link href="/settings" passHref>
-      <Settings src="/icons/Gear.svg" alt="Settings" width={25} height={25} />
+      <a>
+        <Settings src="/icons/Gear.svg" alt="Settings" width={25} height={25} />
+      </a>
     </Link>
   </HeaderStyled>
 );

@@ -37,7 +37,7 @@ const IconBox: React.FC<IconBoxI> = ({ name, icon, href, soon }) => {
   return (
     <Root>
       <TooltipTrigger>
-        <Link href={soon ? '/home' : href}>
+        <Link href={soon ? '/soon' : href}>
           <a>
             <Icon soon={soon}>{icon}</Icon>
           </a>
