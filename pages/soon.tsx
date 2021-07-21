@@ -16,8 +16,8 @@ const Container = styled('div', {
 });
 
 const Heading = styled('h2', {
+  fontFamily: '$indie',
   fontSize: '6rem',
-  fontFamily: '$inter',
   color: '$grey-700',
 
   marginBottom: '3rem',

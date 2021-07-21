@@ -1,4 +1,6 @@
 import React from 'react';
+import Link from 'next/link';
+
 import { styled } from '@styled';
 
 import Button from '@components/button';
@@ -25,9 +27,13 @@ const Heading = styled('h4', {
 const CallToAction: React.FC = () => {
   return (
     <CTAContaner>
-      <Button color="dark" size="mega">
-        Use the App
-      </Button>
+      <Link href="/notes" passHref>
+        <a>
+          <Button color="dark" size="mega">
+            Use the App
+          </Button>
+        </a>
+      </Link>
       <Heading>Help Support the Project</Heading>
     </CTAContaner>
   );

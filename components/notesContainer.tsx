@@ -41,8 +41,19 @@ const AllNotesContainer: React.FC<AllNotesContainerI> = ({
   useEffect(() => {
     if (!notesContainerRef.current) return;
 
-    const { width, height } = notesContainerRef.current.getBoundingClientRect();
-    setSize({ width, height });
+    const updateSize = () => {
+      const { width, height } =
+        notesContainerRef.current.getBoundingClientRect();
+      setSize({ width, height });
+    };
+
+    updateSize();
+
+    window.addEventListener('resize', updateSize);
+
+    return () => {
+      window.removeEventListener('resize', updateSize);
+    };
   }, []);
 
   return (

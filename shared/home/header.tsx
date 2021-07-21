@@ -1,9 +1,12 @@
 import Image from 'next/image';
+import Link from 'next/link';
+
 import { styled } from '@styled';
 
 import Button from '@components/button';
 import { Annotation, AnnoGroup } from '@components/annotation';
 import Ellipse from '@components/annotations/ellipse';
+import Badge from '@components/badge';
 
 const HeaderContainer = styled('header', {
   width: '100%',
@@ -33,6 +36,9 @@ const ULContainer = styled('nav', {
 });
 
 const LI = styled('span', {
+  display: 'flex',
+  alignItems: 'center',
+
   fontSize: '1.4rem',
   color: '$grey-600',
 
@@ -54,6 +60,13 @@ const RightBox = styled('div', {
 const Text = styled('span', {
   fontSize: '1.4rem',
   color: '$grey-600',
+
+  '& a': {
+    fontWeight: '500',
+    color: '$grey-700',
+
+    margin: '0 0.5rem',
+  },
 });
 
 const Header: React.FC = () => {
@@ -82,15 +95,28 @@ const Header: React.FC = () => {
         </Annotation>
         <Text>
           Open Source Project
-          <br /> by @denosaurabh
+          <br /> by
+          <Link href="https://github.com/denosaurabh">
+            <a target="_blank" rel="noreferer">
+              @denosaurabh
+            </a>
+          </Link>
         </Text>
       </LogoContainer>
       <ULContainer>
-        <LI>Github Code</LI>
+        <Link href="https://github.com/denosaurabh/space">
+          <a target="_blank" rel="noreferer">
+            <LI>Github Code</LI>
+          </a>
+        </Link>
         <Annotation css={{ annoPos: '120% -30% 0% 0%' }}>
-          <Button color="dark" size="medium">
-            Get Right In
-          </Button>
+          <Link href="/notes" passHref>
+            <a>
+              <Button color="dark" size="medium">
+                Get Right In
+              </Button>
+            </a>
+          </Link>
 
           <AnnoGroup>
             <Image
@@ -102,14 +128,20 @@ const Header: React.FC = () => {
           </AnnoGroup>
         </Annotation>
 
-        <LI>Support the Project</LI>
+        <LI>
+          Support the Project<Badge size="medium">soon</Badge>
+        </LI>
       </ULContainer>
 
       <RightBox>
         <Button color="light" size="small">
           Beta v0.9
         </Button>
-        <LI>Development</LI>
+        <Link href="https://github.com/DenoSaurabh/space/releases" passHref>
+          <a target="_blank" rel="noreferer">
+            <LI>Development</LI>
+          </a>
+        </Link>
       </RightBox>
     </HeaderContainer>
   );

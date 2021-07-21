@@ -73,7 +73,33 @@ const GridCanvas: React.FC<GridCanvasI> = ({
   }, [canvasRef, width, height, gridSize, enableCanvas]);
 
   const handleDragMove = (e) => {
-    if (!selectionRef.current) return;
+    if (!selectionRef.current && !canvasRef.current) return;
+
+    const canvasBox = canvasRef.current.getBoundingClientRect();
+
+    // When Selection Go outside the bound
+    if (
+      e.clientY < canvasBox.top ||
+      e.clientY > canvasBox.bottom ||
+      e.clientX > canvasBox.right ||
+      e.clientX < canvasBox.left
+    ) {
+      setSelection({
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0,
+      });
+
+      selectionBox = {
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0,
+      };
+
+      return;
+    }
 
     setSelection({
       x: mouseDownPos.x,

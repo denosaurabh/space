@@ -62,7 +62,7 @@ const NotesCollectionSidebar: React.FC = () => {
         return (
           <ContextMenuRoot key={i}>
             <ContextMenuTrigger>
-              <Root key={i}>
+              <Root key={i} delayDuration={300}>
                 <TooltipTrigger>
                   <CollectionBox
                     onClick={() => changeCurrentCollectionHandler(el.id)}
