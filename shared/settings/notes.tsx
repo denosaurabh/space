@@ -10,6 +10,7 @@ import {
 
 import { Section, SubHeading, SettingBox } from '@shared/settings/styles';
 import useSettings from '@state/settings';
+import Badge from '@components/badge';
 
 const NotesSettings: React.FC = () => {
   const { enableGrid, gridSize, toggleGrid, changeGridSize } = useSettings(
@@ -29,14 +30,23 @@ const NotesSettings: React.FC = () => {
       <SubHeading>Notes</SubHeading>
 
       <SettingBox orientation="horizontal">
-        <Label htmlFor="button">Toggle Grid</Label>
-        <Switch checked={enableGrid} onCheckedChange={() => toggleGrid()}>
+        <Label htmlFor="button">Enable Grid</Label>
+        <Switch
+          defaultChecked={enableGrid}
+          checked={enableGrid}
+          onCheckedChange={(checked: boolean) => toggleGrid(checked)}
+        >
           <Thumb />
         </Switch>
       </SettingBox>
 
       <SettingBox orientation="vertical">
-        <Label htmlFor="span">Grid Size</Label>
+        <Label htmlFor="span" color={!enableGrid ? 'light' : undefined}>
+          Grid Size
+          <Badge size="medium" color={enableGrid ? 'green' : 'warning'}>
+            {enableGrid ? gridSize : 'Blocked due to disabled Grid '}
+          </Badge>
+        </Label>
         <SliderRoot
           css={{ width: '80%' }}
           defaultValue={[10]}
@@ -45,11 +55,12 @@ const NotesSettings: React.FC = () => {
           step={2}
           value={[gridSize]}
           onValueChange={onSliderValueChange}
+          disabled={!enableGrid}
         >
           <SliderTrack>
             <SliderRange />
           </SliderTrack>
-          <SliderThumb />
+          {enableGrid ? <SliderThumb /> : null}
         </SliderRoot>
       </SettingBox>
     </Section>

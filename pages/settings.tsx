@@ -24,6 +24,7 @@ const MidContainer = styled('div', {
 const Heading = styled('h1', {
   fontSize: '5rem',
   fontFamily: '$inter',
+  color: '$grey-800',
 });
 
 const Settings: React.FC = () => {

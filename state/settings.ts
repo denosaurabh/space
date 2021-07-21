@@ -12,10 +12,12 @@ const useSettings = create(
         gridSize: 10,
         gridColor: '#ccc',
       },
-      toggleGrid: () => {
+      toggleGrid: (checked: boolean) => {
         set(
           produce((draft) => {
-            draft.notes.enableGrid = !draft.notes.enableGrid;
+            draft.notes.enableGrid = checked;
+
+            draft.notes.gridSize = checked ? 10 : 1;
           })
         );
       },

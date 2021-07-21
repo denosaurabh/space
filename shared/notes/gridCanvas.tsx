@@ -13,6 +13,7 @@ interface GridCanvasI {
   width: number;
   height: number;
   gridSize: number;
+  enableCanvas: boolean;
   onSelectionComplete: ({
     position,
     size,
@@ -27,6 +28,7 @@ const GridCanvas: React.FC<GridCanvasI> = ({
   width,
   height,
   gridSize,
+  enableCanvas,
   onSelectionComplete,
 }) => {
   const [selection, setSelection] = useState({
@@ -58,6 +60,8 @@ const GridCanvas: React.FC<GridCanvasI> = ({
 
     const context = canvasRef.current.getContext('2d');
 
+    if (!enableCanvas) return;
+
     for (let x = 0; x <= width; x += gridSize) {
       for (let y = 0; y <= height; y += gridSize) {
         context.fillStyle = '#212529';
@@ -66,7 +70,7 @@ const GridCanvas: React.FC<GridCanvasI> = ({
         context.fill();
       }
     }
-  }, [canvasRef, width, height, gridSize]);
+  }, [canvasRef, width, height, gridSize, enableCanvas]);
 
   const handleDragMove = (e) => {
     if (!selectionRef.current) return;
@@ -135,7 +139,7 @@ const GridCanvas: React.FC<GridCanvasI> = ({
         ref={canvasRef}
         className={className}
         onMouseDown={onMouseDownHandler}
-        style={{ zIndex: 100 }}
+        style={{ zIndex: 100, opacity: enableCanvas ? 1 : 0 }}
       />
 
       <Selection

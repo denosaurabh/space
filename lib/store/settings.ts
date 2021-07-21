@@ -6,6 +6,6 @@ export interface NotesSettings {
 
 export interface SettingsStore {
   notes: NotesSettings;
-  toggleGrid: () => void;
+  toggleGrid: (checked: boolean) => void;
   changeGridSize: (size: number) => void;
 }

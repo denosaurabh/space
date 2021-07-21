@@ -6,15 +6,25 @@ const LabelStyled = styled(Root, {
   fontSize: '1.6rem',
   fontWeight: 600,
   color: '$grey-700',
+
+  display: 'flex',
+  alignItems: 'center',
+
+  variants: {
+    color: {
+      light: { color: '$grey-500' },
+    },
+  },
 });
 
 interface LabelProps {
   htmlFor: string;
+  color?: 'light';
 }
 
-const Label: React.FC<LabelProps> = ({ children, htmlFor }) => {
+const Label: React.FC<LabelProps> = ({ children, htmlFor, color }) => {
   return (
-    <LabelStyled className="label" htmlFor={htmlFor}>
+    <LabelStyled className="label" color={color} htmlFor={htmlFor}>
       {children}
     </LabelStyled>
   );

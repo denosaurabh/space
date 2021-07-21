@@ -20,6 +20,11 @@ const StyledContent = styled(Content, {
         background: `linear-gradient(to right, #FFB88C, #DE6262)`,
       },
     },
+    color: {
+      warning: {
+        backgroundColor: '#DE6262',
+      },
+    },
   },
 });
 

@@ -115,6 +115,9 @@ const globalStyles = global({
     fontFeatureSettings: 'kern',
     textRendering: 'optimizeLegibility',
   },
+  span: {
+    fontSize: '2rem',
+  },
   a: {
     textDecoration: 'none',
   },

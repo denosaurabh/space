@@ -51,16 +51,14 @@ const AllNotesContainer: React.FC<AllNotesContainerI> = ({
       ref={notesContainerRef}
       css={css}
     >
-      {enableCanvas ? (
-        <GridCanvas
-          className={canvasClassName}
-          width={size.width}
-          height={size.height}
-          onSelectionComplete={onSelectionComplete}
-          gridSize={gridSize}
-        />
-      ) : null}
-
+      <GridCanvas
+        className={canvasClassName}
+        width={size.width}
+        height={size.height}
+        onSelectionComplete={onSelectionComplete}
+        gridSize={gridSize}
+        enableCanvas={enableCanvas}
+      />
       {children}
     </AllNotesContainerStyled>
   );

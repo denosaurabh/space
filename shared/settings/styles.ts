@@ -31,6 +31,7 @@ export const SettingBox = styled('div', {
 export const SubHeading = styled('h3', {
   fontSize: '3rem',
   fontFamily: '$inter',
+  color: '$grey-800',
 
   marginBottom: '4rem',
 });
