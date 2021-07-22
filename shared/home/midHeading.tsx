@@ -135,7 +135,7 @@ const MidHeading: React.FC = () => {
           </TextArrow>
           <TextArrow
             text="Easy to Use"
-            annoPos="-20% 0% 0% 100%"
+            annoPos="-30% 0% 0% 100%"
             arrow={
               <img
                 src="/assets/annotations/space/easy-to-use.webp"
@@ -145,49 +145,13 @@ const MidHeading: React.FC = () => {
               />
             }
             textPos={{
-              top: '0%',
-              right: '-90%',
+              top: '15%',
+              left: '14rem',
               width: '12rem',
             }}
           >
             <Heading>e</Heading>
           </TextArrow>
-          {/* <TextArrow text="Personal & Productivity" arrow={<Image />}>
-            <Heading>p</Heading>
-          </TextArrow>
-          <TextArrow>
-            <Heading
-              text="No Ads, Analytics or auth required"
-              arrow={<Image />}
-            >
-              a
-            </Heading>
-          </TextArrow>
-          <TextArrow text="Completely Free" arrow={<Image />}>
-            <Heading>c</Heading>
-          </TextArrow>
-          <TextArrow text="Easy to Use" arrow={<Image />}>
-            <Heading>e</Heading>
-          </TextArrow> */}
-          {/* <Annotation css={{ annoPos: '-70% 100%' }}>
-            <SimpleSvg />
-          </Annotation>
-          <Annotation css={{ annoPos: '-140% 0%' }}>
-            <Heading>p</Heading>
-            <PersonalProductivitySvg />
-          </Annotation>
-          <Annotation css={{ annoPos: '-160% 0% 0% 20%' }}>
-            <Heading>a</Heading>
-            <NoAuthAdsAnalyticsSvg />
-          </Annotation>
-          <Annotation css={{ annoPos: '-80% 0% 0% 50%' }}>
-            <Heading>c</Heading>
-            <ComletelyFreeSvg />
-          </Annotation>
-          <Annotation css={{ annoPos: '-70% 0% 0% 100%' }}>
-            <Heading>e</Heading>
-            <EasyToUseSvg />
-          </Annotation> */}
         </HeadingContainer>
       </Annotation>
 

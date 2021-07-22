@@ -120,6 +120,9 @@ const GridCanvas: React.FC<GridCanvasI> = ({
     const { top, left } = e.target.getBoundingClientRect();
     parentRectPosition = { top, left };
 
+    // Cursor to Crosshair
+    document.body.style.cursor = 'crosshair';
+
     mouseDownPos = { x: e.clientY, y: e.clientX };
     setSelection({ ...selection, x: e.clientY, y: e.clientX });
 
@@ -129,6 +132,9 @@ const GridCanvas: React.FC<GridCanvasI> = ({
 
   const onDragEndHandler = () => {
     const { top, left } = parentRectPosition;
+
+    // Cursor to Crosshair
+    document.body.style.cursor = 'default';
 
     // Calling the Func
     onSelectionComplete({

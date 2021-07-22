@@ -21,7 +21,7 @@ const Span = styled('span', {
 
 const Circle: React.FC = ({ children }) => {
   return (
-    <Center>
+    <Center className="annotation">
       <Image
         src="/assets/annotations/Circle.webp"
         alt="Ellipse"

@@ -21,7 +21,7 @@ const Center = styled('div', {
 
 const Ellipse: React.FC = ({ children }) => {
   return (
-    <Center>
+    <Center className="annotation">
       <Image
         src="/assets/annotations/Ellipse.webp"
         alt="Ellipse"

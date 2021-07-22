@@ -1,14 +1,38 @@
 import { styled } from '@styled';
 
-const FeatureContainer = styled('div', {
+import Ellipse from '@components/annotations/ellipse';
+
+const MidBoxStyled = styled('div', {
   display: 'flex',
   flexDirection: 'column',
-  gap: '4rem',
+  alignItems: 'center',
 
-  maxWidth: '50rem',
+  width: '50rem',
+});
 
-  margin: '50rem 0',
+const LeftBoxStyled = styled('div', {
+  position: 'relative',
+});
+
+const RightBoxStyled = styled('div', {
+  position: 'relative',
+});
+
+const FeatureContainer = styled('div', {
+  display: 'flex',
+  gap: '8rem',
+
+  width: '100%',
+  margin: '5rem 0',
+
   textAlign: 'center',
+
+  [`& ${LeftBoxStyled}`]: {
+    width: 'fit-content',
+  },
+  [`& ${RightBoxStyled}`]: {
+    width: 'fit-content',
+  },
 });
 
 const Heading = styled('h1', {
@@ -16,27 +40,46 @@ const Heading = styled('h1', {
   fontSize: '10rem',
   fontWeight: 'bold',
   color: '$grey-800',
+
+  marginBottom: '4rem',
 });
 
 const Text = styled('p', {
   fontFamily: '$inter',
   fontSize: '1.8rem',
   lineHeight: '150%',
-  color: '$grey-700',
+  color: '$grey-600',
 });
 
-interface FeatureBoxI {
+interface MidBoxProps {
   heading: string;
   description: string;
 }
 
-const FeatureBox: React.FC<FeatureBoxI> = ({ heading, description }) => {
+interface SideBoxProps {
+  css?: Record<string, unknown>;
+}
+
+const LeftBox: React.FC<SideBoxProps> = ({ children, css }) => {
+  return <LeftBoxStyled css={css}>{children}</LeftBoxStyled>;
+};
+
+const RightBox: React.FC<SideBoxProps> = ({ children, css }) => {
+  return <RightBoxStyled css={css}>{children}</RightBoxStyled>;
+};
+
+const MidBox: React.FC<MidBoxProps> = ({ heading, description }) => {
   return (
-    <FeatureContainer>
+    <MidBoxStyled>
+      <Ellipse>Coming Soon</Ellipse>
       <Heading>{heading}</Heading>
       <Text>{description}</Text>
-    </FeatureContainer>
+    </MidBoxStyled>
   );
 };
 
-export default FeatureBox;
+const FeatureBox: React.FC = ({ children }) => {
+  return <FeatureContainer>{children}</FeatureContainer>;
+};
+
+export { FeatureBox, LeftBox, MidBox, RightBox };

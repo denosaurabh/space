@@ -12,8 +12,16 @@ const AnnoGroupStyled = styled('div', {
   position: 'absolute',
 });
 
-const AnnoGroup: React.FC = ({ children }) => {
-  return <AnnoGroupStyled className="anno">{children}</AnnoGroupStyled>;
+interface AnnoGroupProps {
+  css?: Record<string, unknown>;
+}
+
+const AnnoGroup: React.FC<AnnoGroupProps> = ({ children, css }) => {
+  return (
+    <AnnoGroupStyled className="anno" css={css}>
+      {children}
+    </AnnoGroupStyled>
+  );
 };
 
 export { Annotation, AnnoGroup };

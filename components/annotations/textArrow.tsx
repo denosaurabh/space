@@ -42,7 +42,7 @@ const TextArrow: React.FC<TextArrowI> = ({
   return (
     <Annotation css={{ annoPos }}>
       <AnnoGroup>
-        <Container>
+        <Container className="annotation">
           <div>{arrow}</div>
 
           <span

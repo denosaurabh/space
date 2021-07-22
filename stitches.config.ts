@@ -129,6 +129,9 @@ const globalStyles = global({
     border: 'none',
     outline: 'none',
   },
+  '.annotation': {
+    userSelect: 'none',
+  },
 
   '@font-face': {
     fontFamily: 'IndieFlower',
@@ -145,7 +148,6 @@ const globalStyles = global({
   '::-webkit-scrollbar-track': {
     borderRadius: '10px',
   },
-
   '::-webkit-scrollbar-thumb': {
     background: '$grey',
     borderRadius: '10px',

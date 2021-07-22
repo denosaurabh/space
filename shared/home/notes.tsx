@@ -15,7 +15,7 @@ const Container = styled('div', {
   width: '100%',
   height: '100rem',
 
-  marginTop: '70rem',
+  margin: '70rem 0 40rem 0',
 
   display: 'flex',
   justifyContent: 'space-evenly',
