@@ -6,6 +6,7 @@ import AllFeatures from '@shared/home/allFeatures';
 import HomeNotes from '@shared/home/notes';
 import CallToAction from '@shared/home/cta';
 import Footer from '@shared/home/footer';
+import LandingPageSEO from '@shared/home/seo';
 
 import DreamyGradient from '@components/dreamyGradient';
 
@@ -26,12 +27,14 @@ const Container = styled('div', {
 
   '@tablet': {
     padding: '3rem',
-  }
+  },
 });
 
 const Home: React.FC = () => {
   return (
     <Container>
+      <LandingPageSEO />
+
       <DreamyGradient color="yellow" top="45%" left="0" />
       <DreamyGradient color="orange" top="0" right="0%" />
       <DreamyGradient color="yellow" top="200%" left="0" />
