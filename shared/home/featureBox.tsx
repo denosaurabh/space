@@ -1,6 +1,6 @@
 import { styled } from '@styled';
 
-import Ellipse from '@components/annotations/ellipse';
+import { Annotation } from '@components/annotation';
 
 const MidBoxStyled = styled('div', {
   display: 'flex',
@@ -8,6 +8,10 @@ const MidBoxStyled = styled('div', {
   alignItems: 'center',
 
   width: '50rem',
+
+  '@mobile': {
+    width: '40rem',
+  },
 });
 
 const LeftBoxStyled = styled('div', {
@@ -22,16 +26,27 @@ const FeatureContainer = styled('div', {
   display: 'flex',
   gap: '8rem',
 
-  width: '100%',
   margin: '5rem 0',
 
   textAlign: 'center',
 
+  '@desktop': {
+    gap: '4rem',
+  },
+
   [`& ${LeftBoxStyled}`]: {
     width: 'fit-content',
+
+    '@laptop': {
+      display: 'none',
+    },
   },
   [`& ${RightBoxStyled}`]: {
     width: 'fit-content',
+
+    '@laptop': {
+      display: 'none',
+    },
   },
 });
 
@@ -42,6 +57,10 @@ const Heading = styled('h1', {
   color: '$grey-800',
 
   marginBottom: '4rem',
+
+  '@mobile': {
+    fontSize: '7rem',
+  },
 });
 
 const Text = styled('p', {
@@ -68,12 +87,23 @@ const RightBox: React.FC<SideBoxProps> = ({ children, css }) => {
   return <RightBoxStyled css={css}>{children}</RightBoxStyled>;
 };
 
-const MidBox: React.FC<MidBoxProps> = ({ heading, description }) => {
+const MidBox: React.FC<MidBoxProps> = ({ heading, description, children }) => {
   return (
     <MidBoxStyled>
-      <Ellipse>Coming Soon</Ellipse>
       <Heading>{heading}</Heading>
       <Text>{description}</Text>
+      <Annotation
+        css={{
+          margin: '4rem 0',
+          display: 'none',
+
+          '@laptop': {
+            display: 'block',
+          },
+        }}
+      >
+        {children}
+      </Annotation>
     </MidBoxStyled>
   );
 };

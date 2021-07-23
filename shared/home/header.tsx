@@ -33,6 +33,10 @@ const ULContainer = styled('nav', {
   alignItems: 'center',
   justifyContent: 'center',
   gap: '6rem',
+
+  '@desktop': {
+    gap: '4rem',
+  },
 });
 
 const LI = styled('span', {
@@ -42,11 +46,14 @@ const LI = styled('span', {
   fontSize: '1.4rem',
   color: '$grey-600',
 
-  transition: '$fast',
+  '& a': {
+    color: '$grey-600',
+    transition: '$fast',
 
-  '&:hover': {
-    cursor: 'pointer',
-    color: '$grey-800',
+    '&:hover': {
+      cursor: 'pointer',
+      color: '$grey-800',
+    },
   },
 });
 
@@ -73,7 +80,11 @@ const Header: React.FC = () => {
   return (
     <HeaderContainer>
       <LogoContainer>
-        <Annotation css={{ annoPos: '150% unset unset -40%' }}>
+        <Annotation
+          css={{
+            annoPos: '150% unset unset -40%',
+          }}
+        >
           <Image
             className="logo"
             alt="Space"
@@ -93,22 +104,36 @@ const Header: React.FC = () => {
             <Ellipse>Might Will Change</Ellipse>
           </AnnoGroup>
         </Annotation>
-        <Text>
+        <Text
+          css={{
+            '@laptop': {
+              display: 'none',
+            },
+          }}
+        >
           Open Source Project
           <br /> by
           <Link href="https://github.com/denosaurabh">
-            <a target="_blank" rel="noreferer">
+            <a target="_blank" rel="noreferrer">
               @denosaurabh
             </a>
           </Link>
         </Text>
       </LogoContainer>
       <ULContainer>
-        <Link href="https://github.com/denosaurabh/space">
-          <a target="_blank" rel="noreferer">
-            <LI>Github Code</LI>
-          </a>
-        </Link>
+        <LI
+          css={{
+            '@tablet': {
+              display: 'none',
+            },
+          }}
+        >
+          <Link href="https://github.com/denosaurabh/space" passHref>
+            <a target="_blank" rel="noreferrer">
+              Github Code
+            </a>
+          </Link>
+        </LI>
         <Annotation css={{ annoPos: '120% -30% 0% 0%' }}>
           <Link href="/notes" passHref>
             <a>
@@ -128,17 +153,31 @@ const Header: React.FC = () => {
           </AnnoGroup>
         </Annotation>
 
-        <LI>
+        <LI
+          css={{
+            '@tablet': {
+              display: 'none',
+            },
+          }}
+        >
           Support the Project<Badge size="medium">soon</Badge>
         </LI>
       </ULContainer>
 
       <RightBox>
-        <Button color="light" size="small">
-          Beta v0.9
+        <Button
+          color="light"
+          size="small"
+          css={{
+            '@laptop': {
+              display: 'none',
+            },
+          }}
+        >
+          Beta v0.1
         </Button>
         <Link href="https://github.com/DenoSaurabh/space/releases" passHref>
-          <a target="_blank" rel="noreferer">
+          <a target="_blank" rel="noreferrer">
             <LI>Development</LI>
           </a>
         </Link>

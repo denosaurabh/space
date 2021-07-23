@@ -42,25 +42,29 @@ const AllNotesContainer: React.FC<AllNotesContainerI> = ({
     if (!notesContainerRef.current) return;
 
     const updateSize = () => {
-      const { width, height } =
-        notesContainerRef.current.getBoundingClientRect();
+      const container = notesContainerRef.current.getBoundingClientRect();
+
+      const { width, height } = container;
+
       setSize({ width, height });
     };
 
     updateSize();
 
+    window.addEventListener('load', updateSize);
     window.addEventListener('resize', updateSize);
 
     return () => {
+      window.removeEventListener('load', updateSize);
       window.removeEventListener('resize', updateSize);
     };
-  }, []);
+  }, [notesContainerRef]);
 
   return (
     <AllNotesContainerStyled
       className={containerClassName}
-      ref={notesContainerRef}
       css={css}
+      ref={notesContainerRef}
     >
       <GridCanvas
         className={canvasClassName}

@@ -31,6 +31,13 @@ const Icon = styled('div', {
       },
     },
   },
+
+  '& img': {
+    '@mobile': {
+      width: '20px',
+      height: '20px',
+    },
+  },
 });
 
 const IconBox: React.FC<IconBoxI> = ({ name, icon, href, soon }) => {

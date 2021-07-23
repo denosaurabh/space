@@ -6,14 +6,28 @@ import Link from 'next/link';
 
 const FooterContainer = styled('footer', {
   width: '100%',
-  height: '10rem',
+  // height: '10rem',
 
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
+  gap: '2rem',
+
+  flexWrap: 'wrap',
 
   padding: '8rem 6rem',
+  paddingBottom: '2rem',
   marginTop: '35rem',
+
+  '@laptop': {
+    padding: '6rem 4rem',
+  },
+
+  '@tablet': {
+    gap: '3rem',
+    padding: '2rem',
+    justifyContent: 'flex-start',
+  },
 });
 
 const LogoContainer = styled('div', {
@@ -32,6 +46,22 @@ const ListContainer = styled('div', {
 
   display: 'flex',
   gap: '10rem',
+
+  '@laptop': {
+    gap: '5rem',
+    width: 'auto',
+    margin: 'auto',
+  },
+
+  '@tablet': {
+    margin: '4rem 0',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+  },
+
+  '@mobile-small': {
+    flexDirection: 'column',
+  },
 });
 
 const ULContainer = styled('nav', {
@@ -40,6 +70,10 @@ const ULContainer = styled('nav', {
   alignItems: 'flex-start',
   justifyContent: 'center',
   gap: '2rem',
+
+  '@tablet': {
+    gap: '2rem',
+  },
 });
 
 const LI = styled('span', {
@@ -60,6 +94,10 @@ const LIHead = styled('span', {
   fontWeight: 'bold',
 
   marginBottom: '3rem',
+
+  '@tablet': {
+    marginBottom: '2rem',
+  },
 });
 
 const Text = styled('span', {
@@ -112,7 +150,7 @@ const Footer: React.FC = () => {
           Open Source Project
           <br /> by
           <Link href="https://github.com/denosaurabh" passHref>
-            <a target="_blank" rel="noreferer">
+            <a target="_blank" rel="noreferrer">
               @denosaurabh
             </a>
           </Link>
@@ -127,7 +165,7 @@ const Footer: React.FC = () => {
             href="https://github.com/DenoSaurabh/space/discussions/categories/feedback"
             passHref
           >
-            <a target="_blank" rel="noreferer">
+            <a target="_blank" rel="noreferrer">
               <LI>Give us Feedback</LI>
             </a>
           </Link>
@@ -135,13 +173,13 @@ const Footer: React.FC = () => {
         <ULContainer>
           <LIHead>Development</LIHead>
           <Link href="https://github.com/DenoSaurabh/space/releases" passHref>
-            <a target="_blank" rel="noreferer">
+            <a target="_blank" rel="noreferrer">
               <LI>Updates</LI>
             </a>
           </Link>
           <LI>Technologies</LI>
           <Link href="https://github.com/DenoSaurabh/space/issues/new" passHref>
-            <a target="_blank" rel="noreferer">
+            <a target="_blank" rel="noreferrer">
               <LI>Report a issue</LI>
             </a>
           </Link>
@@ -149,12 +187,12 @@ const Footer: React.FC = () => {
         <ULContainer>
           <LIHead>Community</LIHead>
           <Link href="https://discord.gg/YhPsFzXj" passHref>
-            <a target="_blank" rel="noreferer">
+            <a target="_blank" rel="noreferrer">
               <LI>Discord</LI>
             </a>
           </Link>
           <Link href="https://github.com/denosaurabh/space" passHref>
-            <a target="_blank" rel="noreferer">
+            <a target="_blank" rel="noreferrer">
               <LI>Github</LI>
             </a>
           </Link>
@@ -162,7 +200,7 @@ const Footer: React.FC = () => {
             href="https://github.com/DenoSaurabh/space/discussions"
             passHref
           >
-            <a target="_blank" rel="noreferer">
+            <a target="_blank" rel="noreferrer">
               <LI>Discussions</LI>
             </a>
           </Link>

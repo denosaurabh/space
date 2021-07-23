@@ -14,6 +14,11 @@ const Center = styled('div', {
 
   position: 'relative',
 
+  '@mobile': {
+    width: '150px',
+    height: '70px',
+  },
+
   '& span': {
     position: 'absolute',
   },

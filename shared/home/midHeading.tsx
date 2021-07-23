@@ -7,10 +7,7 @@ import { AnnoGroup, Annotation } from '@components/annotation';
 import TextArrow from '@components/annotations/textArrow';
 
 const MidBoxContainer = styled('div', {
-  position: 'absolute',
-  top: '60%',
-  transform: 'translateY(-50%)',
-
+  marginTop: '40rem',
   padding: '8rem',
 
   display: 'flex',

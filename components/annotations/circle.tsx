@@ -9,6 +9,13 @@ const Center = styled('div', {
   height: 'fit-content',
 
   position: 'relative',
+
+  '@tablet': {
+    '& img': {
+      width: 50,
+      height: 50,
+    },
+  },
 });
 
 const Span = styled('span', {
@@ -19,9 +26,13 @@ const Span = styled('span', {
   color: '$grey-500',
 });
 
-const Circle: React.FC = ({ children }) => {
+interface CircleProps {
+  css?: Record<string, unknown>;
+}
+
+const Circle: React.FC<CircleProps> = ({ children, css }) => {
   return (
-    <Center className="annotation">
+    <Center className="annotation" css={css}>
       <Image
         src="/assets/annotations/Circle.webp"
         alt="Ellipse"

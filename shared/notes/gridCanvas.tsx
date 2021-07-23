@@ -171,7 +171,10 @@ const GridCanvas: React.FC<GridCanvasI> = ({
         ref={canvasRef}
         className={className}
         onMouseDown={onMouseDownHandler}
-        style={{ zIndex: 100, opacity: enableCanvas ? 1 : 0 }}
+        style={{
+          zIndex: 100,
+          opacity: enableCanvas ? 1 : 0,
+        }}
       />
 
       <Selection

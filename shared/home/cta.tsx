@@ -22,11 +22,13 @@ const CTAContaner = styled('div', {
   textAlign: 'center',
 });
 
-// const Heading = styled('h4', {
-//   fontSize: '5rem',
-//   fontWeight: 'bold',
-//   color: '$grey-800',
-// });
+/*
+const Heading = styled('h4', {
+  fontSize: '5rem',
+  fontWeight: 'bold',
+  color: '$grey-800',
+});
+*/
 
 const CallToAction: React.FC = () => {
   return (
@@ -41,7 +43,15 @@ const CallToAction: React.FC = () => {
           />
         </AnnoGroup>
 
-        <AnnoGroup css={{ left: '-150%', top: '40%' }}>
+        <AnnoGroup
+          css={{
+            left: '-150%',
+            top: '40%',
+            '@mobile': {
+              left: '-170%',
+            },
+          }}
+        >
           <Image
             src="/assets/annotations/ThinStraightArrow.webp"
             alt="Thin Right Arrow pointing towards button"
@@ -59,7 +69,14 @@ const CallToAction: React.FC = () => {
         </Link>
 
         <AnnoGroup
-          css={{ right: '-150%', top: '40%', transform: 'rotate(180deg)' }}
+          css={{
+            right: '-150%',
+            top: '40%',
+            transform: 'rotate(180deg)',
+            '@mobile': {
+              right: '-170%',
+            },
+          }}
         >
           <Image
             src="/assets/annotations/ThinStraightArrow.webp"

@@ -59,7 +59,13 @@ const AllFeatures: React.FC = () => {
         <MidBox
           heading="Pomodoro"
           description="Egestas scelerisque nullam felis, ornare feugiat penatibus massa massa dignissim. At tincidunt sed vulputate ornare. Sed morbi elementum consectetur blandit proin consectetur sed donec volutpat."
-        />
+        >
+          <CircularArow
+            css={{ position: 'relative', top: '30%', right: '20%' }}
+          >
+            {currentCount.toFixed(2)}
+          </CircularArow>
+        </MidBox>
         <RightBox>
           <Repeat top="work" bottom="rest" css={{ top: '-20%', left: '50%' }} />
 
@@ -80,7 +86,11 @@ const AllFeatures: React.FC = () => {
       />
       <FeatureBox>
         <LeftBox
-          css={{ display: 'flex', flexDirection: 'column', gap: '8rem' }}
+          css={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8rem',
+          }}
         >
           <Image
             src="/assets/annotations/Dots.webp"
@@ -98,9 +108,20 @@ const AllFeatures: React.FC = () => {
         <MidBox
           heading="Calender"
           description="Egestas scelerisque nullam felis, ornare feugiat penatibus massa massa dignissim. At tincidunt sed vulputate ornare. Sed morbi elementum consectetur blandit proin consectetur sed donec volutpat."
-        />
+        >
+          <Image
+            src="/assets/annotations/Dots.webp"
+            alt="Big Down Arrow"
+            width={150}
+            height={130}
+          />
+        </MidBox>
         <RightBox
-          css={{ display: 'flex', flexDirection: 'column', gap: '8rem' }}
+          css={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8rem',
+          }}
         >
           <Image
             src="/assets/annotations/Dots.webp"
@@ -155,7 +176,29 @@ const AllFeatures: React.FC = () => {
         <MidBox
           heading="Todo"
           description="Egestas scelerisque nullam felis, ornare feugiat penatibus massa massa dignissim. At tincidunt sed vulputate ornare. Sed morbi elementum consectetur blandit proin consectetur sed donec volutpat."
-        />
+        >
+          <CheckMarkContainer>
+            <Image
+              className="check"
+              src="/assets/annotations/Check.webp"
+              alt="Check"
+              width={80}
+              height={80}
+            />
+            <Image
+              src="/assets/annotations/Traced.webp"
+              alt="Check"
+              width={250}
+              height={40}
+            />
+            <Image
+              src="/assets/annotations/Traced.webp"
+              alt="Check"
+              width={250}
+              height={40}
+            />
+          </CheckMarkContainer>
+        </MidBox>
         <RightBox
           css={{
             display: 'flex',

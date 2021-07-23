@@ -12,16 +12,24 @@ import useLandingPageNotes from '@state/landingPageNotes';
 import { LandingPageState } from '@lib/store/landingPage';
 
 const Container = styled('div', {
-  width: '100%',
-  height: '100rem',
+  height: 'fit-content',
 
-  margin: '70rem 0 40rem 0',
+  marginBottom: '40rem',
 
   display: 'flex',
-  justifyContent: 'space-evenly',
+  justifyContent: 'center',
   alignItems: 'center',
   flexWrap: 'wrap',
-  gap: '1rem',
+  gap: '8rem',
+
+  '@desktop': {
+    gap: '4rem',
+  },
+
+  '@tablet': {
+    flexDirection: 'column',
+    flexWrap: 'nowrap',
+  },
 });
 
 const StepsContainer = styled('div', {
@@ -29,6 +37,13 @@ const StepsContainer = styled('div', {
   flexDirection: 'column',
   alignItems: 'center',
   gap: '10rem',
+
+  '@tablet': {
+    width: '70%',
+    gap: '5rem',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
 });
 
 const CircleBox = styled('div', {
@@ -96,7 +111,9 @@ const HomeNotes: React.FC = () => {
 
   return (
     <Container>
-      <StepsContainer css={{ width: 'max-content' }}>
+      <StepsContainer
+        css={{ width: 'max-content', '@tablet': { width: 'auto' } }}
+      >
         <CircleBox>
           <Circle>1</Circle>
           <CircleText>Drag the mouse and make a note</CircleText>
@@ -106,15 +123,21 @@ const HomeNotes: React.FC = () => {
           <CircleText>Write something down on note</CircleText>
         </CircleBox>
         <CircleBox>
-          <Circle>3</Circle>
+          <Circle css={{}}>3</Circle>
           <CircleText>yeee.... make more notes</CircleText>
         </CircleBox>
       </StepsContainer>
       <AllNotesContainer
         css={{
           // flexGrow: '1',
-          maxWidth: '50%',
-          height: '100%',
+          width: '50%',
+          height: '100rem',
+
+          '@tablet': {
+            margin: '5rem 0',
+            width: '90%',
+            height: '100rem',
+          },
         }}
         canvasClassName="home-notes"
         containerClassName="home-notes-container"
@@ -135,11 +158,30 @@ const HomeNotes: React.FC = () => {
           />
         ))}
       </AllNotesContainer>
-      <StepsContainer css={{ width: '20%', padding: '1rem' }}>
+      <StepsContainer
+        css={{
+          width: '20%',
+          padding: '1rem',
+
+          '@laptop': {
+            flex: 1,
+            width: '100%',
+          },
+
+          '@tablet': {
+            width: 'unset',
+            flex: 0.9,
+            padding: '2rem',
+          },
+        }}
+      >
         <Description>
-          A lil online real-time environment to experience, so you might also
+          {/* A lil online real-time environment to experience, so you might also
           see other users who are discovering this website right now, have a
-          small conversation and get to know about this tool :D
+          small conversation and get to know about this tool :D */}
+          That&apos;s just one of the features of this tool. It is currently
+          what there is in the app. But, There&apos;s more for you coming down
+          the line, scroll down and you will find em out!
         </Description>
       </StepsContainer>
     </Container>

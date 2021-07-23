@@ -41,7 +41,13 @@ const TextArrow: React.FC<TextArrowI> = ({
 
   return (
     <Annotation css={{ annoPos }}>
-      <AnnoGroup>
+      <AnnoGroup
+        css={{
+          '@tablet': {
+            display: 'none',
+          },
+        }}
+      >
         <Container className="annotation">
           <div>{arrow}</div>
 

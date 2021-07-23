@@ -19,6 +19,14 @@ const Container = styled('div', {
   height: '100%',
   backgroundColor: '$grey-100',
   padding: '4rem 5rem',
+
+  '@laptop': {
+    padding: '2rem',
+  },
+
+  '@tablet': {
+    padding: '3rem',
+  }
 });
 
 const Home: React.FC = () => {

@@ -46,13 +46,13 @@ const Soon: React.FC = () => {
         <Text>
           Illustration by
           <Link href="https://icons8.com/illustrations/author/5dca95ef01d036001426e2bc">
-            <a target="_blank" rel="noreferer">
+            <a target="_blank" rel="noreferrer">
               Ivan Haidutski
             </a>
           </Link>
           from
           <Link href="https://icons8.com/illustrations">
-            <a target="_blank" rel="noreferer">
+            <a target="_blank" rel="noreferrer">
               Ouch!
             </a>
           </Link>

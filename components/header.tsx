@@ -94,9 +94,22 @@ const Header: React.FC = () => (
       />
     </HeaderNav>
 
-    <Link href="https://github.com/DenoSaurabh/space">
-      <a target="_blank" rel="noreferer">
-        <Badge>
+    <Badge
+      css={{
+        '& a': {
+          display: 'flex',
+          alignItems: 'center',
+          gap: '1rem',
+          color: 'inherit',
+        },
+
+        '@tablet': {
+          display: 'none',
+        },
+      }}
+    >
+      <Link href="https://github.com/DenoSaurabh/space">
+        <a target="_blank" rel="noreferrer">
           Early Development (Alpha)
           <Image
             className="badge-icon"
@@ -105,9 +118,10 @@ const Header: React.FC = () => (
             width={18}
             height={18}
           />
-        </Badge>
-      </a>
-    </Link>
+        </a>
+      </Link>
+    </Badge>
+
     <Link href="/settings" passHref>
       <a>
         <Settings src="/icons/Gear.svg" alt="Settings" width={25} height={25} />

@@ -74,8 +74,12 @@ const { css, styled, global, getCssString, theme } = createCss({
     },
   },
   media: {
-    bp1: '@media (min-width: 520px)',
-    bp2: '@media (min-width: 900px)',
+    ['mobile-small']: '(max-width: 300px)',
+    mobile: '(max-width: 480px)',
+    tablet: '(max-width: 768px)',
+    laptop: '(max-width: 1024px)',
+    desktop: '(max-width: 1200px)',
+    tv: '(min-width: 1201px)',
   },
 });
 
@@ -114,6 +118,21 @@ const globalStyles = global({
     fontWeight: 400,
     fontFeatureSettings: 'kern',
     textRendering: 'optimizeLegibility',
+
+    overflowX: 'hidden',
+
+    '@laptop': {
+      fontSize: '58%',
+    },
+    '@tablet': {
+      fontSize: '54%',
+    },
+    '@mobile': {
+      fontSize: '48%',
+    },
+    '@mobile-small': {
+      fontSize: '42%',
+    },
   },
   span: {
     fontSize: '2rem',

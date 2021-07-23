@@ -61,11 +61,12 @@ const StyledBadge = styled('div', {
 interface BadgeProps {
   size?: 'medium' | 'large';
   color?: 'green' | 'warning';
+  css?: Record<string, unknown>;
 }
 
-const Badge: React.FC<BadgeProps> = ({ children, size, color }) => {
+const Badge: React.FC<BadgeProps> = ({ children, size, color, css }) => {
   return (
-    <StyledBadge size={size} color={color}>
+    <StyledBadge size={size} color={color} css={css}>
       {children}
     </StyledBadge>
   );

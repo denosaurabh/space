@@ -18,7 +18,17 @@ const SettingsContainer = styled('div', {
 });
 
 const MidContainer = styled('div', {
-  width: '30%',
+  width: '35%',
+  minWidth: '50rem',
+  maxWidth: '60rem',
+
+  marginTop: '2rem',
+
+  '@tablet': {
+    width: '90%',
+    minWidth: 'unset',
+    maxWidth: '90%',
+  },
 });
 
 const Heading = styled('h1', {
