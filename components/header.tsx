@@ -10,11 +10,7 @@ import PencilSvg from '@assets/svg/Pencil.svg';
 import SettingSvg from '@assets/svg/Setting.svg';
 import TimerSvg from '@assets/svg/Timer.svg';
 import Calendarvg from '@assets/svg/Calendar.svg';
-
-import SunSvg from '@assets/svg/Sun.svg';
-import MoonSvg from '@assets/svg/Moon.svg';
-
-import useSettings from '@state/settings';
+import ThemeButton from './themeButton';
 
 const HeaderStyled = styled('header', {
   width: '100%',
@@ -50,24 +46,7 @@ const SettingsStyledSvg = styled(SettingSvg, {
   },
 });
 
-const ThemeSvgContainer = styled('div', {
-  transition: '$medium',
-
-  '& svg': {
-    fill: '$grey-700',
-  },
-
-  '&:hover': {
-    cursor: 'pointer',
-  },
-});
-
 const Header: React.FC = () => {
-  const { isDarkTheme, toggleTheme } = useSettings((state) => ({
-    isDarkTheme: state.darkTheme,
-    toggleTheme: state.toggleTheme,
-  }));
-
   return (
     <HeaderStyled>
       <Link href="/" passHref>
@@ -89,13 +68,7 @@ const Header: React.FC = () => {
         <IconBox name="Pomodoro" icon={<TimerSvg />} href="/pomodoro" soon />
       </HeaderNav>
 
-      <ThemeSvgContainer>
-        {isDarkTheme ? (
-          <SunSvg onClick={toggleTheme} />
-        ) : (
-          <MoonSvg onClick={toggleTheme} />
-        )}
-      </ThemeSvgContainer>
+      <ThemeButton />
 
       <Badge
         css={{

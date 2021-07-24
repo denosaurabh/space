@@ -7,11 +7,7 @@ import Button from '@components/button';
 import { Annotation, AnnoGroup } from '@components/annotation';
 import Ellipse from '@components/annotations/ellipse';
 import Badge from '@components/badge';
-
-import useSettings from '@state/settings';
-
-import SunSvg from '@assets/svg/Sun.svg';
-import MoonSvg from '@assets/svg/Moon.svg';
+import ThemeButton from '@components/themeButton';
 
 const HeaderContainer = styled('header', {
   width: '100%',
@@ -82,11 +78,6 @@ const Text = styled('span', {
 });
 
 const Header: React.FC = () => {
-  const { isDarkTheme, toggleTheme } = useSettings((state) => ({
-    isDarkTheme: state.darkTheme,
-    toggleTheme: state.toggleTheme,
-  }));
-
   return (
     <HeaderContainer>
       <LogoContainer>
@@ -182,17 +173,8 @@ const Header: React.FC = () => {
       </ULContainer>
 
       <RightBox>
-        {isDarkTheme ? (
-          <SunSvg
-            style={{ cursor: 'pointer', width: '20px', height: '20px' }}
-            onClick={toggleTheme}
-          />
-        ) : (
-          <MoonSvg
-            style={{ cursor: 'pointer', width: '20px', height: '20px' }}
-            onClick={toggleTheme}
-          />
-        )}
+        <ThemeButton />
+
         <Button
           color="light"
           size="small"
