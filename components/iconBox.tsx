@@ -13,7 +13,7 @@ import { IconBoxI } from '@lib/components/iconBox';
 const Icon = styled('div', {
   width: '5.2rem',
   height: '5.2rem',
-  backgroundColor: '$icon',
+  backgroundColor: '$grey-200',
   borderRadius: '$small',
   display: 'grid',
   placeItems: 'center',
@@ -21,7 +21,7 @@ const Icon = styled('div', {
   transition: 'background-color $medium',
   '&:hover': {
     cursor: 'pointer',
-    backgroundColor: '$iconHover',
+    backgroundColor: '$grey-300',
   },
   variants: {
     soon: {
@@ -32,11 +32,11 @@ const Icon = styled('div', {
     },
   },
 
-  '& img': {
-    '@mobile': {
-      width: '20px',
-      height: '20px',
-    },
+  '& svg': {
+    width: 20,
+    height: 20,
+
+    fill: '$grey-900',
   },
 });
 

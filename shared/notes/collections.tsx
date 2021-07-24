@@ -16,7 +16,6 @@ import {
 } from '@components/contextMenu';
 
 import CollectionBox from '@shared/notes/collectionBox';
-// import CreateCollection from '@shared/notes/createCollection';
 
 const CreateCollection = dynamic(
   () => import('@shared/notes/createCollection'),

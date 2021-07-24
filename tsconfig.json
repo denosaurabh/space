@@ -9,7 +9,8 @@
       "@container": ["layouts/page.tsx"],
       "@styled": ["./stitches.config.ts"],
       "@lib/*": ["lib/*"],
-      "@annotations/*": ["annotations/*"]
+      "@annotations/*": ["annotations/*"],
+      "@assets/*": ["assets/*"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],

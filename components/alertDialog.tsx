@@ -10,6 +10,10 @@ import {
 } from '@radix-ui/react-alert-dialog';
 import { styled } from '@styled';
 
+const StyledTrigger = styled(Trigger, {
+  backgroundColor: 'transparent',
+});
+
 const StyledOverlay = styled(Overlay, {
   backgroundColor: 'rgba(0, 0, 0, .15)',
   position: 'fixed',
@@ -26,7 +30,7 @@ const StyledContent = styled(Content, {
   transform: 'translate(-50%, -50%)',
 
   width: '50rem',
-  backgroundColor: 'white',
+  backgroundColor: '$grey-100',
   borderRadius: '1.6rem',
   padding: '4rem 3.5rem',
 });
@@ -86,7 +90,7 @@ const StyledAction = styled(Action, {
 
 export {
   Root,
-  Trigger,
+  StyledTrigger as Trigger,
   StyledOverlay,
   StyledContent,
   StyledTitle,

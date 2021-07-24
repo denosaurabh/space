@@ -1,4 +1,7 @@
-import { styled } from '@styled';
+import {
+  darkTheme,
+  styled,
+} from '@styled';
 
 import Header from '@shared/home/header';
 import MidHeading from '@shared/home/midHeading';
@@ -9,6 +12,7 @@ import Footer from '@shared/home/footer';
 import LandingPageSEO from '@shared/home/seo';
 
 import DreamyGradient from '@components/dreamyGradient';
+import useSettings from '@state/settings';
 
 // import { Annotation } from '@components/annotation';
 
@@ -31,8 +35,10 @@ const Container = styled('div', {
 });
 
 const Home: React.FC = () => {
+  const isDarkTheme = useSettings((state) => state.darkTheme);
+
   return (
-    <Container>
+    <Container className={isDarkTheme ? darkTheme : ''}>
       <LandingPageSEO />
 
       <DreamyGradient color="yellow" top="45%" left="0" />

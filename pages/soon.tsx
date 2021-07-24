@@ -28,6 +28,10 @@ const Text = styled('span', {
   color: '$grey-600',
 
   '& a': {
+    fontWeight: 'bold',
+    color: '$grey-700',
+    textDecoration: 'underline',
+
     margin: '0 0.5rem',
   },
 });

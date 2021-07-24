@@ -10,6 +10,7 @@ const CollectionBox = styled('div', {
 
   fontFamily: '$system',
   fontSize: '2rem',
+  color: '$grey-800',
 
   transition: '$medium',
 

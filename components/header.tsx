@@ -1,8 +1,20 @@
 import Image from 'next/image';
+import Link from 'next/link';
+
 import { styled } from '@styled';
 import IconBox from '@components/iconBox';
-import Badge from './badge';
-import Link from 'next/link';
+import Badge from '@components/badge';
+
+import ReaderSvg from '@assets/svg/Reader.svg';
+import PencilSvg from '@assets/svg/Pencil.svg';
+import SettingSvg from '@assets/svg/Setting.svg';
+import TimerSvg from '@assets/svg/Timer.svg';
+import Calendarvg from '@assets/svg/Calendar.svg';
+
+import SunSvg from '@assets/svg/Sun.svg';
+import MoonSvg from '@assets/svg/Moon.svg';
+
+import useSettings from '@state/settings';
 
 const HeaderStyled = styled('header', {
   width: '100%',
@@ -10,7 +22,9 @@ const HeaderStyled = styled('header', {
   alignItems: 'center',
   gap: '2rem',
   padding: '1.4rem 1.5rem',
-  borderBottom: '1px solid $headerBorderBottom',
+  borderBottom: '1px solid $grey-400',
+
+  backgroundColor: '$grey-100',
 });
 
 const HeaderNav = styled('div', {
@@ -23,111 +37,101 @@ const HeaderLogo = styled(Image, {
   marginRight: '2rem',
 });
 
-const Settings = styled(Image, {
+const SettingsStyledSvg = styled(SettingSvg, {
+  width: 25,
+  height: 25,
+  fill: '$grey-700',
+
   transition: '$medium',
+
   '&:hover': {
     cursor: 'pointer',
     transform: 'rotate(40deg)',
   },
 });
 
-const Header: React.FC = () => (
-  <HeaderStyled>
-    <Link href="/" passHref>
-      <a>
-        <HeaderLogo
-          className="header-logo"
-          src="/space.png"
-          alt="Space - Productivity & Management Tool"
-          width={26}
-          height={26}
-        />
-      </a>
-    </Link>
+const ThemeSvgContainer = styled('div', {
+  transition: '$medium',
 
-    <HeaderNav>
-      <IconBox
-        name="Notes"
-        icon={
-          <Image
-            src="/icons/Reader.svg"
-            alt="All Notes"
-            width={25}
-            height={25}
-          />
-        }
-        href="/notes"
-      />
-      <IconBox
-        name="Todo"
-        icon={
-          <Image src="/icons/Todo.svg" alt="All Notes" width={24} height={24} />
-        }
-        href="/todo"
-        soon
-      />
-      <IconBox
-        name="Calender"
-        icon={
-          <Image
-            src="/icons/Calender.svg"
-            alt="All Notes"
-            width={22}
-            height={22}
-          />
-        }
-        href="/calendar"
-        soon
-      />
-      <IconBox
-        name="Pomodoro"
-        icon={
-          <Image
-            src="/icons/Timer.svg"
-            alt="All Notes"
-            width={22}
-            height={22}
-          />
-        }
-        href="/pomodoro"
-        soon
-      />
-    </HeaderNav>
+  '& svg': {
+    fill: '$grey-700',
+  },
 
-    <Badge
-      css={{
-        '& a': {
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1rem',
-          color: 'inherit',
-        },
+  '&:hover': {
+    cursor: 'pointer',
+  },
+});
 
-        '@tablet': {
-          display: 'none',
-        },
-      }}
-    >
-      <Link href="https://github.com/DenoSaurabh/space">
-        <a target="_blank" rel="noreferrer">
-          Early Development (Alpha)
-          <Image
-            className="badge-icon"
-            src="/icons/External-Link.svg"
-            alt="External Link"
-            width={18}
-            height={18}
+const Header: React.FC = () => {
+  const { isDarkTheme, toggleTheme } = useSettings((state) => ({
+    isDarkTheme: state.darkTheme,
+    toggleTheme: state.toggleTheme,
+  }));
+
+  return (
+    <HeaderStyled>
+      <Link href="/" passHref>
+        <a>
+          <HeaderLogo
+            className="header-logo"
+            src="/space.png"
+            alt="Space - Productivity & Management Tool"
+            width={26}
+            height={26}
           />
         </a>
       </Link>
-    </Badge>
 
-    <Link href="/settings" passHref>
-      <a>
-        <Settings src="/icons/Gear.svg" alt="Settings" width={25} height={25} />
-      </a>
-    </Link>
-  </HeaderStyled>
-);
+      <HeaderNav>
+        <IconBox name="Notes" icon={<ReaderSvg />} href="/notes" />
+        <IconBox name="Todo" icon={<PencilSvg />} href="/todo" soon />
+        <IconBox name="Calender" icon={<Calendarvg />} href="/calendar" soon />
+        <IconBox name="Pomodoro" icon={<TimerSvg />} href="/pomodoro" soon />
+      </HeaderNav>
+
+      <ThemeSvgContainer>
+        {isDarkTheme ? (
+          <SunSvg onClick={toggleTheme} />
+        ) : (
+          <MoonSvg onClick={toggleTheme} />
+        )}
+      </ThemeSvgContainer>
+
+      <Badge
+        css={{
+          '& a': {
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem',
+            color: 'inherit',
+          },
+
+          '@tablet': {
+            display: 'none',
+          },
+        }}
+      >
+        <Link href="https://github.com/DenoSaurabh/space">
+          <a target="_blank" rel="noreferrer">
+            Early Development (Alpha)
+            <Image
+              className="badge-icon"
+              src="/icons/External-Link.svg"
+              alt="External Link"
+              width={18}
+              height={18}
+            />
+          </a>
+        </Link>
+      </Badge>
+
+      <Link href="/settings" passHref>
+        <a>
+          <SettingsStyledSvg />
+        </a>
+      </Link>
+    </HeaderStyled>
+  );
+};
 
 export default Header;

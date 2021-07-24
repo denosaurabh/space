@@ -40,7 +40,22 @@ const TextArrow: React.FC<TextArrowI> = ({
   const { top, right, bottom, left, width } = textPos;
 
   return (
-    <Annotation css={{ annoPos }}>
+    <Annotation
+      css={{
+        annoPos,
+
+        '& .annotation': {
+          opacity: 0.3,
+          transition: '$slow',
+        },
+
+        '&:hover': {
+          '& .annotation': {
+            opacity: 1,
+          },
+        },
+      }}
+    >
       <AnnoGroup
         css={{
           '@tablet': {
@@ -49,7 +64,7 @@ const TextArrow: React.FC<TextArrowI> = ({
         }}
       >
         <Container className="annotation">
-          <div>{arrow}</div>
+          <div className="arrow">{arrow}</div>
 
           <span
             style={{

@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from 'react';
-import Image from 'next/image';
+import { styled } from '@styled';
 
 import {
   Root as AlertDialogRoot,
@@ -12,9 +12,15 @@ import {
   StyledAction as AlertDialogAction,
 } from '@components/alertDialog';
 
+import PlusSvg from '@assets/svg/Plus.svg';
+
 import Input from '@components/input';
 import CollectionBox from '@shared/notes/collectionBox';
 import useNotes from '@state/notes';
+
+const PlusStyledSvg = styled(PlusSvg, {
+  fill: '$grey-700',
+});
 
 const CreateCollection: React.FC = () => {
   const [name, setName] = useState('');
@@ -33,12 +39,7 @@ const CreateCollection: React.FC = () => {
     <AlertDialogRoot>
       <AlertDialogTrigger>
         <CollectionBox>
-          <Image
-            alt="Add Collection"
-            src="/icons/Plus.svg"
-            width={20}
-            height={20}
-          />
+          <PlusStyledSvg />
         </CollectionBox>
       </AlertDialogTrigger>
       <AlertDialogStyledOverlay />

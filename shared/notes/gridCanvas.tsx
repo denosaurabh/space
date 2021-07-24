@@ -2,6 +2,7 @@ import { styled } from '@styled';
 import { useEffect, useRef, useState } from 'react';
 
 import { NotePosition, NoteSize } from '@lib/store/notes';
+import useSettings from '@state/settings';
 
 const Selection = styled('div', {
   position: 'fixed',
@@ -31,6 +32,8 @@ const GridCanvas: React.FC<GridCanvasI> = ({
   enableCanvas,
   onSelectionComplete,
 }) => {
+  const isDarkTheme = useSettings((state) => state.darkTheme);
+
   const [selection, setSelection] = useState({
     x: 0,
     y: 0,
@@ -64,13 +67,13 @@ const GridCanvas: React.FC<GridCanvasI> = ({
 
     for (let x = 0; x <= width; x += gridSize) {
       for (let y = 0; y <= height; y += gridSize) {
-        context.fillStyle = '#212529';
+        context.fillStyle = isDarkTheme ? '#adb5bd' : '#212529';
         context.beginPath();
         context.rect(x, y, 1, 1);
         context.fill();
       }
     }
-  }, [canvasRef, width, height, gridSize, enableCanvas]);
+  }, [canvasRef, width, height, gridSize, enableCanvas, isDarkTheme]);
 
   const handleDragMove = (e) => {
     if (!selectionRef.current && !canvasRef.current) return;

@@ -1,6 +1,7 @@
-import { styled } from '@styled';
+import { darkTheme, styled } from '@styled';
 
 import { Annotation } from '@components/annotation';
+import Ellipse from '@components/annotations/ellipse';
 
 const MidBoxStyled = styled('div', {
   display: 'flex',
@@ -61,6 +62,10 @@ const Heading = styled('h1', {
   '@mobile': {
     fontSize: '7rem',
   },
+
+  [`.${darkTheme} &`]: {
+    color: '$grey-700',
+  }
 });
 
 const Text = styled('p', {
@@ -68,6 +73,10 @@ const Text = styled('p', {
   fontSize: '1.8rem',
   lineHeight: '150%',
   color: '$grey-600',
+
+  [`.${darkTheme} &`]: {
+    color: '$grey-500',
+  }
 });
 
 interface MidBoxProps {
@@ -90,6 +99,8 @@ const RightBox: React.FC<SideBoxProps> = ({ children, css }) => {
 const MidBox: React.FC<MidBoxProps> = ({ heading, description, children }) => {
   return (
     <MidBoxStyled>
+      <Ellipse>Coming Soon</Ellipse>
+
       <Heading>{heading}</Heading>
       <Text>{description}</Text>
       <Annotation

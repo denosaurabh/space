@@ -20,11 +20,7 @@ const Container = styled('div', {
   justifyContent: 'center',
   alignItems: 'center',
   flexWrap: 'wrap',
-  gap: '8rem',
-
-  '@desktop': {
-    gap: '4rem',
-  },
+  gap: '4rem',
 
   '@tablet': {
     flexDirection: 'column',
@@ -112,7 +108,10 @@ const HomeNotes: React.FC = () => {
   return (
     <Container>
       <StepsContainer
-        css={{ width: 'max-content', '@tablet': { width: 'auto' } }}
+        css={{
+          width: '20%',
+          '@tablet': { width: 'auto', justifyContent: 'center' },
+        }}
       >
         <CircleBox>
           <Circle>1</Circle>
@@ -129,11 +128,16 @@ const HomeNotes: React.FC = () => {
       </StepsContainer>
       <AllNotesContainer
         css={{
-          // flexGrow: '1',
           width: '50%',
           height: '100rem',
 
+          '@laptop': {
+            flex: 1,
+          },
+
           '@tablet': {
+            flex: 'unset',
+
             margin: '5rem 0',
             width: '90%',
             height: '100rem',
@@ -161,10 +165,10 @@ const HomeNotes: React.FC = () => {
       <StepsContainer
         css={{
           width: '20%',
+          minWidth: '20rem',
           padding: '1rem',
 
           '@laptop': {
-            flex: 1,
             width: '100%',
           },
 

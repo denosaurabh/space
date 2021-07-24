@@ -7,10 +7,18 @@ import { SettingsStore } from '@lib/store/settings';
 const useSettings = create(
   persist<SettingsStore>(
     (set) => ({
+      darkTheme: false,
       notes: {
         enableGrid: true,
         gridSize: 10,
         gridColor: '#ccc',
+      },
+      toggleTheme: () => {
+        set(
+          produce((draft) => {
+            draft.darkTheme = !draft.darkTheme;
+          })
+        );
       },
       toggleGrid: (checked: boolean) => {
         set(

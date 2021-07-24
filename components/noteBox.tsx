@@ -1,5 +1,4 @@
 import { memo } from 'react';
-import Image from 'next/image';
 import { Rnd } from 'react-rnd';
 import { styled } from '@styled';
 import { NewNote, Note } from '@lib/store/notes';
@@ -16,7 +15,7 @@ import {
 const NoteContainer = styled('div', {
   width: '100%',
   height: '100%',
-  border: '1px solid #000',
+  border: '1px solid $grey-700',
   borderRadius: '$small',
   display: 'flex',
   flexDirection: 'column',
@@ -26,7 +25,7 @@ const NoteContainer = styled('div', {
   userSelect: 'none',
 
   '&:active': {
-    boxShadow: '5px 5px 10px 0px #E9ECEF',
+    boxShadow: '5px 5px 10px 0px $grey-100',
   },
 });
 
@@ -37,8 +36,8 @@ const NoteHeader = styled('div', {
   width: '100%',
   height: '2.4rem',
   padding: '0 0.4rem',
-  borderBottom: '1px solid #000',
-  backgroundColor: '#fff',
+  borderBottom: '1px solid $grey-700',
+  backgroundColor: '$grey-100',
   borderTopLeftRadius: '$small',
   borderTopRightRadius: '$small',
   '&:hover': {
@@ -62,6 +61,34 @@ const NoteContent = styled('textarea', {
   resize: 'none',
   border: 'none',
   outline: 'none',
+
+  backgroundColor: '$grey-100',
+  color: '$grey-900',
+});
+
+const Circle = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+
+  width: '1rem',
+  height: '1rem',
+
+  margin: '0 5px',
+
+  '&:after': {
+    content: '',
+
+    width: '0.6rem',
+    height: '0.6rem',
+
+    border: '0.5px solid $grey-700',
+    borderRadius: '9999px',
+  },
+
+  '&:hover': {
+    cursor: 'pointer',
+  },
 });
 
 interface NoteBoxProps extends Note {
@@ -144,13 +171,7 @@ const NoteBox: React.FC<NoteBoxProps> = ({
         <NoteHeader className="drag-header">
           <PopoverRoot>
             <PopoverTrigger>
-              <Image
-                className="note-header-dot"
-                src="/icons/Dot.svg"
-                width={15}
-                height={15}
-                alt="Note Menu"
-              />
+              <Circle />
             </PopoverTrigger>
             <PopoverAnchor />
 

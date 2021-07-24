@@ -6,7 +6,6 @@ import Link from 'next/link';
 
 const FooterContainer = styled('footer', {
   width: '100%',
-  // height: '10rem',
 
   display: 'flex',
   justifyContent: 'space-between',

@@ -26,11 +26,11 @@ const { css, styled, global, getCssString, theme } = createCss({
       'grey-800': '#343a40',
       'grey-900': '#212529',
 
-      'dreamy-gradients-yellow-first': `linear-gradient(180deg, #85FFBD 0%, rgba(255, 251, 125, 0.46) 100%)`,
-      'dreamy-gradients-yellow-second': `linear-gradient(180deg, #85FFBD 0%, rgba(245, 138, 37, 0) 100%, #FFFB7D 100%)`,
+      'dreamy-gradients-yellow-first': `linear-gradient(180deg, #85FFBD 100%, rgba(255, 251, 125, 0.46) 100%)`,
+      'dreamy-gradients-yellow-second': `linear-gradient(180deg, #85FFBD 100%, rgba(245, 138, 37, 0) 100%, #FFFB7D 100%)`,
 
-      'dreamy-gradients-orange-first': `linear-gradient(180deg, #F6D365 0%, rgba(245, 138, 37, 0) 100%, #FDA085 100%);`,
-      'dreamy-gradients-orange-second': `linear-gradient(180deg, #F6D365 0%, rgba(253, 160, 133, 0.46) 100%)`,
+      'dreamy-gradients-orange-first': `linear-gradient(180deg, #F6D365 100%, rgba(245, 138, 37, 0) 100%, #FDA085 100%);`,
+      'dreamy-gradients-orange-second': `linear-gradient(180deg, #F6D365 100%, rgba(253, 160, 133, 0.46) 100%)`,
     },
     borderStyles: {
       note: '2px solid #343a40',

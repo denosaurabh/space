@@ -8,6 +8,11 @@ import { Annotation, AnnoGroup } from '@components/annotation';
 import Ellipse from '@components/annotations/ellipse';
 import Badge from '@components/badge';
 
+import useSettings from '@state/settings';
+
+import SunSvg from '@assets/svg/Sun.svg';
+import MoonSvg from '@assets/svg/Moon.svg';
+
 const HeaderContainer = styled('header', {
   width: '100%',
   height: 'fit-content',
@@ -77,6 +82,11 @@ const Text = styled('span', {
 });
 
 const Header: React.FC = () => {
+  const { isDarkTheme, toggleTheme } = useSettings((state) => ({
+    isDarkTheme: state.darkTheme,
+    toggleTheme: state.toggleTheme,
+  }));
+
   return (
     <HeaderContainer>
       <LogoContainer>
@@ -134,7 +144,14 @@ const Header: React.FC = () => {
             </a>
           </Link>
         </LI>
-        <Annotation css={{ annoPos: '120% -30% 0% 0%' }}>
+        <Annotation
+          css={{
+            annoPos: '120% 0% 0% -15%',
+            '@tablet': {
+              annoPos: '120% 0% 0% -25%',
+            },
+          }}
+        >
           <Link href="/notes" passHref>
             <a>
               <Button color="dark" size="medium">
@@ -143,7 +160,7 @@ const Header: React.FC = () => {
             </a>
           </Link>
 
-          <AnnoGroup>
+          <AnnoGroup css={{ width: 170, height: 80 }}>
             <Image
               alt="Scribble"
               src="/assets/annotations/Scribble.webp"
@@ -165,6 +182,17 @@ const Header: React.FC = () => {
       </ULContainer>
 
       <RightBox>
+        {isDarkTheme ? (
+          <SunSvg
+            style={{ cursor: 'pointer', width: '20px', height: '20px' }}
+            onClick={toggleTheme}
+          />
+        ) : (
+          <MoonSvg
+            style={{ cursor: 'pointer', width: '20px', height: '20px' }}
+            onClick={toggleTheme}
+          />
+        )}
         <Button
           color="light"
           size="small"

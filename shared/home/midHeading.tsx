@@ -7,8 +7,7 @@ import { AnnoGroup, Annotation } from '@components/annotation';
 import TextArrow from '@components/annotations/textArrow';
 
 const MidBoxContainer = styled('div', {
-  marginTop: '40rem',
-  padding: '8rem',
+  margin: '40rem 0 10rem 0',
 
   display: 'flex',
   flexDirection: 'column',
@@ -25,7 +24,7 @@ const Heading = styled('h1', {
   fontFamily: '$inter',
   fontSize: '12rem',
   fontWeight: '900',
-  color: '$grey-800',
+  color: '$grey-700',
 
   textShadow: '0px 2.5rem 2.5rem rgba(0, 0, 0, 0.25)',
 
@@ -44,7 +43,7 @@ const Heading = styled('h1', {
 const Text = styled('p', {
   fontFamily: '$inter',
   fontSize: '2rem',
-  color: '$grey-700',
+  color: '$grey-600',
 });
 
 const MidHeading: React.FC = () => {

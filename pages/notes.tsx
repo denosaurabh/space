@@ -16,6 +16,8 @@ import useSettings from '@state/settings';
 const HomeContainer = styled('div', {
   display: 'flex',
   height: '100%',
+
+  backgroundColor: '$grey-100',
 });
 
 const Home: React.FC = () => {
