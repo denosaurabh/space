@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { styled } from '@styled';
 
 const GradientContainer = styled('div', {
@@ -54,4 +55,4 @@ const DreamyGradient: React.FC<DreamyGradientI> = ({
   );
 };
 
-export default DreamyGradient;
+export default memo(DreamyGradient);

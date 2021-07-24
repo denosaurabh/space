@@ -141,7 +141,7 @@ const globalStyles = global({
     textDecoration: 'none',
   },
   button: {
-    outline: 'none',
+    // outline: 'none',
     border: 'none',
   },
   input: {

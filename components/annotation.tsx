@@ -1,4 +1,4 @@
-import {  styled } from '@styled';
+import { darkTheme, styled } from '@styled';
 
 const Annotation = styled('div', {
   position: 'relative',
@@ -10,6 +10,10 @@ const Annotation = styled('div', {
 
 const AnnoGroupStyled = styled('div', {
   position: 'absolute',
+
+  [`.${darkTheme} &`]: {
+    opacity: 0.3,
+  },
 });
 
 interface AnnoGroupProps {

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { styled } from '@styled';
+import { darkTheme, styled } from '@styled';
 
 const Center = styled('div', {
   display: 'grid',
@@ -15,6 +15,10 @@ const Center = styled('div', {
       width: 50,
       height: 50,
     },
+  },
+
+  [`.${darkTheme} &`]: {
+    opacity: 0.3,
   },
 });
 

@@ -9,7 +9,25 @@ const useNotes = create<NotesState>(
     (set) => ({
       currentCollection: '0',
       notesState: {
-        '0': { id: '0', name: 'Home', icon: '', notes: {} },
+        '0': {
+          id: '0',
+          name: 'Home',
+          icon: '',
+          notes: {
+            0: {
+              id: 0,
+              text: 'Welcome to Space',
+              size: {
+                width: 250,
+                height: 350,
+              },
+              position: {
+                x: 100,
+                y: 100,
+              },
+            },
+          },
+        },
       },
       changeCurrentCollection: (collectionNumber) => {
         set(

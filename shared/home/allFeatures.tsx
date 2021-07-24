@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { styled } from '@styled';
+import { darkTheme, styled } from '@styled';
 
 import { FeatureBox, MidBox, LeftBox, RightBox } from '@shared/home/featureBox';
 import CircularArow from '@components/annotations/circularArrow';
@@ -22,6 +22,10 @@ const CheckMarkContainer = styled('div', {
   justifyContent: 'center',
 
   gap: '2rem',
+
+  [`.${darkTheme} &`]: {
+    opacity: 0.3,
+  },
 });
 
 const Text = styled('p', {

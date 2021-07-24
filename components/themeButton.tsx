@@ -5,7 +5,8 @@ import useSettings from '@state/settings';
 import SunSvg from '@assets/svg/Sun.svg';
 import MoonSvg from '@assets/svg/Moon.svg';
 
-const ThemeSvgContainer = styled('div', {
+const ThemeSvgContainer = styled('button', {
+  backgroundColor: 'transparent',
   transition: '$medium',
 
   '& svg': {

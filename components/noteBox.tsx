@@ -20,7 +20,6 @@ const NoteContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   transition: 'box-shadow 0.25s',
-  // position: 'relative',
   zIndex: 1,
   userSelect: 'none',
 
@@ -29,7 +28,7 @@ const NoteContainer = styled('div', {
   },
 });
 
-const NoteHeader = styled('div', {
+const NoteHeader = styled('button', {
   display: 'flex',
   justifyContent: 'flex-end',
   alignItems: 'center',
@@ -38,8 +37,12 @@ const NoteHeader = styled('div', {
   padding: '0 0.4rem',
   borderBottom: '1px solid $grey-700',
   backgroundColor: '$grey-100',
+
   borderTopLeftRadius: '$small',
   borderTopRightRadius: '$small',
+  
+  zIndex: 10,
+
   '&:hover': {
     cursor: 'grab',
   },
