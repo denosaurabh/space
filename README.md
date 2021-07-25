@@ -91,16 +91,15 @@ We have a [code of conduct](https://github.com/DenoSaurabh/space/blob/master/COD
 YES, it has a dark theme, you can enable it from top right section of page by clicking on a moon icon.
 
 ### 2. What platforms are supported?
-The project is completely responsive, and work for almost all screen sizes. Though I do not have any plans currently to make native app for android & ios. But, the web app is PWA so it is installable in almost all devices. You can install it from "Install" button beside the Bookmark "Star" button on url bar. In mobile you can go to top right section.
-IMPORTANT! Mark that full support for touch devcies is still ongoing and you data will not be synced, more down below.
+The project is completely responsive, and work for almost all screen sizes. Though I do not have any plans currently to make native app for android & ios. But, the web app is PWA so it is installable in almost all devices. You can install it from "Install" button beside the Bookmark "Star" button on url bar. In mobile you can go to the menu in top right section.
+IMPORTANT! Mark that full support for touch devcies is still ongoing and also your data will not be synced, more down below.
 
 ### 3. Custom database?
-The database is totally local stored as "LocalStorage". Though, it still arise some concerns of accidently deleting your data and cannot be reverted. Also you can't sync the data in multiple devices. So, I have to plan to add features like import & export data, using advance Browser API like FileSystem (very experimental in browsers), and support for custom databases which may add additional things like authentication.
+The database is totally local stored as "LocalStorage". Though, it arise some concerns of accidently deleting your data and cannot be reverted. Also you can't sync the data in multiple devices. So, I have to plan to add features like import & export data, using advance Browser API like FileSystem (very experimental in browsers), and support for custom databases which may add additional things like authentication.
 
 ### 4. Custom Themes
 
-Uff! You may see be saying soon soon, so many times, hehe. The project is still very new and updating very day. So, one more thing I have in plans is Custom Themes. Personalization is increasing, and we all like it, right? So, applying custom themes will also come soon where you can change color palette, and just change the entire look and feel for you withour looking at the code and worrying about it.
-
+Uff! You may see be saying soon soon, so many times, hehe. The project is still very new and updating very day. So, one more thing I have in plans is Custom Themes. Personalization is increasing, and we all like it, right? So, applying custom themes will also come soon where you can change color palette, and just change the entire look and feel for you without having to look at the code and worrying about it.
 
 &nbsp;
 
