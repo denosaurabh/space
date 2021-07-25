@@ -1,11 +1,17 @@
-<center>
+<p align="center">
+  <a href="https://space-gray.vercel.app">
+    <img src="https://i.ibb.co/TRsp1GH/icon-512x512.png" width="150" height="150" alt="Space Logo">
+  </a>
   <h1>Space - Simple Productivity & Management tool</h1>
-  <div>
+</p>
+
+<div>
     <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/denosaurabh/space?style=for-the-badge">
     <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/denosaurabh/space?color=%23ffba08&style=for-the-badge">
-    <img alt="Discord" src="https://img.shields.io/discord/781116010009722891?style=for-the-badge">
+    <a href="https://discord.gg/YhPsFzXj" target="_blank">
+      <img alt="Discord" src="https://img.shields.io/discord/781116010009722891?style=for-the-badge">
+    </a>
   </div>
-</center>
 
 <br />
 
@@ -35,13 +41,14 @@ Space is a completely open source project, so here's the source code for the pro
 
 ## 📑 TOC (Table Of Content)
 
-- [Space - Simple Productivity & Management tool](#space---simple-productivity--management-tool)
-  - [TOC (Table Of Content)](#toc-table-of-content)
-  - [Stack](#stack)
-  - [Goal](#goal)
-  - [Community](#community)
-  - [Installation](#installation)
-  - [Contribution](#contribution)
+- [Stack](#stack)
+- [Goal](#🥅-goal)
+- [Community](#community)
+- [Installation](#installation)
+- [Contribution](#contribution)
+- [Support](#support)
+- [Developers](#developers)
+- [License](#license)
 
 ## 🍕 Stack
 
@@ -55,15 +62,19 @@ Space is a completely open source project, so here's the source code for the pro
 
 ## 🥅 Goal
 
-The goal is to make a very simple and minimal productivity, notes making & life management app.
+The goal is to make a very simple and minimal productivity, notes making & life management app. 
+The project is aimed to be very flexible, easy to use and community oriented in a long run. 
+The Performance, size, accessibility of this application are also marked as high priority.
 
-In a engineer perspective, Performance is high priority here. I am trying to make bundle size as small as possible.
+&nbsp;
 
 ## 🧑‍🤝‍🧑 Community
 
 Our Discord Community → https://discord.gg/YhPsFzXj
 
 You can ask question, report issues and share your ideas here too..
+
+&nbsp;
 
 ## 👨‍💻 Installation
 
@@ -79,92 +90,38 @@ You can ask question, report issues and share your ideas here too..
 
 ## 👷‍♂️ Contributing
 
-When contributing to this repository, please first discuss the change you wish to make via issue, discussion or email. 
+We hearly welcome new contributers to the project. When contributing to this repository, please first discuss the change you wish to make via [issue](https://github.com/DenoSaurabh/space/issues/new) or [discussions](https://github.com/DenoSaurabh/space/discussions/new). 
 
-Please note we have a code of conduct, please follow it in all your interactions with the project.
+We have a code of conduct so please read and follow it in all your interactions with the project.
 
-## 🚔 Code of Conduct
+&nbsp;
 
-### Our Pledge
+## ❔ FAQ
 
-In the interest of fostering an open and welcoming environment, we as
-contributors and maintainers pledge to making participation in our project and
-our community a harassment-free experience for everyone, regardless of age, body
-size, disability, ethnicity, gender identity and expression, level of experience,
-nationality, personal appearance, race, religion, or sexual identity and
-orientation.
+### 1. Does this has a dark theme?
+YES, it has a dark theme, you can enable it from top right section of page by clicking on a moon icon.
 
-### Our Standards
+### 2. What platforms are supported?
+The project is completely responsive, and work for almost all screen sizes. Though I do not have any plans currently to make native app for android & ios. But, the web app is PWA so it is installable in almost all devices. You can install it from "Install" button beside the Bookmark "Star" button on url bar. In mobile you can go to top right section.
+IMPORTANT! Mark that full support for touch devcies is still ongoing and you data will not be synced, more down below.
 
-Examples of behavior that contributes to creating a positive environment
-include:
+### 3. Custom database?
+The database is totally local stored as "LocalStorage". Though, it still arise some concerns of accidently deleting your data and cannot be reverted. Also you can't sync the data in multiple devices. So, I have to plan to add features like import & export data, using advance Browser API like FileSystem (very experimental in browsers), and support for custom databases which may add additional things like authentication.
 
-* Using welcoming and inclusive language
-* Being respectful of differing viewpoints and experiences
-* Gracefully accepting constructive criticism
-* Focusing on what is best for the community
-* Showing empathy towards other community members
+### 4. Custom Themes
 
-Examples of unacceptable behavior by participants include:
+Uff! You may see be saying soon soon, so many times, hehe. The project is still very new and updating very day. So, one more thing I have in plans is Custom Themes. Personalization is increasing, and we all like it, right? So, applying custom themes will also come soon where you can change color palette, and just change the entire look and feel for you withour looking at the code and worrying about it.
 
-* The use of sexualized language or imagery and unwelcome sexual attention or
-advances
-* Trolling, insulting/derogatory comments, and personal or political attacks
-* Public or private harassment
-* Publishing others' private information, such as a physical or electronic
-  address, without explicit permission
-* Other conduct which could reasonably be considered inappropriate in a
-  professional setting
 
-### Our Responsibilities
-
-Project maintainers are responsible for clarifying the standards of acceptable
-behavior and are expected to take appropriate and fair corrective action in
-response to any instances of unacceptable behavior.
-
-Project maintainers have the right and responsibility to remove, edit, or
-reject comments, commits, code, wiki edits, issues, and other contributions
-that are not aligned to this Code of Conduct, or to ban temporarily or
-permanently any contributor for other behaviors that they deem inappropriate,
-threatening, offensive, or harmful.
-
-### Scope
-
-This Code of Conduct applies both within project spaces and in public spaces
-when an individual is representing the project or its community. Examples of
-representing a project or community include using an official project e-mail
-address, posting via an official social media account, or acting as an appointed
-representative at an online or offline event. Representation of a project may be
-further defined and clarified by project maintainers.
-
-### Enforcement
-
-Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported by contacting the project team at [INSERT EMAIL ADDRESS]. All
-complaints will be reviewed and investigated and will result in a response that
-is deemed necessary and appropriate to the circumstances. The project team is
-obligated to maintain confidentiality with regard to the reporter of an incident.
-Further details of specific enforcement policies may be posted separately.
-
-Project maintainers who do not follow or enforce the Code of Conduct in good
-faith may face temporary or permanent repercussions as determined by other
-members of the project's leadership.
-
-### Attribution
-
-This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 1.4,
-available at [http://contributor-covenant.org/version/1/4][version]
-
-[homepage]: http://contributor-covenant.org
-[version]: http://contributor-covenant.org/version/1/4/
-
+&nbsp;
 
 ## 😍 Support the Project
 
-Supporting the project will really help us to be more excited and regular with this loving project. Starring this project and sharing this project with your freiends will be very appreciated. 🎉
+This project is completely open source and free to use. So, Supporting the project will really help us to be more excited and regular with this loving project. Starring this project and sharing this project with your freiends will be very appreciated. 🎉
 
+&nbsp;
 
-## Creator
+## 👨‍💻 Developers
 
 ### DenoSaurabh
 
@@ -172,3 +129,9 @@ Supporting the project will really help us to be more excited and regular with t
 
 - [Github](https://github.com/denosaurabh)
 - [Twitter](https://twitter.com/denosaurabh)
+
+&nbsp;
+
+## 🔨 License
+
+[GNU General Public License v3.0](https://github.com/DenoSaurabh/space/blob/master/LICENSE.md)
