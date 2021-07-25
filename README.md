@@ -39,17 +39,6 @@ Space is a completely open source project, so here's the source code for the pro
 &nbsp;
 
 
-## 📑 TOC (Table Of Content)
-
-- [Stack](#stack)
-- [Goal](#🥅-goal)
-- [Community](#community)
-- [Installation](#installation)
-- [Contribution](#contribution)
-- [Support](#support)
-- [Developers](#developers)
-- [License](#license)
-
 ## 🍕 Stack
 
 - [NextJS](https://nextjs.org) - Main React Framework
