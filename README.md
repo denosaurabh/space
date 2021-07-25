@@ -81,7 +81,7 @@ You can ask question, report issues and share your ideas here too..
 
 We hearly welcome new contributers to the project. When contributing to this repository, please first discuss the change you wish to make via [issue](https://github.com/DenoSaurabh/space/issues/new) or [discussions](https://github.com/DenoSaurabh/space/discussions/new). 
 
-We have a code of conduct so please read and follow it in all your interactions with the project.
+We have a [code of conduct](https://github.com/DenoSaurabh/space/blob/master/CODE_OF_CONDUCT.md) so please read and follow it in all your interactions with the project.
 
 &nbsp;
 
