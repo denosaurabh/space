@@ -7,6 +7,7 @@ import { SettingsStore } from '@lib/store/settings';
 const useSettings = create(
   persist<SettingsStore>(
     (set) => ({
+      storage: 'localStorage',
       darkTheme: false,
       notes: {
         enableGrid: true,

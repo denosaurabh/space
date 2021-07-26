@@ -10,12 +10,8 @@ const { css, styled, global, getCssString, theme } = createCss({
       indie: 'IndieFlower',
     },
     colors: {
-      grey: '#343a40',
-      icon: '#f8f9fa',
-      iconHover: '#e9ecef',
-      headerBorderBottom: '#dee2e6',
-      green: '#34a0a4',
-      lightGreen: '#52b69a',
+      // green: '#34a0a4',
+      // lightGreen: '#52b69a',
       'grey-100': '#f8f9fa',
       'grey-200': '#e9ecef',
       'grey-300': '#dee2e6',
@@ -32,7 +28,6 @@ const { css, styled, global, getCssString, theme } = createCss({
       'dreamy-gradients-purple': `linear-gradient(141.55deg, #575EFF -3.79%, #E478FF 82.82%);`,
       'dreamy-gradients-blue': `radial-gradient(111.63% 111.63% at 42.64% -5.82%, #00AAFF 33.65%, #00AAFF 44.58%, #00AAFF 100%)`,
       'dreamy-gradients-green': `linear-gradient(180deg, #00FF85 0%, rgba(0, 255, 71, 0) 100%);`,
-      // 'dreamy-gradients-blue': `#00B0FF`,
     },
     borderStyles: {
       note: '2px solid #343a40',
@@ -87,12 +82,6 @@ const { css, styled, global, getCssString, theme } = createCss({
 
 const darkTheme = theme({
   colors: {
-    grey: '#343a40',
-    icon: '#f8f9fa',
-    iconHover: '#e9ecef',
-    headerBorderBottom: '#dee2e6',
-    green: '#34a0a4',
-    lightGreen: '#52b69a',
     'grey-900': '#f8f9fa',
     'grey-800': '#e9ecef',
     'grey-700': '#dee2e6',
@@ -170,7 +159,7 @@ const globalStyles = global({
     borderRadius: '10px',
   },
   '::-webkit-scrollbar-thumb': {
-    background: '$grey',
+    background: '$grey-800',
     borderRadius: '10px',
   },
 });

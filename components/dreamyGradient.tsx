@@ -35,18 +35,6 @@ const GradientCircle = styled('div', {
 
   variants: {
     color: {
-      'yellow-first': {
-        background: '$dreamy-gradients-yellow-first',
-      },
-      'yellow-second': {
-        background: '$dreamy-gradients-yellow-second',
-      },
-      'orange-first': {
-        background: '$dreamy-gradients-orange-first',
-      },
-      'orange-second': {
-        background: '$dreamy-gradients-orange-second',
-      },
       yellow: {
         background: '$dreamy-gradients-yellow',
       },

@@ -184,7 +184,7 @@ const Header: React.FC = () => {
             },
           }}
         >
-          Release v0.1
+          Release v0.1.1
         </Button>
         <Link href="https://github.com/DenoSaurabh/space/releases" passHref>
           <a target="_blank" rel="noreferrer">

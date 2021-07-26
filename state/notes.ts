@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware';
 import produce from 'immer';
 
 import { NotesState } from '@lib/store/notes';
+import useSettings from '@state/settings';
 
 const useNotes = create<NotesState>(
   persist(
@@ -42,8 +43,6 @@ const useNotes = create<NotesState>(
           produce((draft) => {
             const collectionDraft = draft.notesState[draft.currentCollection];
 
-            console.log(collectionDraft);
-
             const allNotesIDs = Object.keys(collectionDraft.notes);
             const newNoteId = allNotesIDs.length;
 
@@ -78,7 +77,17 @@ const useNotes = create<NotesState>(
     }),
     {
       name: 'notesStorage',
-      getStorage: () => localStorage,
+      getStorage: () => {
+        const { storage } = useSettings.getState();
+
+        switch (storage) {
+          case 'localStorage':
+            return localStorage;
+
+          default:
+            return localStorage;
+        }
+      },
     }
   )
 );

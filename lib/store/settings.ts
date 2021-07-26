@@ -5,6 +5,7 @@ export interface NotesSettings {
 }
 
 export interface SettingsStore {
+  storage: 'localStorage';
   darkTheme: boolean;
   notes: NotesSettings;
   toggleTheme: () => void;

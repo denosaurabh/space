@@ -14,8 +14,6 @@ Space is yours, very personal space, without any restrictions and complete flexi
 
 
 @denosaurabh`,
-
-      //You all might use various apps to manage different things, the goals of those project are different that comes to multitude of features that you might not need with lot of noise with increasing complexity!
       position: { x: 50, y: 20 },
       size: { width: 270, height: 400 },
     },

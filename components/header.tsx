@@ -86,7 +86,7 @@ const Header: React.FC = () => {
       >
         <Link href="https://github.com/DenoSaurabh/space">
           <a target="_blank" rel="noreferrer">
-            Release v0.1
+            Release v0.1.1
             <Image
               className="badge-icon"
               src="/icons/External-Link.svg"

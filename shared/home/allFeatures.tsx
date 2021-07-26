@@ -62,7 +62,7 @@ const AllFeatures: React.FC = () => {
         </LeftBox>
         <MidBox
           heading="Pomodoro"
-          description="Egestas scelerisque nullam felis, ornare feugiat penatibus massa massa dignissim. At tincidunt sed vulputate ornare. Sed morbi elementum consectetur blandit proin consectetur sed donec volutpat."
+          description="A simple pomodoro tool where you can set 25mins timer to complete your goal for that time, and then 5mins to rest a bit. Then repeat!"
         >
           <CircularArow
             css={{ position: 'relative', top: '30%', right: '20%' }}
@@ -111,7 +111,7 @@ const AllFeatures: React.FC = () => {
         </LeftBox>
         <MidBox
           heading="Calender"
-          description="Egestas scelerisque nullam felis, ornare feugiat penatibus massa massa dignissim. At tincidunt sed vulputate ornare. Sed morbi elementum consectetur blandit proin consectetur sed donec volutpat."
+          description="A dot grid based calendar where you can make point your future goals and see your history of tasks."
         >
           <Image
             src="/assets/annotations/Dots.webp"
@@ -179,7 +179,7 @@ const AllFeatures: React.FC = () => {
         </LeftBox>
         <MidBox
           heading="Todo"
-          description="Egestas scelerisque nullam felis, ornare feugiat penatibus massa massa dignissim. At tincidunt sed vulputate ornare. Sed morbi elementum consectetur blandit proin consectetur sed donec volutpat."
+          description="Todo list maker for every day, week, month and even year. Got bored of typical Todo maker, So I will try my best to make something better and creative."
         >
           <CheckMarkContainer>
             <Image

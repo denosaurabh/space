@@ -31,6 +31,7 @@ const Home: React.FC = () => {
   } = useNotes((state: NotesState) => state);
 
   const { enableGrid, gridSize } = useSettings((state) => state.notes);
+
   useEffect(() => {
     changeCurrentCollection('0');
   }, [changeCurrentCollection]);

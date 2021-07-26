@@ -7,16 +7,12 @@ const StyledBadge = styled('div', {
   gap: '1rem',
   margin: '0 1rem',
 
-  backgroundColor: '#d8f3dc',
-
   fontFamily: '$inter',
-  color: '#40916c',
   fontWeight: 'bolder',
   transition: 'background-color $medium',
 
   '&:hover': {
     cursor: 'pointer',
-    backgroundColor: '#b7e4c7',
   },
 
   variants: {
