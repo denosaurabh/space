@@ -2,9 +2,10 @@ import { memo } from 'react';
 import { styled } from '@styled';
 import { keyframes } from '@stitches/react';
 
-const rotate = keyframes({
-  '0%': { transform: 'rotateX(0)' },
-  '100%': { transform: 'rotateX(180deg)' },
+const rotateAndScale = keyframes({
+  '0%': { transform: 'rotate(0) scale(0.8)' },
+  '50%': { transform: 'rotate(180deg) scale(1.1)' },
+  '100%': { transform: 'rotate(360deg) scale(0.8)' },
 });
 
 const GradientContainer = styled('div', {
@@ -16,7 +17,7 @@ const GradientContainer = styled('div', {
   variants: {
     animate: {
       true: {
-        animation: `${rotate} 1.2s`,
+        animation: `${rotateAndScale} 3s infinite ease-in`,
       },
     },
   },
