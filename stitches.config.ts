@@ -26,11 +26,13 @@ const { css, styled, global, getCssString, theme } = createCss({
       'grey-800': '#343a40',
       'grey-900': '#212529',
 
-      'dreamy-gradients-yellow-first': `linear-gradient(180deg, #85FFBD 100%, rgba(255, 251, 125, 0.46) 100%)`,
-      'dreamy-gradients-yellow-second': `linear-gradient(180deg, #85FFBD 100%, rgba(245, 138, 37, 0) 100%, #FFFB7D 100%)`,
-
-      'dreamy-gradients-orange-first': `linear-gradient(180deg, #F6D365 100%, rgba(245, 138, 37, 0) 100%, #FDA085 100%);`,
-      'dreamy-gradients-orange-second': `linear-gradient(180deg, #F6D365 100%, rgba(253, 160, 133, 0.46) 100%)`,
+      'dreamy-gradients-yellow': `#FFAA6C`,
+      'dreamy-gradients-orange': `radial-gradient(111.63% 111.63% at 42.64% -5.82%, #FFA800 33.65%, #FF0000 44.58%, #FF47D6 100%)`,
+      'dreamy-gradients-red': `radial-gradient(111.63% 111.63% at 42.64% -5.82%, #FF0000 33.65%, #FF47D6 44.58%, #FFA800 100%)`,
+      'dreamy-gradients-purple': `linear-gradient(141.55deg, #575EFF -3.79%, #E478FF 82.82%);`,
+      'dreamy-gradients-blue': `radial-gradient(111.63% 111.63% at 42.64% -5.82%, #00AAFF 33.65%, #00AAFF 44.58%, #00AAFF 100%)`,
+      'dreamy-gradients-green': `linear-gradient(180deg, #00FF85 0%, rgba(0, 255, 71, 0) 100%);`,
+      // 'dreamy-gradients-blue': `#00B0FF`,
     },
     borderStyles: {
       note: '2px solid #343a40',

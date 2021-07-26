@@ -28,7 +28,7 @@ const NoteContainer = styled('div', {
   },
 });
 
-const NoteHeader = styled('button', {
+const NoteHeader = styled('div', {
   display: 'flex',
   justifyContent: 'flex-end',
   alignItems: 'center',
@@ -40,8 +40,6 @@ const NoteHeader = styled('button', {
 
   borderTopLeftRadius: '$small',
   borderTopRightRadius: '$small',
-  
-  zIndex: 10,
 
   '&:hover': {
     cursor: 'grab',

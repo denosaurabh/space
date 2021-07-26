@@ -1,7 +1,4 @@
-import {
-  darkTheme,
-  styled,
-} from '@styled';
+import { darkTheme, styled } from '@styled';
 
 import Header from '@shared/home/header';
 import MidHeading from '@shared/home/midHeading';
@@ -25,6 +22,8 @@ const Container = styled('div', {
   backgroundColor: '$grey-100',
   padding: '4rem 5rem',
 
+  position: 'relative',
+
   '@laptop': {
     padding: '2rem',
   },
@@ -41,18 +40,16 @@ const Home: React.FC = () => {
     <Container className={isDarkTheme ? darkTheme : ''}>
       <LandingPageSEO />
 
-      <DreamyGradient color="yellow" top="45%" left="0" />
-      <DreamyGradient color="orange" top="0" right="0%" />
-      <DreamyGradient color="yellow" top="200%" left="0" />
-      <DreamyGradient color="yellow" top="270%" right="0" />
-      <DreamyGradient color="yellow" top="360%" left="0" />
+      <DreamyGradient color="orange" top="0%" right="0%" />
+      <DreamyGradient color="yellow" top="10%" left="0" />
+      <DreamyGradient color="green" top="35%" left="0" />
+      <DreamyGradient color="blue" top="50%" right="0" />
+      <DreamyGradient color="purple" top="68%" left="0" />
+
+      <DreamyGradient color="orange" bottom="5%" left="45%" animate />
 
       <Header />
       <MidHeading />
-
-      {/* <Annotation css={{ position: 'absolute', top: '70%', right: '15%' }}>
-        <ScrollDownSvg />
-      </Annotation> */}
 
       <HomeNotes />
       <AllFeatures />
