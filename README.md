@@ -105,7 +105,9 @@ Uff! You may see be saying soon soon, so many times, hehe. The project is still 
 
 ## 😍 Support the Project
 
-This project is completely open source and free to use. So, Supporting the project will really help us to be more excited and regular with this loving project. Starring this project and sharing this project with your freiends will be very appreciated. 🎉
+This project is completely open source and free to use. So, Supporting the project will really help us to be more excited and regular with this loving project. Star this project and sharing this project with your freiends will be very appreciated. 🎉
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/denosaurabh)
 
 &nbsp;
 
