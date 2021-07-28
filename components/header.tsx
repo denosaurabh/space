@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 
 import { styled } from '@styled';
 import IconBox from '@components/iconBox';
-// import Badge from '@components/badge';
+import Badge from '@components/badge';
 
 import ReaderSvg from '@assets/svg/Reader.svg';
 import PencilSvg from '@assets/svg/Pencil.svg';
@@ -132,33 +132,37 @@ const Header: React.FC = () => {
         <IconBox name="Pomodoro" icon={<TimerSvg />} href="/pomodoro" soon />
       </HeaderNav>
 
-      {/* <Badge
-        css={{
-          '& a': {
-            display: 'flex',
-            alignItems: 'center',
-            gap: '1rem',
-            color: 'inherit',
-          },
+      {process.env.NEXT_PUBLIC_VERSION_ALPHA ? (
+        <Badge
+          color="warning"
+          css={{
+            '& a': {
+              display: 'flex',
+              alignItems: 'center',
+              gap: '1rem',
+              color: 'inherit',
+            },
 
-          '@tablet': {
-            display: 'none',
-          },
-        }}
-      >
-        <Link href="https://github.com/DenoSaurabh/space">
-          <a target="_blank" rel="noreferrer">
-            Release v0.1.1
-            <Image
-              className="badge-icon"
-              src="/icons/External-Link.svg"
-              alt="External Link"
-              width={18}
-              height={18}
-            />
-          </a>
-        </Link>
-      </Badge> */}
+            '@tablet': {
+              width: '5rem',
+            },
+          }}
+        >
+          This is a development version. Not Intended for use in production.
+          <Link href="https://space-gray.vercel.app">
+            <a target="_blank" rel="noreferrer">
+              Check out release version
+              <Image
+                className="badge-icon"
+                src="/icons/External-Link.svg"
+                alt="External Link"
+                width={18}
+                height={18}
+              />
+            </a>
+          </Link>
+        </Badge>
+      ) : null}
 
       {!hideInstallButton ? (
         <Button size="small" onClick={handleInstallPWA}>

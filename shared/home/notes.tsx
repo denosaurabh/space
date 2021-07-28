@@ -71,27 +71,27 @@ const HomeNotes: React.FC = () => {
   );
 
   const handleOnDragStop = (
-    id: number,
+    id: string,
     data: { position: NotePosition; size: NoteSize; text: string }
   ) => {
     updateNote(id, data);
   };
 
   const handleOnResizeStop = (
-    id: number,
+    id: string,
     data: { position: NotePosition; size: NoteSize; text: string }
   ) => {
     updateNote(id, data);
   };
 
   const handleOnTextChange = (
-    id: number,
+    id: string,
     data: { position: NotePosition; size: NoteSize; text: string }
   ) => {
     updateNote(id, data);
   };
 
-  const handleOnRemoveClick = (id: number) => {
+  const handleOnRemoveClick = (id: string) => {
     removeNote(id);
   };
 
@@ -193,9 +193,6 @@ const HomeNotes: React.FC = () => {
         }}
       >
         <Description>
-          {/* A lil online real-time environment to experience, so you might also
-          see other users who are discovering this website right now, have a
-          small conversation and get to know about this tool :D */}
           That&apos;s just one of the features of this tool. It is currently
           what there is in the app. But, There&apos;s more for you coming down
           the line, scroll down and you will find em out!
