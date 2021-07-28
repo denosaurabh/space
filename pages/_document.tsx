@@ -1,11 +1,9 @@
 import React, { ReactElement } from 'react';
 import NextDocument, { Html, Head, Main, NextScript } from 'next/document';
-import { getCssString, globalStyles } from '@styled';
+import { getCssString } from '@styled';
 
 export default class Document extends NextDocument {
   render(): ReactElement {
-    globalStyles();
-
     return (
       <Html lang="en">
         <Head>
@@ -40,7 +38,7 @@ export default class Document extends NextDocument {
           <link rel="manifest" href="/manifest.json" />
           <link rel="shortcut icon" href="/assets/favicon.ico" />
         </Head>
-        <body>
+        <body className="">
           <Main />
           <NextScript />
         </body>

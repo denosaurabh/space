@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { NotePosition, NoteSize } from '@lib/store/notes';
 import useSettings from '@state/settings';
+import isDblTouchTap from '@utils/doubleTouchTap';
 
 const Selection = styled('div', {
   position: 'fixed',
@@ -22,6 +23,7 @@ interface GridCanvasI {
     position: NotePosition;
     size: NoteSize;
   }) => void;
+  onDoubleClick: ({ pos }: { pos: NotePosition }) => void;
 }
 
 const GridCanvas: React.FC<GridCanvasI> = ({
@@ -31,6 +33,7 @@ const GridCanvas: React.FC<GridCanvasI> = ({
   gridSize,
   enableCanvas,
   onSelectionComplete,
+  onDoubleClick,
 }) => {
   const isDarkTheme = useSettings((state) => state.darkTheme);
 
@@ -168,12 +171,30 @@ const GridCanvas: React.FC<GridCanvasI> = ({
     }
   };
 
+  const onDoubleClickHandler = (e, type = 'mouse') => {
+    if (!canvasRef.current) return;
+
+    const { top, left } = canvasRef.current.getBoundingClientRect();
+
+    const x = type === 'mouse' ? e.clientX : e.touches[0].clientX;
+    const y = type === 'mouse' ? e.clientY : e.touches[0].clientY;
+
+    const pos = { x: x - left, y: y - top };
+    onDoubleClick({ pos });
+  };
+
   return (
     <>
       <canvas
         ref={canvasRef}
         className={className}
         onMouseDown={onMouseDownHandler}
+        onDoubleClick={onDoubleClickHandler}
+        onTouchStart={(e) => {
+          if (isDblTouchTap(e)) {
+            onDoubleClickHandler(e, 'touch');
+          }
+        }}
         style={{
           zIndex: 100,
           opacity: enableCanvas ? 1 : 0,

@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+
 import { styled } from '@styled';
 
 import Page from '@container';
@@ -12,52 +12,56 @@ import useNotes from '@state/notes';
 
 import { Note, NotePosition, NoteSize, NotesState } from '@lib/store/notes';
 import useSettings from '@state/settings';
+import { useEffect } from 'react';
 
 const HomeContainer = styled('div', {
   display: 'flex',
   height: '100%',
+  minHeight: '100vh',
 
   backgroundColor: '$grey-100',
 });
 
 const Home: React.FC = () => {
+  const router = useRouter();
+  const version = useSettings((state) => state.version);
+
   const {
     notesState,
-    currentCollection,
     addNote,
     updateNote,
     removeNote,
     changeCurrentCollection,
   } = useNotes((state: NotesState) => state);
 
+  useEffect(() => {
+    changeCurrentCollection(`${router.query.id}`);
+  }, [, router.query.id, changeCurrentCollection, version, router]);
+
   const { enableGrid, gridSize } = useSettings((state) => state.notes);
 
-  useEffect(() => {
-    changeCurrentCollection('0');
-  }, [changeCurrentCollection]);
-
   const handleOnDragStop = (
-    id: number,
+    id: string,
     data: { position: NotePosition; size: NoteSize; text: string }
   ) => {
     updateNote(id, data);
   };
 
   const handleOnResizeStop = (
-    id: number,
+    id: string,
     data: { position: NotePosition; size: NoteSize; text: string }
   ) => {
     updateNote(id, data);
   };
 
   const handleOnTextChange = (
-    id: number,
+    id: string,
     data: { position: NotePosition; size: NoteSize; text: string }
   ) => {
     updateNote(id, data);
   };
 
-  const handleOnRemoveClick = (id: number) => {
+  const handleOnRemoveClick = (id: string) => {
     removeNote(id);
   };
 
@@ -77,6 +81,17 @@ const Home: React.FC = () => {
     }
   };
 
+  const onDoubleClick = ({ pos }) => {
+    addNote({
+      position: pos,
+      size: {
+        width: 200,
+        height: 300,
+      },
+      text: '',
+    });
+  };
+
   return (
     <Page>
       <Head>
@@ -92,23 +107,26 @@ const Home: React.FC = () => {
             height: '100%',
           }}
           onSelectionComplete={handleOnSelectionComplete}
+          onDoubleClick={onDoubleClick}
           enableCanvas={enableGrid}
           gridSize={gridSize}
         >
-          {Object.values(notesState[currentCollection].notes).map(
-            (note: Note, i) => (
-              <NoteBox
-                key={i}
-                {...note}
-                boundClassName={'notes-container'}
-                onDragStop={handleOnDragStop}
-                onRemoveClick={handleOnRemoveClick}
-                onResizeStop={handleOnResizeStop}
-                onTextChange={handleOnTextChange}
-                gridSize={gridSize}
-              />
-            )
-          )}
+          {router.query.id
+            ? Object.values(notesState[`${router.query.id}`].notes).map(
+                (note: Note, i) => (
+                  <NoteBox
+                    key={i}
+                    {...note}
+                    boundClassName={'notes-container'}
+                    onDragStop={handleOnDragStop}
+                    onRemoveClick={handleOnRemoveClick}
+                    onResizeStop={handleOnResizeStop}
+                    onTextChange={handleOnTextChange}
+                    gridSize={gridSize}
+                  />
+                )
+              )
+            : null}
         </AllNotesContainer>
 
         <NotesCollectionSidebar />

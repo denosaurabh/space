@@ -3,7 +3,7 @@
   "background_color": "#F8F9FA",
   "display": "standalone",
   "scope": "/",
-  "start_url": "/",
+  "start_url": "/notes",
   "name": "Space",
   "short_name": "Space",
   "description": "Productivity & Management Tool",

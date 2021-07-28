@@ -1,4 +1,7 @@
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+import { useShortcuts } from 'react-shortcuts-hook';
+
 import { styled } from '@styled';
 
 import {
@@ -17,14 +20,13 @@ import {
 
 import CollectionBox from '@shared/notes/collectionBox';
 
+import useNotes from '@state/notes';
+import { NotesCollection } from '@lib/store/notes';
+
 const CreateCollection = dynamic(
   () => import('@shared/notes/createCollection'),
   { ssr: false }
 );
-
-import useNotes from '@state/notes';
-import React from 'react';
-import { NotesCollection } from '@lib/store/notes';
 
 const NotesCollectionContainer = styled('div', {
   height: '100%',
@@ -39,24 +41,61 @@ const NotesCollectionContainer = styled('div', {
 });
 
 const NotesCollectionSidebar: React.FC = () => {
-  const { currentCollection, changeCurrentCollection, notesState } = useNotes(
-    (state) => ({
-      currentCollection: state.currentCollection,
-      changeCurrentCollection: state.changeCurrentCollection,
-      notesState: state.notesState,
-    })
+  const { notesState, currentCollection } = useNotes((state) => ({
+    notesState: state.notesState,
+    currentCollection: state.currentCollection,
+  }));
+
+  const router = useRouter();
+
+  const changeCurrentCollectionHandler = (id: string) => {
+    router.push(`/notes/${id}`);
+  };
+
+  useShortcuts(
+    ['ArrowUp'],
+    () => {
+      console.log('up', currentCollection);
+
+      const collectionsArr = Object.keys(notesState);
+      const currentCollectionIndex = collectionsArr.indexOf(currentCollection);
+
+      const previousNo = currentCollectionIndex - 1;
+
+      const previousCollection = collectionsArr[previousNo];
+      console.log(previousNo);
+
+      if (previousNo >= 0) {
+        router.push(`/notes/${previousCollection}`);
+      }
+    },
+    [currentCollection]
   );
 
-  const changeCurrentCollectionHandler = (id) => {
-    changeCurrentCollection(id);
-  };
+  useShortcuts(
+    ['ArrowDown'],
+    () => {
+      console.log('down!', currentCollection);
+
+      const collectionsArr = Object.keys(notesState);
+      const currentCollectionIndex = collectionsArr.indexOf(currentCollection);
+
+      const nextCollection = collectionsArr[currentCollectionIndex + 1];
+      console.log(currentCollectionIndex + 1);
+
+      if (nextCollection) {
+        router.push(`/notes/${nextCollection}`);
+      }
+    },
+    [currentCollection]
+  );
 
   return (
     <NotesCollectionContainer>
       {Object.values(notesState).map((el: NotesCollection, i) => {
         const firstString = el.name[0];
 
-        const isCurrentCollection = el.id == currentCollection;
+        const isCurrentCollection = el.slug === router?.query?.id;
 
         return (
           <ContextMenuRoot key={i}>
@@ -64,7 +103,10 @@ const NotesCollectionSidebar: React.FC = () => {
               <Root key={i} delayDuration={300}>
                 <TooltipTrigger>
                   <CollectionBox
-                    onClick={() => changeCurrentCollectionHandler(el.id)}
+                    onClick={() => {
+                      console.log(el.slug);
+                      changeCurrentCollectionHandler(el.slug);
+                    }}
                     css={{
                       backgroundColor: isCurrentCollection
                         ? '$grey-300'

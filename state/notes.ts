@@ -1,17 +1,20 @@
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
 import produce from 'immer';
+import { nanoid } from 'nanoid';
 
 import { NotesState } from '@lib/store/notes';
 import useSettings from '@state/settings';
+import slugify from '@utils/slug';
 
 const useNotes = create<NotesState>(
   persist(
     (set) => ({
-      currentCollection: '0',
+      currentCollection: 'home',
       notesState: {
-        '0': {
+        home: {
           id: '0',
+          slug: 'home',
           name: 'Home',
           icon: '',
           notes: {},
@@ -27,11 +30,15 @@ const useNotes = create<NotesState>(
       createCollection: (data) => {
         set(
           produce((draft) => {
-            const newCollectionId = Object.keys(draft.notesState).length;
+            const newCollectionId = nanoid();
+            const { name } = data;
 
-            draft.notesState[newCollectionId] = {
+            const slug = slugify(name);
+
+            draft.notesState[slug] = {
               id: newCollectionId,
-              name: data.name,
+              slug,
+              name,
               icon: '',
               notes: {},
             };
@@ -43,8 +50,7 @@ const useNotes = create<NotesState>(
           produce((draft) => {
             const collectionDraft = draft.notesState[draft.currentCollection];
 
-            const allNotesIDs = Object.keys(collectionDraft.notes);
-            const newNoteId = allNotesIDs.length;
+            const newNoteId = nanoid();
 
             collectionDraft.notes[newNoteId] = {
               id: newNoteId,
@@ -71,6 +77,20 @@ const useNotes = create<NotesState>(
             const collectionDraft = draft.notesState[draft.currentCollection];
 
             delete collectionDraft.notes[id];
+          })
+        );
+      },
+      migrateNotesState: (newState, currentCollection) => {
+        /* 
+        * This is a bit of a hack, but it's the only way I could think of to // hmm, that's a suggestion BY Github CoPilot
+
+        But, what I am saying is that, this is a function only for migration purposes, beware before using it for other purposes.
+        */
+
+        set(
+          produce((draft) => {
+            draft.notesState = newState;
+            draft.currentCollection = currentCollection;
           })
         );
       },

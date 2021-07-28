@@ -5,9 +5,11 @@ export interface NotesSettings {
 }
 
 export interface SettingsStore {
+  version: string;
   storage: 'localStorage';
   darkTheme: boolean;
   notes: NotesSettings;
+  setNewVersion: (version: string) => void;
   toggleTheme: () => void;
   toggleGrid: (checked: boolean) => void;
   changeGridSize: (size: number) => void;

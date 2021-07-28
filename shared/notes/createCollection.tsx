@@ -7,7 +7,6 @@ import {
   StyledOverlay as AlertDialogStyledOverlay,
   StyledContent as AlertDialogStyledContent,
   StyledTitle as AlertDialogTitle,
-  StyledDescription as AlertDialogDescription,
   StyledCancel as AlertDialogCancel,
   StyledAction as AlertDialogAction,
 } from '@components/alertDialog';
@@ -25,12 +24,15 @@ const PlusStyledSvg = styled(PlusSvg, {
 const CreateCollection: React.FC = () => {
   const [name, setName] = useState('');
 
-  const { createCollection } = useNotes((state) => ({
+  const { createCollection, notesState } = useNotes((state) => ({
     createCollection: state.createCollection,
+    notesState: state.notesState,
   }));
 
   const onAddedNewCollectionClick = () => {
     if (name.length === 0) return;
+
+    console.log(notesState);
 
     createCollection({ name });
   };
@@ -45,18 +47,18 @@ const CreateCollection: React.FC = () => {
       <AlertDialogStyledOverlay />
       <AlertDialogStyledContent>
         <AlertDialogTitle>Add Collection</AlertDialogTitle>
-        <AlertDialogDescription>
-          <Input
-            label="Name"
-            type="name"
-            placeholder="Work Notes"
-            value={name}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setName(e.target.value)
-            }
-            required
-          />
-        </AlertDialogDescription>
+        <Input
+          label="Name"
+          type="name"
+          placeholder="Work Notes"
+          value={name}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setName(e.target.value)
+          }
+          css={{ marginBottom: '4rem' }}
+          required
+        />
+
         <AlertDialogAction
           onClick={() => onAddedNewCollectionClick()}
           disabled={name.length === 0}

@@ -28,6 +28,10 @@ const StyledContent = styled(Content, {
   fontFamily: '$inter',
   fontSize: '1.4rem',
   color: '$grey-100',
+
+  '@mobile': {
+    padding: '0.7rem 0.7rem 0.7rem 1.5rem',
+  },
 });
 
 const StyledClose = styled(Close, {
@@ -44,6 +48,10 @@ const StyledClose = styled(Close, {
 
   transition: '$medium',
 
+  '@mobile': {
+    padding: '0.8rem 1rem',
+  },
+
   '&:hover': {
     cursor: 'pointer',
     backgroundColor: '$grey-200',
@@ -52,6 +60,10 @@ const StyledClose = styled(Close, {
 
 const StyledArrow = styled(Arrow, {
   color: '$grey-800',
+
+  '@mobile': {
+    opacity: '0',
+  },
 });
 
 export { Root, StyledTrigger, Anchor, StyledContent, StyledClose, StyledArrow };

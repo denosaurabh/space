@@ -1,10 +1,9 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
+name: Feature update
+about: Suggest an update for a previous feature in the app
 title: ''
 labels: ''
 assignees: ''
-
 ---
 
 **Is your feature request related to a problem? Please describe.**

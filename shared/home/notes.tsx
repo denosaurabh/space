@@ -105,6 +105,18 @@ const HomeNotes: React.FC = () => {
     }
   };
 
+  const onDoubleClick = ({ pos }) => {
+    console.log(pos);
+
+    addNote({
+      position: pos,
+      size: {
+        width: 200,
+        height: 300,
+      },
+      text: '',
+    });
+  };
   return (
     <Container>
       <StepsContainer
@@ -146,6 +158,7 @@ const HomeNotes: React.FC = () => {
         canvasClassName="home-notes"
         containerClassName="home-notes-container"
         onSelectionComplete={handleOnSelectionComplete}
+        onDoubleClick={onDoubleClick}
         enableCanvas={true}
         gridSize={10}
       >

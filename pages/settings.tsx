@@ -1,4 +1,7 @@
+import { useShortcuts } from 'react-shortcuts-hook';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+
 import { styled } from '@styled';
 
 import Seperator from '@components/separator';
@@ -9,6 +12,7 @@ import Page from '@container';
 const SettingsContainer = styled('div', {
   width: '100%',
   height: '100%',
+  minHeight: '100vh',
 
   padding: '2rem',
 
@@ -38,6 +42,10 @@ const Heading = styled('h1', {
 });
 
 const Settings: React.FC = () => {
+  const router = useRouter();
+
+  useShortcuts(['escape'], () => router.back(), []);
+
   return (
     <Page>
       <Head>

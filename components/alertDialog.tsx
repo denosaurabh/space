@@ -8,7 +8,7 @@ import {
   Cancel,
   Action,
 } from '@radix-ui/react-alert-dialog';
-import { styled } from '@styled';
+import { styled, darkTheme } from '@styled';
 
 const StyledTrigger = styled(Trigger, {
   backgroundColor: 'transparent',
@@ -33,12 +33,20 @@ const StyledContent = styled(Content, {
   backgroundColor: '$grey-100',
   borderRadius: '1.6rem',
   padding: '4rem 3.5rem',
+
+  [`.${darkTheme} &`]: {
+    backgroundColor: '$grey-100',
+  },
 });
 
 const StyledTitle = styled(Title, {
   fontFamily: '$inter',
   fontSize: '4rem',
   marginBottom: '3rem',
+
+  [`.${darkTheme} &`]: {
+    color: '$grey-700',
+  },
 });
 
 const StyledDescription = styled(Description, {
