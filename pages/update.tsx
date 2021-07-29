@@ -1,18 +1,24 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { GetStaticProps } from 'next';
 
 import { styled } from '@styled';
 
 import useSettings from '@state/settings';
 import Page from '@layouts/page';
 import Button from '@components/button';
-import Seperator from '@components/separator';
-import useNotes from '@state/notes';
+// import Seperator from '@components/separator';
+import ReleaseBox from '@components/releaseBox';
+// import WarningBox from '@components/warningBox';
 
-import status from '@utils/statusText';
+// import useNotes from '@state/notes';
+
+// import status from '@utils/statusText';
 import { convertDataVersion } from '@utils/versionMigration';
-import WarningBox from '@components/warningBox';
-import { NotesCollection } from '@lib/store/notes';
+import useNotes from '@state/notes';
+// import { NotesCollection } from '@lib/store/notes';
+
+/*
 
 declare global {
   interface Window {
@@ -29,7 +35,11 @@ interface CurrentStepState {
   };
 }
 
-const Update: React.FC = () => {
+interface UpdateProps {
+  latestRelease: { name: string; body: string };
+}
+
+const Update: React.FC<UpdateProps> = ({ latestRelease }) => {
   const [notesData, setNotesData] = useState<{
     currentCollection: string;
     notesState: { [key: string]: NotesCollection };
@@ -58,9 +68,10 @@ const Update: React.FC = () => {
     version: state.version,
     setNewVersion: state.setNewVersion,
   }));
-  const { migrateNotesState } = useNotes((state) => ({
-    migrateNotesState: state.migrateNotesState,
-  }));
+
+  // const { migrateNotesState } = useNotes((state) => ({
+  //   migrateNotesState: state.migrateNotesState,
+  // }));
 
   const onNewUserContinueClick = () => {
     setNewVersion(process.env.NEXT_PUBLIC_VERSION);
@@ -149,8 +160,21 @@ const Update: React.FC = () => {
         },
       });
 
-      console.log(updatedNotesState);
-      migrateNotesState(updatedNotesState, updatedCurrentCollection);
+      console.log(
+        updatedNotesState,
+        updatedCurrentCollection,
+        'need to save this migration'
+      );
+
+      // const notesStore = JSON.parse(localStorage.getItem('notesStorage'));
+      // const {
+      //   state: { currentCollection, notesState },
+      //   version,
+      // } = notesStore;
+
+      // console.log(notesStore);
+
+      // migrateNotesState(updatedNotesState, updatedCurrentCollection);
     } catch (err) {
       setCurrentStepNo({
         ...currentStepNo,
@@ -240,7 +264,7 @@ const Update: React.FC = () => {
             disabled={currentStepNo[1].status !== 'success'} // Disable when previous step didn't succeeded
             onClick={onConvertDataClick}
           >
-            Convert data to new version
+            Convert data from v0.1.1 to v0.1.2
           </Button>
           <Text color={currentStepNo[2].status}>
             {status(currentStepNo[2].status)}
@@ -260,7 +284,8 @@ const Update: React.FC = () => {
             >
               issue
             </a>
-            or email me at <b>denosaurabh@gmail.com</b>, to relove this problem
+            or email me at <b>denosaurabh@gmail.com</b>, to resolve this
+            problem.
           </WarningBox>
         )}
         <StepContainer>
@@ -295,63 +320,134 @@ const Update: React.FC = () => {
         <br />
         <br />
 
-        <Heading>Release Notes</Heading>
-        <UL>
-          <MiniHeading>New Stuff</MiniHeading>
-          <LI>
-            Now you can double click or touch on board to add a new note,
-            (Suggestion from a community member)
-          </LI>
-          <LI>
-            Themes are now get stored in your settings (localStorage) so you
-            don&apos;t have to set it every time.
-          </LI>
-          <LI>
-            New Keyboard Shortcuts (keyboard settings still in development)
-          </LI>
-        </UL>
+        <ReleaseBox heading={latestRelease.name} body={latestRelease.body} />
+      </Container>
+    </Page>
+  );
+};
 
-        <UL>
-          <MiniHeading>Changes</MiniHeading>
 
-          <LI>
-            Change from unsafe and bug prone `.length` for generating for ids,
-            to `nanoid`.
-            <a
-              href="https://github.com/ai/nanoid/"
-              rel="noreferrer"
-              target="_blank"
-            >
-              More About Nanoid
-            </a>
-          </LI>
-          <LI>Fixed theme colors of components like Alert Dialog and Switch</LI>
-          <LI>
-            Changing Notes Collections are now managed with URL (suggestion from
-            <a
-              href="https://github.com/Rishabh-Rathod"
-              rel="noreferrer"
-              target="_blank"
-            >
-              Rishabh Rathod
-            </a>
-            over
-            <a
-              href="https://github.com/DenoSaurabh/space/discussions/4"
-              rel="noreferrer"
-              target="_blank"
-            >
-              discussions
-            </a>
-            )
-          </LI>
-        </UL>
+*/
+
+interface UpdateProps {
+  latestRelease: { name: string; body: string };
+}
+
+const Update: React.FC<UpdateProps> = ({ latestRelease }) => {
+  const [completed, setCompleted] = useState(false);
+  const router = useRouter();
+
+  const { setNewVersion } = useSettings((state) => ({
+    setNewVersion: state.setNewVersion,
+  }));
+
+  useEffect(() => {
+    if (!window) return;
+
+    /* STEPS TO MIGRATE DATA
+
+    1. Backup the user data
+    2. Convert the data from v0.1.1 to v0.1.2
+    3. Back to Space
+    
+    */
+
+    const notesStore = JSON.parse(localStorage.getItem('notesStorage'));
+    const { state } = notesStore;
+    const { currentCollection, notesState } = state;
+
+    console.log(notesStore);
+
+    // 1. Backup the user data
+    localStorage.setItem('notesStorage_v0_1_1', JSON.stringify(notesStore));
+
+    // 2. Convert the data from v0.1.1 to v0.1.2
+    const migrate = async () => {
+      try {
+        const {
+          notesState: updatedNotesState,
+          currentCollection: updatedCurrentCollection,
+        } = await convertDataVersion({
+          from: 'v0.1.1',
+          to: 'v0.1.2',
+          data: {
+            currentCollection: currentCollection,
+            notesState: notesState,
+          },
+        });
+
+        console.log(
+          updatedNotesState,
+          updatedCurrentCollection,
+          'saving this migration'
+        );
+
+        // const updateNotesStore = {
+        //   state: {
+        //     currentCollection: updatedCurrentCollection,
+        //     notesState: updatedNotesState,
+        //   },
+        //   version,
+        // };
+
+        // localStorage.setItem('notesStorage', JSON.stringify(updateNotesStore));
+
+        useNotes.setState((state) => ({
+          ...state,
+          currentCollection: updatedCurrentCollection,
+          notesState: updatedNotesState,
+        }));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    migrate();
+
+    // 3. Back to Space
+    setCompleted(true);
+    setNewVersion(process.env.NEXT_PUBLIC_VERSION);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const onContinueClick = () => {
+    router.push('/notes/home');
+    // router.reload();
+  };
+
+  return (
+    <Page>
+      <Container>
+        <ReleaseBox heading={latestRelease.name} body={latestRelease.body} />
+
+        <Button disabled={!completed} onClick={onContinueClick}>
+          Use Space
+        </Button>
       </Container>
     </Page>
   );
 };
 
 export default Update;
+
+export const getStaticProps: GetStaticProps = async () => {
+  const res = await fetch(
+    `https://api.github.com/repos/denosaurabh/space/releases/latest`
+  );
+
+  const latestRelease = await res.json();
+
+  if (!latestRelease) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: { latestRelease },
+  };
+};
 
 const Container = styled('div', {
   maxWidth: '60%',
@@ -363,8 +459,6 @@ const Container = styled('div', {
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'flex-start',
-
-  gap: '3rem',
 
   '& a': {
     color: 'inherit',
@@ -380,77 +474,41 @@ const Container = styled('div', {
   },
 });
 
-const Heading = styled('h1', {
-  fontSize: '4rem',
-  fontWeight: '900',
-  color: '$grey-800',
-});
+// const Heading = styled('h1', {
+//   fontSize: '4rem',
+//   fontWeight: '900',
+//   color: '$grey-800',
+// });
 
-const Text = styled('p', {
-  fontSize: '1.6rem',
-  color: '$grey-800',
-  lineHeight: '25px',
+// const Text = styled('p', {
+//   fontSize: '1.6rem',
+//   color: '$grey-800',
+//   lineHeight: '25px',
 
-  variants: {
-    color: {
-      waiting: {
-        color: '$grey-800',
-      },
-      processing: {
-        color: '$yellow',
-      },
-      success: {
-        color: '$green',
-      },
-      failed: {
-        color: '$red',
-      },
-    },
-  },
-});
+//   variants: {
+//     color: {
+//       waiting: {
+//         color: '$grey-800',
+//       },
+//       processing: {
+//         color: '$yellow',
+//       },
+//       success: {
+//         color: '$green',
+//       },
+//       failed: {
+//         color: '$red',
+//       },
+//     },
+//   },
+// });
 
-const StepContainer = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
+// const StepContainer = styled('div', {
+//   display: 'flex',
+//   alignItems: 'center',
 
-  gap: '2rem',
+//   gap: '2rem',
 
-  fontWeight: 'bold',
-  fontSize: '2rem',
-});
-
-const UL = styled('ul', {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'flex-start',
-  justifyContent: 'center',
-  gap: '2rem',
-
-  listStyleType: 'unset',
-  listStylePosition: 'inside',
-
-  marginBottom: '4rem',
-
-  '@tablet': {
-    gap: '2rem',
-  },
-});
-
-const MiniHeading = styled('h6', {
-  fontSize: '1.8rem',
-  color: '$grey-800',
-
-  marginBottom: '2rem',
-});
-
-const LI = styled('li', {
-  fontSize: '1.6rem',
-  color: '$grey-700',
-
-  transition: '$fast',
-
-  '&:hover': {
-    cursor: 'pointer',
-    color: '$grey-800',
-  },
-});
+//   fontWeight: 'bold',
+//   fontSize: '2rem',
+// });

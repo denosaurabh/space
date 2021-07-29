@@ -34,6 +34,8 @@ const Home: React.FC = () => {
     changeCurrentCollection,
   } = useNotes((state: NotesState) => state);
 
+  console.log(notesState, `notes[${router.query.id}]`);
+
   useEffect(() => {
     changeCurrentCollection(`${router.query.id}`);
   }, [, router.query.id, changeCurrentCollection, version, router]);

@@ -6,6 +6,7 @@ import { styled } from '@styled';
 
 import Header from '@components/header';
 import useSettings from '@state/settings';
+import ErrorBoundary from '@components/errorBoundary';
 
 const Container = styled('div', {
   width: '100%',
@@ -46,11 +47,13 @@ const Page: React.FC = ({ children }) => {
   useShortcuts(['alt', 't'], toggleTheme, []);
 
   return (
-    <Container>
-      <Header />
+    <ErrorBoundary>
+      <Container>
+        <Header />
 
-      <Box className="main-content">{children}</Box>
-    </Container>
+        <Box className="main-content">{children}</Box>
+      </Container>
+    </ErrorBoundary>
   );
 };
 
