@@ -11,6 +11,8 @@ import useNotes from '@state/notes';
 
 import status from '@utils/statusText';
 import { convertDataVersion } from '@utils/versionMigration';
+import WarningBox from '@components/warningBox';
+import { NotesCollection } from '@lib/store/notes';
 
 declare global {
   interface Window {
@@ -23,14 +25,22 @@ interface CurrentStepState {
   [key: number]: {
     step: number;
     status: 'waiting' | 'processing' | 'success' | 'failed';
+    [key: string]: unknown;
   };
 }
 
 const Update: React.FC = () => {
+  const [notesData, setNotesData] = useState<{
+    currentCollection: string;
+    notesState: { [key: string]: NotesCollection };
+  }>(null);
+
   const [currentStepNo, setCurrentStepNo] = useState<CurrentStepState>({
     1: {
       step: 1,
       status: 'waiting',
+      noFileSystem: false,
+      copiedToClipboard: false,
     },
     2: {
       step: 2,
@@ -48,14 +58,9 @@ const Update: React.FC = () => {
     version: state.version,
     setNewVersion: state.setNewVersion,
   }));
-  const { currentCollection, notesState, migrateNotesState } = useNotes(
-    (state) => ({
-      currentCollection: state.currentCollection,
-      notesState: state.notesState,
-      changeCurrentCollection: state.changeCurrentCollection,
-      migrateNotesState: state.migrateNotesState,
-    })
-  );
+  const { migrateNotesState } = useNotes((state) => ({
+    migrateNotesState: state.migrateNotesState,
+  }));
 
   const onNewUserContinueClick = () => {
     setNewVersion(process.env.NEXT_PUBLIC_VERSION);
@@ -72,8 +77,8 @@ const Update: React.FC = () => {
 
     const data = {
       version,
-      currentCollection,
-      notesState,
+      currentCollection: notesData.currentCollection,
+      notesState: notesData.notesState,
     };
 
     const options = {
@@ -100,7 +105,28 @@ const Update: React.FC = () => {
     } catch (err) {
       console.log(err);
 
-      setCurrentStepNo({ ...currentStepNo, 1: { step: 1, status: 'failed' } });
+      try {
+        if (window) {
+          localStorage.setItem('notesStorage_v0.1.1', JSON.stringify(data));
+        }
+
+        await window.navigator.clipboard.writeText(JSON.stringify(data));
+
+        setCurrentStepNo({
+          ...currentStepNo,
+          1: {
+            step: 1,
+            status: 'success',
+            noFileSystem: true,
+            copiedToClipboard: true,
+          },
+        });
+      } catch (err) {
+        setCurrentStepNo({
+          ...currentStepNo,
+          1: { step: 1, status: 'failed', noFileSystem: false },
+        });
+      }
     }
   };
 
@@ -118,15 +144,18 @@ const Update: React.FC = () => {
         from: 'v0.1.1',
         to: 'v0.1.2',
         data: {
-          currentCollection,
-          notesState,
+          currentCollection: notesData.currentCollection,
+          notesState: notesData.notesState,
         },
       });
 
       console.log(updatedNotesState);
       migrateNotesState(updatedNotesState, updatedCurrentCollection);
     } catch (err) {
-      setCurrentStepNo({ ...currentStepNo, 2: { step: 2, status: 'failed' } });
+      setCurrentStepNo({
+        ...currentStepNo,
+        2: { step: 2, status: 'failed', err },
+      });
     }
 
     setCurrentStepNo({ ...currentStepNo, 2: { step: 2, status: 'success' } });
@@ -148,6 +177,18 @@ const Update: React.FC = () => {
 
   useEffect(() => {
     console.log(currentStepNo);
+
+    if (!window) return;
+
+    const notes = localStorage.getItem('notesStorage');
+
+    const {
+      state: { currentCollection, notesState },
+    } = JSON.parse(localStorage.getItem('notesStorage'));
+
+    setNotesData({ currentCollection, notesState });
+
+    console.log(JSON.parse(notes));
   }, [currentStepNo]);
 
   return (
@@ -175,9 +216,24 @@ const Update: React.FC = () => {
           <Text>Step 1 &nbsp; &rarr;</Text>
           <Button onClick={onBackupDataClick}>Backup your data</Button>
           <Text color={currentStepNo[1].status}>
-            {status(currentStepNo[1].status)}
+            {currentStepNo[1].copiedToClipboard
+              ? 'Copied To Clipboard!'
+              : status(currentStepNo[1].status)}
           </Text>
         </StepContainer>
+        {currentStepNo[1].noFileSystem && (
+          <WarningBox status="warning">
+            The data backing process has been failed, due to the user has
+            aborted the backup or the feature is not supported in the browser.
+            <br />
+            In this case, don&apos;t worry, we have copied the data onto your
+            clipboard, so please create a new file with `.json` extension in
+            your local machine and save the data into it.
+            <br />
+            Backing up your data will help ensure safety while doing this
+            migration.
+          </WarningBox>
+        )}
         <StepContainer>
           <Text>Step 2 &nbsp; &rarr;</Text>
           <Button
@@ -190,6 +246,23 @@ const Update: React.FC = () => {
             {status(currentStepNo[2].status)}
           </Text>
         </StepContainer>
+        {currentStepNo[1].status === 'failed' && (
+          <WarningBox status="warning">
+            The data conversion has been failed.
+            <br />
+            ERR: {currentStepNo[2].err}
+            <br />
+            Please open a issue
+            <a
+              href="https://github.com/DenoSaurabh/space/issues/new/choose"
+              target="_blank"
+              rel="noreferrer"
+            >
+              issue
+            </a>
+            or email me at <b>denosaurabh@gmail.com</b>, to relove this problem
+          </WarningBox>
+        )}
         <StepContainer>
           <Text>Step 3 &nbsp; &rarr;</Text>
           <Button

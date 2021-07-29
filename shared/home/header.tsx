@@ -184,7 +184,8 @@ const Header: React.FC = () => {
             },
           }}
         >
-          BETA v0.1.1
+          {process.env.NEXT_PUBLIC_VERSION_ALPHA ? 'ALPHA' : 'BETA'}&nbsp;v
+          {process.env.NEXT_PUBLIC_VERSION}
         </Button>
         <Link href="https://github.com/DenoSaurabh/space/releases" passHref>
           <a target="_blank" rel="noreferrer">

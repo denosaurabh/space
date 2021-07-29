@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
@@ -12,7 +13,6 @@ import useNotes from '@state/notes';
 
 import { Note, NotePosition, NoteSize, NotesState } from '@lib/store/notes';
 import useSettings from '@state/settings';
-import { useEffect } from 'react';
 
 const HomeContainer = styled('div', {
   display: 'flex',
@@ -91,6 +91,10 @@ const Home: React.FC = () => {
       text: '',
     });
   };
+
+  useEffect(() => {
+    console.log('notes have loaded!');
+  }, []);
 
   return (
     <Page>

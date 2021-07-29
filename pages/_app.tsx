@@ -6,7 +6,10 @@ import { globalStyles } from '@styled';
 import useSettings from '@state/settings';
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
-  const isDarkTheme = useSettings((state) => state.darkTheme);
+  const { isDarkTheme, setUserOld } = useSettings((state) => ({
+    isDarkTheme: state.darkTheme,
+    setUserOld: state.setUserOld,
+  }));
 
   globalStyles();
 
@@ -18,7 +21,12 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
     } else {
       document.body.classList.remove('dark-theme');
     }
-  }, [isDarkTheme]);
+
+    return () => {
+      console.log('bye!');
+      setUserOld();
+    };
+  }, [isDarkTheme, setUserOld]);
 
   return (
     <IdProvider>

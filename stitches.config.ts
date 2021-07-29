@@ -21,10 +21,14 @@ const { css, styled, global, getCssString, theme } = createCss({
       'grey-800': '#343a40',
       'grey-900': '#212529',
 
+      'yellow-light': '#fffed6',
       yellow: '#ffb703',
+      'yellow-dark': '#ff7b00',
+
       orange: '#ff6d00',
       green: '#34a0a4',
       red: '#f94144',
+      'red-light': '#fff0f3',
 
       'dreamy-gradients-yellow': `#FFAA6C`,
       'dreamy-gradients-orange': `radial-gradient(111.63% 111.63% at 42.64% -5.82%, #FFA800 33.65%, #FF0000 44.58%, #FF47D6 100%)`,
