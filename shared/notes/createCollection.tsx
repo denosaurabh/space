@@ -24,15 +24,13 @@ const PlusStyledSvg = styled(PlusSvg, {
 const CreateCollection: React.FC = () => {
   const [name, setName] = useState('');
 
-  const { createCollection, notesState } = useNotes((state) => ({
+  const { createCollection } = useNotes((state) => ({
     createCollection: state.createCollection,
     notesState: state.notesState,
   }));
 
   const onAddedNewCollectionClick = () => {
     if (name.length === 0) return;
-
-    console.log(notesState);
 
     createCollection({ name });
   };

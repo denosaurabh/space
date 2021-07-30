@@ -25,7 +25,6 @@ export default class Document extends NextDocument {
           />
           <meta name="format-detection" content="telephone=no" />
           <meta name="mobile-web-app-capable" content="yes" />
-          {/* <meta name='msapplication-config' content='/assets/browserconfig.xml' /> */}
           <meta name="msapplication-TileColor" content="#F8F9FA" />
           <meta name="msapplication-tap-highlight" content="no" />
           <meta name="theme-color" content="#6C757D" />

@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { Rnd } from 'react-rnd';
 import { styled } from '@styled';
+
 import { NewNote, Note } from '@lib/store/notes';
 
 import {
@@ -11,6 +12,8 @@ import {
   StyledClose as PopoverClose,
   StyledArrow as PopoverArrow,
 } from '@components/popover';
+
+import mRound from '@utils/mRound';
 
 const NoteContainer = styled('div', {
   width: '100%',
@@ -132,7 +135,14 @@ const NoteBox: React.FC<NoteBoxProps> = ({
   const onNoteDragStop = (e, data) => {
     const { x, y } = data;
 
-    onDragStop(id, { position: { x, y }, size, text });
+    onDragStop(id, {
+      position: {
+        x: mRound(x, gridSize),
+        y: mRound(y, gridSize),
+      },
+      size,
+      text,
+    });
   };
 
   const onNoteResizeStop = (e, dir, el, delta, updatedPosition) => {

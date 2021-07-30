@@ -43,8 +43,6 @@ const Update: React.FC<UpdateProps> = ({ latestRelease }) => {
     const { state } = notesStore;
     const { currentCollection, notesState } = state;
 
-    console.log(notesStore);
-
     // 1. Backup the user data
     localStorage.setItem('notesStorage_v0_1_1', JSON.stringify(notesStore));
 
