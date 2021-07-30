@@ -2,20 +2,21 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useShortcuts } from 'react-shortcuts-hook';
 
 import { styled } from '@styled';
 import IconBox from '@components/iconBox';
 import Badge from '@components/badge';
+import ThemeButton from '@components/themeButton';
+import Button from '@components/button';
 
 import ReaderSvg from '@assets/svg/Reader.svg';
 import PencilSvg from '@assets/svg/Pencil.svg';
 import SettingSvg from '@assets/svg/Setting.svg';
 import TimerSvg from '@assets/svg/Timer.svg';
 import Calendarvg from '@assets/svg/Calendar.svg';
-import ThemeButton from './themeButton';
-import Button from './button';
+
 import useNotes from '@state/notes';
-import { useShortcuts } from 'react-shortcuts-hook';
 
 const HeaderStyled = styled('header', {
   width: '100%',
