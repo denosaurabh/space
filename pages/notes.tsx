@@ -36,6 +36,17 @@ const Home: React.FC = () => {
     changeCurrentCollection('0');
   }, [changeCurrentCollection]);
 
+  useEffect(() => {
+    // backing up data for any potential user who use the app daily and has its data
+
+    if (!window) return;
+
+    localStorage.setItem(
+      'notes_backup_pre_release_0_1_2',
+      JSON.stringify(notesState)
+    );
+  }, [notesState]);
+
   const handleOnDragStop = (
     id: number,
     data: { position: NotePosition; size: NoteSize; text: string }
