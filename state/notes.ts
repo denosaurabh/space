@@ -6,6 +6,7 @@ import { nanoid } from 'nanoid';
 import { NotesState } from '@lib/store/notes';
 import useSettings from '@state/settings';
 import slugify from '@utils/slug';
+import { convertDataVersion } from '@utils/versionMigration';
 
 const useNotes = create<NotesState>(
   persist(
@@ -80,23 +81,33 @@ const useNotes = create<NotesState>(
           })
         );
       },
-      migrateNotesState: (newState, currentCollection) => {
-        /* 
-        * This is a bit of a hack, but it's the only way I could think of to // hmm, that's a suggestion BY Github CoPilot
-
-        But, what I am saying is that, this is a function only for migration purposes, beware before using it for other purposes.
-        */
-
-        set(
-          produce((draft) => {
-            draft.notesState = newState;
-            draft.currentCollection = currentCollection;
-          })
-        );
-      },
     }),
     {
       name: 'notesStorage',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      migrate: async (persistedState, version): Promise<any> => {
+        console.log(
+          `Current DB version: ${version}, converting data to new version....`
+        );
+
+        const {
+          notesState: updatedNotesState,
+          currentCollection: updatedCurrentCollection,
+        } = await convertDataVersion({
+          from: 'v0.1.1',
+          to: 'v0.1.2',
+          data: {
+            currentCollection: persistedState.currentCollection,
+            notesState: persistedState.notesState,
+          },
+        });
+
+        return {
+          currentCollection: updatedCurrentCollection,
+          notesState: updatedNotesState,
+        };
+      },
+      version: 2,
       getStorage: () => {
         const { storage } = useSettings.getState();
 

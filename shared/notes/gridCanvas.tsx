@@ -128,6 +128,7 @@ const GridCanvas: React.FC<GridCanvasI> = ({
 
     // Cursor to Crosshair
     document.body.style.cursor = 'crosshair';
+    document.body.style.userSelect = 'none';
 
     mouseDownPos = { x: e.clientY, y: e.clientX };
     setSelection({ ...selection, x: e.clientY, y: e.clientX });
@@ -141,6 +142,7 @@ const GridCanvas: React.FC<GridCanvasI> = ({
 
     // Cursor to Crosshair
     document.body.style.cursor = 'default';
+    document.body.style.userSelect = 'unset';
 
     // Calling the Func
     onSelectionComplete({

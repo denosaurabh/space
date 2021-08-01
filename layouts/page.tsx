@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import { useShortcuts } from 'react-shortcuts-hook';
 
 import { styled } from '@styled';
@@ -26,23 +26,14 @@ const Box = styled('main', {
 });
 
 const Page: React.FC = ({ children }) => {
-  const router = useRouter();
-
-  const { theme, toggleTheme, version } = useSettings((state) => ({
+  const { theme, toggleTheme } = useSettings((state) => ({
     theme: state.darkTheme,
     toggleTheme: state.toggleTheme,
-    version: state.version,
   }));
 
   useEffect(() => {
     console.log('Page loaded');
-
-    if (process.env.NEXT_PUBLIC_VERSION !== version) {
-      router.push('/update');
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [, theme, version]);
+  }, [, theme]);
 
   useShortcuts(['alt', 't'], toggleTheme, []);
 

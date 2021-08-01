@@ -50,8 +50,4 @@ export interface NotesState {
       text: string;
     }
   ) => void;
-  migrateNotesState: (
-    newState: { [key: string]: NotesCollection },
-    currentCollection: string
-  ) => void;
 }
