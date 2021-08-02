@@ -7,12 +7,28 @@ import { SettingsStore } from '@lib/store/settings';
 const useSettings = create(
   persist<SettingsStore>(
     (set) => ({
+      newUser: true,
+      version: '0.1.1',
       storage: 'localStorage',
       darkTheme: false,
       notes: {
         enableGrid: true,
         gridSize: 10,
         gridColor: '#ccc',
+      },
+      setUserOld: () => {
+        set(
+          produce((draft) => {
+            draft.newUser = false;
+          })
+        );
+      },
+      setNewVersion: (version) => {
+        set(
+          produce((draft) => {
+            draft.version = version;
+          })
+        );
       },
       toggleTheme: () => {
         set(
@@ -47,7 +63,7 @@ const useSettings = create(
 
 useSettings.subscribe((state) => {
   if (process.env.NODE_ENV === 'development') {
-    console.log(state.notes);
+    console.log(state.version, state.storage, state.darkTheme, state.notes);
   }
 });
 

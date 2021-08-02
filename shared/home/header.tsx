@@ -143,7 +143,7 @@ const Header: React.FC = () => {
             },
           }}
         >
-          <Link href="/notes" passHref>
+          <Link href="/notes/home" passHref>
             <a>
               <Button color="dark" size="medium">
                 Get Right In
@@ -184,7 +184,8 @@ const Header: React.FC = () => {
             },
           }}
         >
-          Release v0.1.1
+          {process.env.NEXT_PUBLIC_VERSION_ALPHA ? 'ALPHA' : 'BETA'}&nbsp;v
+          {process.env.NEXT_PUBLIC_VERSION}
         </Button>
         <Link href="https://github.com/DenoSaurabh/space/releases" passHref>
           <a target="_blank" rel="noreferrer">

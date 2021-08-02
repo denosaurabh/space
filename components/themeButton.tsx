@@ -9,6 +9,8 @@ const ThemeSvgContainer = styled('button', {
   backgroundColor: 'transparent',
   transition: '$medium',
 
+  margin: '0 1rem',
+
   '& svg': {
     fill: '$grey-700',
   },
@@ -23,6 +25,7 @@ const ThemeButton: React.FC = () => {
     isDarkTheme: state.darkTheme,
     toggleTheme: state.toggleTheme,
   }));
+
   return (
     <ThemeSvgContainer>
       {isDarkTheme ? (

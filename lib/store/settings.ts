@@ -5,9 +5,13 @@ export interface NotesSettings {
 }
 
 export interface SettingsStore {
+  newUser: boolean;
+  version: string;
   storage: 'localStorage';
   darkTheme: boolean;
   notes: NotesSettings;
+  setUserOld: () => void;
+  setNewVersion: (version: string) => void;
   toggleTheme: () => void;
   toggleGrid: (checked: boolean) => void;
   changeGridSize: (size: number) => void;

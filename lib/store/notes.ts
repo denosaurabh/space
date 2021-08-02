@@ -9,7 +9,7 @@ export interface NoteSize {
 }
 
 export interface Note {
-  id: number;
+  id: string;
   position: NotePosition;
   size: NoteSize;
   text: string;
@@ -21,6 +21,7 @@ export interface Notes {
 
 export interface NotesCollection {
   id: string;
+  slug: string;
   name: string;
   icon: string;
   notes: Notes;
@@ -40,9 +41,9 @@ export interface NotesState {
   changeCurrentCollection: (collectionNo: string) => void;
   createCollection: (data: { name: string }) => void;
   addNote: (newNote: NewNote) => void;
-  removeNote: (noteId: number) => void;
+  removeNote: (noteId: string) => void;
   updateNote: (
-    id: number,
+    id: string,
     data: {
       position: NotePosition;
       size: NoteSize;

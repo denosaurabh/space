@@ -1,5 +1,5 @@
 import { Root, Thumb } from '@radix-ui/react-switch';
-import { styled } from '@styled';
+import { darkTheme, styled } from '@styled';
 
 const StyledSwitch = styled(Root, {
   appearance: 'none',
@@ -16,6 +16,14 @@ const StyledSwitch = styled(Root, {
   },
   '&[data-state="checked"]': {
     backgroundColor: '$grey-800',
+  },
+
+  [`.${darkTheme} &`]: {
+    backgroundColor: '$grey-200',
+
+    '&[data-state="checked"]': {
+      backgroundColor: '$grey-500',
+    },
   },
 });
 

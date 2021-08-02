@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { Rnd } from 'react-rnd';
 import { styled } from '@styled';
+
 import { NewNote, Note } from '@lib/store/notes';
 
 import {
@@ -11,6 +12,8 @@ import {
   StyledClose as PopoverClose,
   StyledArrow as PopoverArrow,
 } from '@components/popover';
+
+import mRound from '@utils/mRound';
 
 const NoteContainer = styled('div', {
   width: '100%',
@@ -31,7 +34,6 @@ const NoteContainer = styled('div', {
 const NoteHeader = styled('div', {
   display: 'flex',
   justifyContent: 'flex-end',
-  alignItems: 'center',
   width: '100%',
   height: '2.4rem',
   padding: '0 0.4rem',
@@ -67,13 +69,26 @@ const NoteContent = styled('textarea', {
   color: '$grey-900',
 });
 
+const CircleContainer = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+
+  width: '2rem',
+  height: '100%',
+
+  '&:hover': {
+    cursor: 'pointer',
+  },
+});
+
 const Circle = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
 
-  width: '1rem',
-  height: '1rem',
+  width: '2rem',
+  height: '100%',
 
   margin: '0 5px',
 
@@ -86,19 +101,23 @@ const Circle = styled('div', {
     border: '0.5px solid $grey-700',
     borderRadius: '9999px',
   },
+});
 
-  '&:hover': {
-    cursor: 'pointer',
-  },
+const ResizeBtn = styled('div', {
+  width: '100%',
+  height: '100%',
+
+  border: '1px solid $grey-600',
+  borderBottomRightRadius: '$small',
 });
 
 interface NoteBoxProps extends Note {
   boundClassName: string;
   gridSize: number;
-  onDragStop: (id: number, data: NewNote) => void;
-  onResizeStop: (id: number, data: NewNote) => void;
-  onTextChange: (id: number, data: NewNote) => void;
-  onRemoveClick: (noteId: number) => void;
+  onDragStop: (id: string, data: NewNote) => void;
+  onResizeStop: (id: string, data: NewNote) => void;
+  onTextChange: (id: string, data: NewNote) => void;
+  onRemoveClick: (noteId: string) => void;
 }
 
 const NoteBox: React.FC<NoteBoxProps> = ({
@@ -113,15 +132,17 @@ const NoteBox: React.FC<NoteBoxProps> = ({
   onRemoveClick,
   gridSize,
 }) => {
-  // const { updateNote, removeNote } = useNotes((state) => ({
-  //   updateNote: state.updateNote,
-  //   removeNote: state.removeNote,
-  // }));
-
   const onNoteDragStop = (e, data) => {
     const { x, y } = data;
 
-    onDragStop(id, { position: { x, y }, size, text });
+    onDragStop(id, {
+      position: {
+        x: mRound(x, gridSize),
+        y: mRound(y, gridSize),
+      },
+      size,
+      text,
+    });
   };
 
   const onNoteResizeStop = (e, dir, el, delta, updatedPosition) => {
@@ -155,6 +176,7 @@ const NoteBox: React.FC<NoteBoxProps> = ({
       dragGrid={[gridSize, gridSize]}
       dragHandleClassName="drag-header"
       bounds={`.${boundClassName}`}
+      cancel=".circle-container"
       enableResizing={{
         bottom: false,
         bottomLeft: false,
@@ -167,12 +189,28 @@ const NoteBox: React.FC<NoteBoxProps> = ({
       }}
       onDragStop={onNoteDragStop}
       onResizeStop={onNoteResizeStop}
+      resizeHandleComponent={{
+        bottomRight: <ResizeBtn />,
+      }}
+      resizeHandleStyles={{
+        bottomRight: {
+          position: 'absolute',
+          right: '0',
+          bottom: '0',
+
+          width: '1.2rem',
+          height: '1.2rem',
+        },
+      }}
+      enableUserSelectHack={false}
     >
       <NoteContainer>
         <NoteHeader className="drag-header">
           <PopoverRoot>
             <PopoverTrigger>
-              <Circle />
+              <CircleContainer className="circle-container">
+                <Circle />
+              </CircleContainer>
             </PopoverTrigger>
             <PopoverAnchor />
 
@@ -190,6 +228,7 @@ const NoteBox: React.FC<NoteBoxProps> = ({
           placeholder="Type something here ....."
           value={text}
           onChange={onNoteTextChange}
+          spellCheck={false}
         />
       </NoteContainer>
     </Rnd>

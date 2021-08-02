@@ -10,6 +10,15 @@ module.exports = withPlugins([withPWA], {
     disable: prod ? false : true,
     dest: 'public',
   },
+  async redirects() {
+    return [
+      {
+        source: '/notes',
+        destination: '/notes/home',
+        permanent: true,
+      },
+    ];
+  },
   webpack: (config /*{ dev, isServer }*/) => {
     // Replace React with PReact only in client production build
     // if (!dev && !isServer) {

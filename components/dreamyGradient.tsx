@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { styled } from '@styled';
 import { keyframes } from '@stitches/react';
 
@@ -76,9 +75,8 @@ const DreamyGradient: React.FC<DreamyGradientI> = ({
   return (
     <GradientContainer css={{ top, bottom, left, right }} animate={animate}>
       <GradientCircle color={`${color}`} />
-      {/* <GradientCircle color={`${color}-second`} /> */}
     </GradientContainer>
   );
 };
 
-export default memo(DreamyGradient);
+export default DreamyGradient;

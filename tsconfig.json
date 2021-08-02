@@ -10,7 +10,8 @@
       "@styled": ["./stitches.config.ts"],
       "@lib/*": ["lib/*"],
       "@annotations/*": ["annotations/*"],
-      "@assets/*": ["assets/*"]
+      "@assets/*": ["assets/*"],
+      "@utils/*": ["utils/*"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],

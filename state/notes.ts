@@ -1,17 +1,21 @@
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
 import produce from 'immer';
+import { nanoid } from 'nanoid';
 
 import { NotesState } from '@lib/store/notes';
 import useSettings from '@state/settings';
+import slugify from '@utils/slug';
+import { convertDataVersion } from '@utils/versionMigration';
 
 const useNotes = create<NotesState>(
   persist(
     (set) => ({
-      currentCollection: '0',
+      currentCollection: 'home',
       notesState: {
-        '0': {
+        home: {
           id: '0',
+          slug: 'home',
           name: 'Home',
           icon: '',
           notes: {},
@@ -27,11 +31,15 @@ const useNotes = create<NotesState>(
       createCollection: (data) => {
         set(
           produce((draft) => {
-            const newCollectionId = Object.keys(draft.notesState).length;
+            const newCollectionId = nanoid();
+            const { name } = data;
 
-            draft.notesState[newCollectionId] = {
+            const slug = slugify(name);
+
+            draft.notesState[slug] = {
               id: newCollectionId,
-              name: data.name,
+              slug,
+              name,
               icon: '',
               notes: {},
             };
@@ -43,8 +51,7 @@ const useNotes = create<NotesState>(
           produce((draft) => {
             const collectionDraft = draft.notesState[draft.currentCollection];
 
-            const allNotesIDs = Object.keys(collectionDraft.notes);
-            const newNoteId = allNotesIDs.length;
+            const newNoteId = nanoid();
 
             collectionDraft.notes[newNoteId] = {
               id: newNoteId,
@@ -77,6 +84,30 @@ const useNotes = create<NotesState>(
     }),
     {
       name: 'notesStorage',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      migrate: async (persistedState, version): Promise<any> => {
+        console.log(
+          `Current DB version: ${version}, converting data to new version....`
+        );
+
+        const {
+          notesState: updatedNotesState,
+          currentCollection: updatedCurrentCollection,
+        } = await convertDataVersion({
+          from: 'v0.1.1',
+          to: 'v0.1.2',
+          data: {
+            currentCollection: persistedState.currentCollection,
+            notesState: persistedState.notesState,
+          },
+        });
+
+        return {
+          currentCollection: updatedCurrentCollection,
+          notesState: updatedNotesState,
+        };
+      },
+      version: 2,
       getStorage: () => {
         const { storage } = useSettings.getState();
 

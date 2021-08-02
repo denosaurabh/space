@@ -1,4 +1,5 @@
-import { darkTheme, styled } from '@styled';
+import { useEffect } from 'react';
+import { styled } from '@styled';
 
 import Header from '@shared/home/header';
 import MidHeading from '@shared/home/midHeading';
@@ -9,9 +10,6 @@ import Footer from '@shared/home/footer';
 import LandingPageSEO from '@shared/home/seo';
 
 import DreamyGradient from '@components/dreamyGradient';
-import useSettings from '@state/settings';
-
-// import { Annotation } from '@components/annotation';
 
 const Container = styled('div', {
   display: 'flex',
@@ -34,10 +32,18 @@ const Container = styled('div', {
 });
 
 const Home: React.FC = () => {
-  const isDarkTheme = useSettings((state) => state.darkTheme);
+  useEffect(() => {
+    if (!window) return;
+
+    // backing data on update v0.1.2
+    if (process.env.NEXT_PUBLIC_VERSION == '0.1.2') {
+      const notesStorage = localStorage.getItem('notesStorage');
+      localStorage.setItem('notesStorage_on_release_v0_1_2', notesStorage);
+    }
+  }, []);
 
   return (
-    <Container className={isDarkTheme ? darkTheme : ''}>
+    <Container>
       <LandingPageSEO />
 
       <DreamyGradient color="orange" top="0%" right="0%" />

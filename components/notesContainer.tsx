@@ -7,6 +7,7 @@ import { NotePosition, NoteSize } from '@lib/store/notes';
 
 const AllNotesContainerStyled = styled('div', {
   width: '100%',
+  minHeight: '100vh',
   height: '100%',
   overflow: 'hidden',
 });
@@ -17,6 +18,7 @@ interface AllNotesContainerI {
   containerClassName: string;
   enableCanvas: boolean;
   gridSize: number;
+  onDoubleClick: ({ pos }: { pos: NotePosition }) => void;
   onSelectionComplete: ({
     position,
     size,
@@ -31,6 +33,7 @@ const AllNotesContainer: React.FC<AllNotesContainerI> = ({
   canvasClassName,
   containerClassName,
   onSelectionComplete,
+  onDoubleClick,
   enableCanvas,
   gridSize,
   children,
@@ -73,6 +76,7 @@ const AllNotesContainer: React.FC<AllNotesContainerI> = ({
         onSelectionComplete={onSelectionComplete}
         gridSize={gridSize}
         enableCanvas={enableCanvas}
+        onDoubleClick={onDoubleClick}
       />
       {children}
     </AllNotesContainerStyled>

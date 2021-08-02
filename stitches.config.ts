@@ -10,7 +10,6 @@ const { css, styled, global, getCssString, theme } = createCss({
       indie: 'IndieFlower',
     },
     colors: {
-      // green: '#34a0a4',
       // lightGreen: '#52b69a',
       'grey-100': '#f8f9fa',
       'grey-200': '#e9ecef',
@@ -21,6 +20,15 @@ const { css, styled, global, getCssString, theme } = createCss({
       'grey-700': '#495057',
       'grey-800': '#343a40',
       'grey-900': '#212529',
+
+      'yellow-light': '#fffed6',
+      yellow: '#ffb703',
+      'yellow-dark': '#ff7b00',
+
+      orange: '#ff6d00',
+      green: '#34a0a4',
+      red: '#f94144',
+      'red-light': '#fff0f3',
 
       'dreamy-gradients-yellow': `#FFAA6C`,
       'dreamy-gradients-orange': `radial-gradient(111.63% 111.63% at 42.64% -5.82%, #FFA800 33.65%, #FF0000 44.58%, #FF47D6 100%)`,
@@ -80,7 +88,7 @@ const { css, styled, global, getCssString, theme } = createCss({
   },
 });
 
-const darkTheme = theme({
+const darkTheme = theme('dark-theme', {
   colors: {
     'grey-900': '#f8f9fa',
     'grey-800': '#e9ecef',
@@ -102,9 +110,10 @@ const globalStyles = global({
   },
   'html, body, #__next': {
     width: '100%',
+    minHeight: '100vh',
     height: 'fit-content',
-    fontSize: '62.5%',
 
+    fontSize: '62.5%',
     fontFamily: '$inter',
     fontWeight: 400,
     fontFeatureSettings: 'kern',

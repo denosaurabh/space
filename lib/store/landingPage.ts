@@ -9,9 +9,9 @@ export interface NewNote {
 export interface LandingPageState {
   notes: Notes;
   addNote: (newNote: NewNote) => void;
-  removeNote: (noteId: number) => void;
+  removeNote: (noteId: string) => void;
   updateNote: (
-    id: number,
+    id: string,
     data: {
       position: NotePosition;
       size: NoteSize;
