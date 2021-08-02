@@ -143,7 +143,7 @@ const Header: React.FC = () => {
             },
           }}
         >
-          <Link href="/update" passHref>
+          <Link href="/notes/home" passHref>
             <a>
               <Button color="dark" size="medium">
                 Get Right In

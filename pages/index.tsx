@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { styled } from '@styled';
 
 import Header from '@shared/home/header';
@@ -31,6 +32,16 @@ const Container = styled('div', {
 });
 
 const Home: React.FC = () => {
+  useEffect(() => {
+    if (!window) return;
+
+    // backing data on update v0.1.2
+    if (process.env.NEXT_PUBLIC_VERSION == '0.1.2') {
+      const notesStorage = localStorage.getItem('notesStorage');
+      localStorage.setItem('notesStorage_on_release_v0_1_2', notesStorage);
+    }
+  }, []);
+
   return (
     <Container>
       <LandingPageSEO />
