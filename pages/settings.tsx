@@ -5,7 +5,9 @@ import { useRouter } from 'next/router';
 import { styled } from '@styled';
 
 import Seperator from '@components/separator';
+
 import NotesSettings from '@shared/settings/notes';
+import KeyboardSettings from '@shared/settings/keyboard';
 
 import Page from '@container';
 
@@ -58,6 +60,7 @@ const Settings: React.FC = () => {
 
           <NotesSettings />
           <Seperator />
+          <KeyboardSettings />
         </MidContainer>
       </SettingsContainer>
     </Page>

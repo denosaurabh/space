@@ -124,8 +124,7 @@ const NotesCollectionSidebar: React.FC = () => {
               </Root>
             </ContextMenuTrigger>
             <ContextMenuContent>
-              <ContextMenuItem>Change Name</ContextMenuItem>
-              <ContextMenuItem>Set to Default</ContextMenuItem>
+              <ContextMenuItem>Delete Collection</ContextMenuItem>
             </ContextMenuContent>
           </ContextMenuRoot>
         );

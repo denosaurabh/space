@@ -7,7 +7,7 @@ import {
   Arrow,
 } from '@radix-ui/react-popover';
 
-import { styled } from '@styled';
+import { darkTheme, styled } from '@styled';
 
 const StyledTrigger = styled(Trigger, {
   display: 'grid',
@@ -31,6 +31,24 @@ const StyledContent = styled(Content, {
 
   '@mobile': {
     padding: '0.7rem 0.7rem 0.7rem 1.5rem',
+  },
+
+  variants: {
+    color: {
+      light: {
+        backgroundColor: '$grey-100',
+        color: '$grey-800',
+      },
+    },
+
+    dropShadow: {
+      true: {
+        boxShadow: '4px 10px 22px rgba(167, 167, 167, 0.25)',
+        [`.${darkTheme} &`]: {
+          boxShadow: '4px 10px 22px rgba(167, 167, 167, 0.05)',
+        },
+      },
+    },
   },
 });
 
@@ -56,6 +74,10 @@ const StyledClose = styled(Close, {
     cursor: 'pointer',
     backgroundColor: '$grey-200',
   },
+
+  [`svg`]: {
+    fill: '$grey-800',
+  },
 });
 
 const StyledArrow = styled(Arrow, {
@@ -63,6 +85,14 @@ const StyledArrow = styled(Arrow, {
 
   '@mobile': {
     opacity: '0',
+  },
+
+  variants: {
+    color: {
+      light: {
+        color: '$grey-200',
+      },
+    },
   },
 });
 
