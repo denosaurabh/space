@@ -25,6 +25,8 @@ const ReleaseContainer = styled('div', {
 
   margin: '5rem auto',
 
+  borderBottom: '1px solid $grey-400',
+
   '& a': {
     color: 'inherit',
     fontWeight: 'bold',

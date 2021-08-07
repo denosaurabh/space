@@ -81,6 +81,13 @@ const useNotes = create<NotesState>(
           })
         );
       },
+      deleteCollection: (slug) => {
+        set(
+          produce((draft) => {
+            delete draft.notesState[slug];
+          })
+        );
+      },
     }),
     {
       name: 'notesStorage',

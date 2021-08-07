@@ -105,7 +105,11 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     console.log('notes have loaded!');
-  }, []);
+
+    if (!notesState[`${router.query.id}`]) {
+      router.push(`/notes/home`);
+    }
+  }, [router, notesState]);
 
   return (
     <Page>
@@ -126,7 +130,7 @@ const Home: React.FC = () => {
           enableCanvas={enableGrid}
           gridSize={gridSize}
         >
-          {router.query.id
+          {router.query.id && notesState[`${router.query.id}`]
             ? Object.values(notesState[`${router.query.id}`].notes).map(
                 (note: Note, i) => (
                   <NoteBox

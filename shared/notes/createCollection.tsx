@@ -33,12 +33,14 @@ const CreateCollection: React.FC = () => {
     if (name.length === 0) return;
 
     createCollection({ name });
+
+    setName('');
   };
 
   return (
     <AlertDialogRoot>
       <AlertDialogTrigger>
-        <CollectionBox>
+        <CollectionBox name="New Collection">
           <PlusStyledSvg />
         </CollectionBox>
       </AlertDialogTrigger>

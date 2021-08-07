@@ -50,4 +50,5 @@ export interface NotesState {
       text: string;
     }
   ) => void;
+  deleteCollection: (slug: string) => void;
 }

@@ -20,80 +20,6 @@ import {
   StyledContent,
 } from '@components/popover';
 
-const StyledPopoverContent = styled(StyledContent, {
-  width: '18rem',
-  flexDirection: 'column',
-  padding: '1rem 0',
-  gap: '0.4rem',
-});
-
-const LI = styled('a', {
-  display: 'flex',
-  alignItems: 'center',
-  gap: '1rem',
-
-  width: '90%',
-  padding: '1rem 2rem',
-  paddingLeft: '1.2rem',
-
-  borderRadius: '0.8rem',
-
-  fontSize: '1.4rem',
-  fontWeight: '500',
-  color: '$grey-800',
-
-  transition: '$fast',
-
-  svg: {
-    width: '20',
-
-    fill: '$grey-600',
-  },
-
-  '&:hover': {
-    cursor: 'pointer',
-    backgroundColor: '$grey-800',
-    color: '$grey-200',
-
-    svg: {
-      fill: '$grey-200',
-    },
-
-    [`.${darkTheme} &`]: {
-      backgroundColor: '$grey-200',
-      color: '$grey-700',
-
-      svg: {
-        fill: '$grey-700',
-      },
-    },
-  },
-});
-
-const SocialBox = styled('div', {
-  width: '100%',
-  padding: '1rem 2rem',
-  marginTop: '0.5rem',
-
-  display: 'none', // need to be removed after completion
-  justifyContent: 'space-between',
-  alignItems: 'center',
-
-  ['svg']: {
-    fill: '$grey-600',
-
-    ['#clip0 rect']: {
-      fill: '$grey-100',
-    },
-
-    transition: '$medium',
-    '&:hover': {
-      cursor: 'pointer',
-      transform: 'rotateZ(20deg)',
-    },
-  },
-});
-
 const SettingsButton: React.FC = () => {
   return (
     <Root>
@@ -114,7 +40,7 @@ const SettingsButton: React.FC = () => {
         </Link>
         <Link href="/releases" passHref>
           <LI>
-            <RocketSvg /> Releases
+            <RocketSvg /> Releases v{process.env.NEXT_PUBLIC_VERSION}
           </LI>
         </Link>
 
@@ -148,9 +74,17 @@ const SettingsButton: React.FC = () => {
         </Link>
 
         <SocialBox>
-          <GithubSvg />
-          <DiscordSvg />
-          <TwitterSvg />
+          <LI href="https://github.com/denosaurabh" target="_blank">
+            <GithubSvg />
+          </LI>
+
+          <LI href="https://discord.gg/GqAJmYrd8q" target="_blank">
+            <DiscordSvg />
+          </LI>
+
+          <LI href="https://twitter.com/denosaurabh" target="_blank">
+            <TwitterSvg />
+          </LI>
         </SocialBox>
       </StyledPopoverContent>
     </Root>
@@ -169,5 +103,96 @@ const SettingsStyledSvg = styled(SettingSvg, {
   '&:hover': {
     cursor: 'pointer',
     transform: 'rotate(40deg)',
+  },
+});
+
+const StyledPopoverContent = styled(StyledContent, {
+  width: '20rem',
+  flexDirection: 'column',
+  padding: '1rem 0 0.5rem 0',
+
+  gap: '0.4rem',
+
+  '@mobile': {
+    width: '22rem',
+  },
+});
+
+const LI = styled('a', {
+  display: 'flex',
+  alignItems: 'center',
+  gap: '1rem',
+
+  width: '90%',
+  padding: '1rem 2rem',
+  paddingLeft: '1.2rem',
+
+  borderRadius: '0.8rem',
+
+  fontSize: '1.4rem',
+  fontWeight: '500',
+  color: '$grey-800',
+
+  transition: '$fast',
+
+  svg: {
+    width: '20',
+
+    fill: '$grey-600',
+  },
+
+  '&:hover': {
+    cursor: 'pointer',
+    backgroundColor: '$grey-200',
+    color: '$grey-800',
+
+    svg: {
+      fill: '$grey-700',
+    },
+
+    [`.${darkTheme} &`]: {
+      backgroundColor: '$grey-200',
+      color: '$grey-700',
+
+      svg: {
+        fill: '$grey-700',
+      },
+    },
+  },
+});
+
+const SocialBox = styled('div', {
+  width: '100%',
+  padding: '0.4rem 1rem',
+  marginTop: '0.5rem',
+
+  borderTop: '1px solid $grey-200',
+
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+
+  [`${LI}`]: {
+    padding: '1rem',
+    gap: 0,
+    width: 'min-content',
+
+    ['svg']: {
+      fill: '$grey-600',
+      opacity: 0.8,
+
+      transition: '$medium',
+    },
+
+    '&:hover svg': {
+      fill: '$grey-700',
+
+      [`.${darkTheme} &`]: {
+        fill: '$grey-800',
+      },
+
+      cursor: 'pointer',
+      transform: 'rotateZ(20deg)',
+    },
   },
 });
