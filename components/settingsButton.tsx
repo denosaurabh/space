@@ -9,7 +9,7 @@ import StarSvg from '@assets/svg/Star.svg';
 import ExclamationSvg from '@assets/svg/Exclamation.svg';
 import ShareSvg from '@assets/svg/Share.svg';
 
-import GithubSvg from '@assets/svg/Github.svg';
+import GithubSvg from '@assets/svg/GitHub.svg';
 import DiscordSvg from '@assets/svg/Discord.svg';
 import TwitterSvg from '@assets/svg/Twitter.svg';
 
