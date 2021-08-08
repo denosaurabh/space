@@ -104,8 +104,6 @@ const Home: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log('notes have loaded!');
-
     if (!notesState[`${router.query.id}`]) {
       router.push(`/notes/home`);
     }

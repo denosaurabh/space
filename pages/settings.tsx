@@ -8,6 +8,7 @@ import Seperator from '@components/separator';
 
 import NotesSettings from '@shared/settings/notes';
 import KeyboardSettings from '@shared/settings/keyboard';
+import DataSettings from '@shared/settings/data';
 
 import Page from '@container';
 
@@ -61,6 +62,7 @@ const Settings: React.FC = () => {
           <NotesSettings />
           <Seperator />
           <KeyboardSettings />
+          <DataSettings />
         </MidContainer>
       </SettingsContainer>
     </Page>

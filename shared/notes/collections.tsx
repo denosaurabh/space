@@ -14,18 +14,6 @@ const CreateCollection = dynamic(
   { ssr: false }
 );
 
-const NotesCollectionContainer = styled('div', {
-  height: '100%',
-  backgroundColor: '$grey-100',
-
-  padding: '2rem 1.6rem',
-
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '1.4rem',
-});
-
 const NotesCollectionSidebar: React.FC = () => {
   const { notesState, currentCollection, deleteCollection } = useNotes(
     (state) => ({
@@ -118,3 +106,15 @@ const NotesCollectionSidebar: React.FC = () => {
 };
 
 export default NotesCollectionSidebar;
+
+const NotesCollectionContainer = styled('div', {
+  height: '100%',
+  backgroundColor: '$grey-100',
+
+  padding: '2rem 1.6rem',
+
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: '1rem',
+});

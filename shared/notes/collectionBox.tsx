@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { styled, darkTheme } from '@styled';
 
 import TrashSvg from '@assets/svg/Trash.svg';
+import CloseSvg from '@assets/svg/Close.svg';
 
 import {
   Root,
@@ -18,26 +19,8 @@ import {
 } from '@components/popover';
 
 import Input from '@components/input';
-
-const CollectionBoxStyled = styled('div', {
-  size: '5rem',
-  borderRadius: '1rem',
-  backgroundColor: '$grey-200',
-
-  display: 'grid',
-  placeItems: 'center',
-
-  fontFamily: '$system',
-  fontSize: '2rem',
-  color: '$grey-800',
-
-  transition: '$medium',
-
-  '&:hover': {
-    cursor: 'pointer',
-    backgroundColor: '$grey-300',
-  },
-});
+import DropIcon from '@components/dropIcon';
+// import Seperator from '@components/separator';
 
 interface CollectionBoxProps {
   slug?: string;
@@ -62,16 +45,54 @@ const CollectionBox: React.FC<CollectionBoxProps> = ({
   const handleContextMenu = (e) => {
     e.preventDefault();
 
+    // Hack to disabling Context Menu on Home Collection and Create New Collection Button
+    if (name === 'Home' || name === 'New Collection') return;
+
     setShowContextMenu(true);
     return false;
   };
 
-  const onContextMenuChange = (open: boolean) => {
-    console.log('context menu is', open);
+  const onCloseClick = (e) => {
+    e.preventDefault();
+
+    setShowContextMenu(false);
   };
 
+  const onDeleteCollectionClick = () => {
+    handleDeleteCollection(slug);
+
+    setShowContextMenu(false);
+  };
+
+  const onCollectionNameChange = (e) => {
+    const { value } = e.target;
+    console.log(value);
+  };
+
+  useEffect(() => {
+    if (!window || !showContextMenu) return;
+
+    const onDocumentClick = (e) => {
+      const collectionPopover = document.querySelector(
+        '.collectionbox-popover-content'
+      );
+
+      if (collectionPopover && !collectionPopover.contains(e.target)) {
+        setShowContextMenu(false);
+      }
+    };
+
+    window.document.addEventListener('click', onDocumentClick, true);
+    window.document.addEventListener('contextmenu', onDocumentClick, true);
+
+    return () => {
+      window.document.removeEventListener('click', onDocumentClick);
+      window.document.removeEventListener('contextmenu', onDocumentClick);
+    };
+  }, [showContextMenu]);
+
   return (
-    <PopoverRoot open={showContextMenu} onOpenChange={onContextMenuChange}>
+    <PopoverRoot open={showContextMenu}>
       <PopoverTrigger>
         <Root delayDuration={300}>
           <TooltipTrigger>
@@ -96,10 +117,12 @@ const CollectionBox: React.FC<CollectionBoxProps> = ({
       </PopoverTrigger>
       <PopoverAnchor />
       <PopoverContent
+        className="collectionbox-popover-content"
         color="light"
         dropShadow
         css={{
           flexDirection: 'column',
+          alignItems: 'flex-start',
           padding: '1.3rem',
           gap: '1rem',
           width: '25rem',
@@ -107,17 +130,30 @@ const CollectionBox: React.FC<CollectionBoxProps> = ({
         side="left"
         sideOffset={40}
       >
-        <Title>Collection Menu</Title>
-        <Input type="name" placeholder={`Name of Collection`} size="mini" />
-        <LI onClick={() => handleDeleteCollection(slug)}>
+        <Title>
+          Collection Menu
+          <LI css={{ width: 'fit-content' }} onClick={onCloseClick}>
+            <CloseSvg />
+          </LI>
+        </Title>
+
+        <InputBox>
+          <DropIcon />
+          <Input
+            label="Name"
+            type="name"
+            value={name}
+            placeholder={`Name of Collection`}
+            size="mini"
+            css={{ width: '80%', input: { borderColor: '$grey-400' } }}
+            onChange={onCollectionNameChange}
+          />
+        </InputBox>
+
+        <LI onClick={onDeleteCollectionClick}>
           <TrashSvg />
           Delete Collection
         </LI>
-        <LI onClick={() => handleDeleteCollection(slug)}>
-          <TrashSvg />
-          Delete Collection
-        </LI>
-        <LI css={{ marginTop: '1.4rem', backgroundColor: '$grey-200' }}>OK</LI>
       </PopoverContent>
     </PopoverRoot>
   );
@@ -125,10 +161,38 @@ const CollectionBox: React.FC<CollectionBoxProps> = ({
 
 export default CollectionBox;
 
+const CollectionBoxStyled = styled('div', {
+  size: '5rem',
+  borderRadius: '1rem',
+  backgroundColor: '$grey-200',
+
+  display: 'grid',
+  placeItems: 'center',
+
+  fontFamily: '$system',
+  fontSize: '2rem',
+  color: '$grey-800',
+
+  transition: '$medium',
+
+  '&:hover': {
+    cursor: 'pointer',
+    backgroundColor: '$grey-300',
+  },
+});
+
 const Title = styled('h6', {
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+
   fontSize: '1.6rem',
   fontWeight: '600',
   color: '$grey-700',
+
+  padding: '1rem',
+  paddingTop: '0rem',
 });
 
 const LI = styled('a', {
@@ -140,6 +204,7 @@ const LI = styled('a', {
   padding: '1rem',
   paddingLeft: '1.2rem',
 
+  border: '1px solid $grey-300',
   borderRadius: '0.8rem',
 
   fontSize: '1.4rem',
@@ -147,7 +212,7 @@ const LI = styled('a', {
   color: '$grey-700',
   backgroundColor: '$grey-100',
 
-  transition: '$fast',
+  transition: '$medium',
 
   svg: {
     width: '20',
@@ -158,7 +223,7 @@ const LI = styled('a', {
   '&:hover': {
     cursor: 'pointer',
     color: '$grey-800',
-    fontWeight: '600',
+    backgroundColor: '$grey-200',
 
     svg: {
       fill: '$grey-800',
@@ -173,4 +238,11 @@ const LI = styled('a', {
       },
     },
   },
+});
+
+const InputBox = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  gap: '1rem',
 });

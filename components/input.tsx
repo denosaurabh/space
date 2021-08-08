@@ -14,8 +14,16 @@ const InputLabel = styled('label', {
 
   color: '$grey-800',
 
+  svg: {
+    fill: '$grey-800',
+  },
+
   [`.${darkTheme} &`]: {
     color: '$grey-600',
+  },
+
+  '&:hover': {
+    cursor: 'pointer',
   },
 
   variants: {
@@ -53,7 +61,7 @@ const StyledInput = styled('input', {
 
 interface InputI {
   size?: 'mini';
-  label?: string;
+  label?: string | JSX.Element;
   css?: Record<string, unknown>;
   [key: string]: unknown;
 }
@@ -66,7 +74,7 @@ const Input: React.FC<InputI> = ({ size, label, css, ...inputProps }) => {
           {label}
         </InputLabel>
       ) : null}
-      <StyledInput size={size} {...inputProps} />
+      <StyledInput id="input" size={size} {...inputProps} />
     </InputContainer>
   );
 };

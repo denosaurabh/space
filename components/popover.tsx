@@ -43,9 +43,9 @@ const StyledContent = styled(Content, {
 
     dropShadow: {
       true: {
-        boxShadow: '4px 10px 22px rgba(167, 167, 167, 0.25)',
+        boxShadow: '4px 8px 22px rgba(167, 167, 167, 0.25)',
         [`.${darkTheme} &`]: {
-          boxShadow: '4px 10px 22px rgba(167, 167, 167, 0.05)',
+          boxShadow: '4px 8px 22px rgba(167, 167, 167, 0.05)',
         },
       },
     },
