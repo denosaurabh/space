@@ -89,6 +89,7 @@ const NotesCollectionSidebar: React.FC = () => {
             key={i}
             name={el.name}
             slug={el.slug}
+            icon={el.icon}
             firstString={firstString}
             isCurrentCollection={isCurrentCollection}
             onClickHandler={() => {

@@ -5,7 +5,12 @@ import Input from '@components/input';
 
 import ImportSvg from '@assets/svg/Import.svg';
 
-const DropIcon: React.FC = () => {
+interface DropIconI {
+  onError: ({ message }) => void;
+  onUpload: (icon: File) => void;
+}
+
+const DropIcon: React.FC<DropIconI> = ({ onError, onUpload }) => {
   const [uploadedIconURL, setUploadIconURL] = useState(null);
 
   const onIconUpload = (e) => {
@@ -22,7 +27,11 @@ const DropIcon: React.FC = () => {
       // Over 1MB
       console.log('over size');
       // return;
+
+      onError({ message: 'Icon size is too big' });
     }
+
+    onUpload(icon);
 
     const iconUrl = URL.createObjectURL(icon);
     setUploadIconURL(iconUrl);

@@ -18,13 +18,25 @@ import {
   StyledContent as PopoverContent,
 } from '@components/popover';
 
+import {
+  Root as AlertDialogRoot,
+  Trigger as AlertDialogTrigger,
+  StyledOverlay as AlertDialogStyledOverlay,
+  StyledContent as AlertDialogStyledContent,
+  StyledTitle as AlertDialogTitle,
+  StyledCancel as AlertDialogCancel,
+  StyledAction as AlertDialogAction,
+  StyledDescription as AlertDialogDescription,
+} from '@components/alertDialog';
+
 import Input from '@components/input';
 import DropIcon from '@components/dropIcon';
-// import Seperator from '@components/separator';
+import Badge from '@components/badge';
 
 interface CollectionBoxProps {
   slug?: string;
   name?: string;
+  icon?: string;
   firstString?: string;
   isCurrentCollection?: boolean;
   onClickHandler?: () => void;
@@ -34,6 +46,7 @@ interface CollectionBoxProps {
 const CollectionBox: React.FC<CollectionBoxProps> = ({
   name,
   slug,
+  icon,
   firstString,
   isCurrentCollection,
   onClickHandler,
@@ -69,6 +82,18 @@ const CollectionBox: React.FC<CollectionBoxProps> = ({
     console.log(value);
   };
 
+  const onIconUploadSuccess = (icon: File) => {
+    console.log('icon uploaded', icon);
+    // addNotesCollectionIcon(icon);
+
+    // const { src } = collectionIcons[icon.name];
+    // updateCollectionIcon(slug, src);
+  };
+
+  const onIconUploadError = ({ message }) => {
+    console.log(message);
+  };
+
   useEffect(() => {
     if (!window || !showContextMenu) return;
 
@@ -77,7 +102,16 @@ const CollectionBox: React.FC<CollectionBoxProps> = ({
         '.collectionbox-popover-content'
       );
 
-      if (collectionPopover && !collectionPopover.contains(e.target)) {
+      const collectionAlertDialog = document.querySelector(
+        '.collection-box-alert-dialog'
+      );
+
+      if (
+        collectionPopover &&
+        !collectionPopover.contains(e.target) &&
+        collectionAlertDialog &&
+        !collectionAlertDialog.contains(e.target)
+      ) {
         setShowContextMenu(false);
       }
     };
@@ -105,7 +139,12 @@ const CollectionBox: React.FC<CollectionBoxProps> = ({
                   : '$grey-200',
               }}
             >
-              {firstString || children}
+              {!icon ? (
+                firstString || children
+              ) : (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={`${icon}`} alt="Collection Icon" />
+              )}
             </CollectionBoxStyled>
           </TooltipTrigger>
 
@@ -138,7 +177,10 @@ const CollectionBox: React.FC<CollectionBoxProps> = ({
         </Title>
 
         <InputBox>
-          <DropIcon />
+          <DropIcon
+            onError={onIconUploadError}
+            onUpload={onIconUploadSuccess}
+          />
           <Input
             label="Name"
             type="name"
@@ -149,11 +191,40 @@ const CollectionBox: React.FC<CollectionBoxProps> = ({
             onChange={onCollectionNameChange}
           />
         </InputBox>
+        <Badge size="medium" css={{ margin: 0 }}>
+          Icon and Change Name soon
+        </Badge>
 
-        <LI onClick={onDeleteCollectionClick}>
-          <TrashSvg />
-          Delete Collection
-        </LI>
+        <AlertDialogRoot>
+          <AlertDialogTrigger css={{ width: '100%' }}>
+            <LI>
+              <TrashSvg />
+              Delete Collection
+            </LI>
+          </AlertDialogTrigger>
+          <AlertDialogStyledOverlay />
+          <AlertDialogStyledContent
+            className="collection-box-alert-dialog"
+            css={{ width: '60rem' }}
+          >
+            <AlertDialogTitle>
+              Are you sure to delete &quot;{name}&quot; Collection
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              The action is NOT reversible
+            </AlertDialogDescription>
+
+            <AlertDialogAction
+              disabled={name.length === 0}
+              onClick={onDeleteCollectionClick}
+            >
+              Delete Collection
+            </AlertDialogAction>
+            <AlertDialogCancel onClick={() => setShowContextMenu(false)}>
+              Cancel
+            </AlertDialogCancel>
+          </AlertDialogStyledContent>
+        </AlertDialogRoot>
       </PopoverContent>
     </PopoverRoot>
   );

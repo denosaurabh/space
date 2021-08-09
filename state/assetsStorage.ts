@@ -15,16 +15,24 @@ const indexStorage: StateStorage = {
   },
 };
 
-export const useAssetsStorage = create<AssetsStorageState>(
+const useAssetsStorage = create<AssetsStorageState>(
   persist(
     (set) => ({
       notesCollection: { icons: {} },
       addNotesCollectionIcon: (icon) =>
         set(
           produce((draft) => {
-            const iconUrl = URL.createObjectURL(icon);
+            const iconBlobUrl = URL.createObjectURL(icon);
 
-            draft.notesCollection.icons[icon.name] = { ...icon, src: iconUrl };
+            console.log('iconBlobUrl', iconBlobUrl);
+
+            const iconURL = iconBlobUrl.replace('blob:', '');
+            console.log('iconURL', iconURL);
+
+            draft.notesCollection.icons[icon.name] = {
+              ...icon,
+              src: iconURL,
+            };
           })
         ),
     }),
@@ -34,3 +42,5 @@ export const useAssetsStorage = create<AssetsStorageState>(
     }
   )
 );
+
+export default useAssetsStorage;
