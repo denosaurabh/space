@@ -21,7 +21,13 @@ const Releases: React.FC<ReleasesProps> = ({ allReleases }) => {
       <Container>
         {allReleases
           ? allReleases.map((release, i) => (
-              <ReleaseBox heading={release.name} body={release.body} key={i} />
+              <>
+                <ReleaseBox
+                  heading={release.name}
+                  body={release.body}
+                  key={i}
+                />
+              </>
             ))
           : null}
       </Container>

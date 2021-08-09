@@ -4,20 +4,6 @@ import { useShortcuts } from 'react-shortcuts-hook';
 
 import { styled } from '@styled';
 
-import {
-  Root,
-  Arrow,
-  StyledContent,
-  TooltipTrigger,
-} from '@components/tooltip';
-
-import {
-  Root as ContextMenuRoot,
-  Trigger as ContextMenuTrigger,
-  StyledItem as ContextMenuItem,
-  StyledContent as ContextMenuContent,
-} from '@components/contextMenu';
-
 import CollectionBox from '@shared/notes/collectionBox';
 
 import useNotes from '@state/notes';
@@ -28,28 +14,29 @@ const CreateCollection = dynamic(
   { ssr: false }
 );
 
-const NotesCollectionContainer = styled('div', {
-  height: '100%',
-  backgroundColor: '$grey-100',
-
-  padding: '2rem 1.6rem',
-
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '1.4rem',
-});
-
 const NotesCollectionSidebar: React.FC = () => {
-  const { notesState, currentCollection } = useNotes((state) => ({
-    notesState: state.notesState,
-    currentCollection: state.currentCollection,
-  }));
+  const { notesState, currentCollection, deleteCollection } = useNotes(
+    (state) => ({
+      notesState: state.notesState,
+      currentCollection: state.currentCollection,
+      deleteCollection: state.deleteCollection,
+    })
+  );
 
   const router = useRouter();
 
   const changeCurrentCollectionHandler = (id: string) => {
     router.push(`/notes/${id}`);
+  };
+
+  const handleDeleteCollection = (slug: string) => {
+    // Default Collection shouldn't be deleted
+    if (slug === 'home') return;
+
+    console.log('deleting collection', slug);
+
+    deleteCollection(slug);
+    router.push('/notes/home');
   };
 
   useShortcuts(
@@ -93,41 +80,24 @@ const NotesCollectionSidebar: React.FC = () => {
   return (
     <NotesCollectionContainer>
       {Object.values(notesState).map((el: NotesCollection, i) => {
-        const firstString = el.name[0];
+        const firstString = el.name[0].toUpperCase();
 
         const isCurrentCollection = el.slug === router?.query?.id;
 
         return (
-          <ContextMenuRoot key={i}>
-            <ContextMenuTrigger>
-              <Root key={i} delayDuration={300}>
-                <TooltipTrigger>
-                  <CollectionBox
-                    onClick={() => {
-                      console.log(el.slug);
-                      changeCurrentCollectionHandler(el.slug);
-                    }}
-                    css={{
-                      backgroundColor: isCurrentCollection
-                        ? '$grey-300'
-                        : '$grey-200',
-                    }}
-                  >
-                    {firstString.toUpperCase()}
-                  </CollectionBox>
-                </TooltipTrigger>
-
-                <StyledContent side="left">
-                  <Arrow />
-                  {el.name}
-                </StyledContent>
-              </Root>
-            </ContextMenuTrigger>
-            <ContextMenuContent>
-              <ContextMenuItem>Change Name</ContextMenuItem>
-              <ContextMenuItem>Set to Default</ContextMenuItem>
-            </ContextMenuContent>
-          </ContextMenuRoot>
+          <CollectionBox
+            key={i}
+            name={el.name}
+            slug={el.slug}
+            icon={el.icon}
+            firstString={firstString}
+            isCurrentCollection={isCurrentCollection}
+            onClickHandler={() => {
+              console.log(el.slug);
+              changeCurrentCollectionHandler(el.slug);
+            }}
+            handleDeleteCollection={handleDeleteCollection}
+          />
         );
       })}
 
@@ -137,3 +107,15 @@ const NotesCollectionSidebar: React.FC = () => {
 };
 
 export default NotesCollectionSidebar;
+
+const NotesCollectionContainer = styled('div', {
+  height: '100%',
+  backgroundColor: '$grey-100',
+
+  padding: '2rem 1.6rem',
+
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: '1rem',
+});

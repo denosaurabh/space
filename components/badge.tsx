@@ -35,6 +35,11 @@ const StyledBadge = styled('div', {
       },
     },
     size: {
+      mini: {
+        padding: '0.4rem 1rem',
+        borderRadius: '1rem',
+        fontSize: '1rem',
+      },
       medium: {
         padding: '0.8rem 1.6rem',
         borderRadius: '2rem',
@@ -55,7 +60,7 @@ const StyledBadge = styled('div', {
 });
 
 interface BadgeProps {
-  size?: 'medium' | 'large';
+  size?: 'mini' | 'medium' | 'large';
   color?: 'green' | 'warning';
   css?: Record<string, unknown>;
 }

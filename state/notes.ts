@@ -36,6 +36,8 @@ const useNotes = create<NotesState>(
 
             const slug = slugify(name);
 
+            if (draft.notesState[slug]) return;
+
             draft.notesState[slug] = {
               id: newCollectionId,
               slug,
@@ -78,6 +80,20 @@ const useNotes = create<NotesState>(
             const collectionDraft = draft.notesState[draft.currentCollection];
 
             delete collectionDraft.notes[id];
+          })
+        );
+      },
+      updateCollectionIcon: (id, icon) => {
+        set(
+          produce((draft) => {
+            draft.notesState[id].icon = icon;
+          })
+        );
+      },
+      deleteCollection: (slug) => {
+        set(
+          produce((draft) => {
+            delete draft.notesState[slug];
           })
         );
       },

@@ -50,6 +50,9 @@ const StyledTitle = styled(Title, {
 });
 
 const StyledDescription = styled(Description, {
+  fontSize: '1.4rem',
+  color: '$grey-800',
+
   marginBottom: '4rem',
 });
 

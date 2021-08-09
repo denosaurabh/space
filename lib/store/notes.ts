@@ -50,4 +50,6 @@ export interface NotesState {
       text: string;
     }
   ) => void;
+  updateCollectionIcon: (id: string, icon: string) => void;
+  deleteCollection: (slug: string) => void;
 }
