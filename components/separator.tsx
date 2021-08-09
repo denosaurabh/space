@@ -9,11 +9,12 @@ const SeperatorStyled = styled(Root, {
 });
 
 interface SeperatorProps {
+  css?: Record<string, unknown>;
   [key: string]: unknown;
 }
 
-const Seperator: React.FC<SeperatorProps> = ({ ...props }) => {
-  return <SeperatorStyled {...props} />;
+const Seperator: React.FC<SeperatorProps> = ({ css, ...props }) => {
+  return <SeperatorStyled css={css} {...props} />;
 };
 
 export default Seperator;

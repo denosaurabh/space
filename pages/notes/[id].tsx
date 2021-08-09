@@ -40,6 +40,17 @@ const Home: React.FC = () => {
 
   const { enableGrid, gridSize } = useSettings((state) => state.notes);
 
+  useEffect(() => {
+    // backing up data for any potential user who use the app daily and has its data
+
+    if (!window) return;
+
+    localStorage.setItem(
+      'notes_backup_pre_release_0_1_2',
+      JSON.stringify(notesState)
+    );
+  }, [notesState]);
+
   const handleOnDragStop = (
     id: string,
     data: { position: NotePosition; size: NoteSize; text: string }
@@ -93,8 +104,10 @@ const Home: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log('notes have loaded!');
-  }, []);
+    if (!notesState[`${router.query.id}`]) {
+      router.push(`/notes/home`);
+    }
+  }, [router, notesState]);
 
   return (
     <Page>
@@ -115,7 +128,7 @@ const Home: React.FC = () => {
           enableCanvas={enableGrid}
           gridSize={gridSize}
         >
-          {router.query.id
+          {router.query.id && notesState[`${router.query.id}`]
             ? Object.values(notesState[`${router.query.id}`].notes).map(
                 (note: Note, i) => (
                   <NoteBox

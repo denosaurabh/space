@@ -12,11 +12,11 @@ import Button from '@components/button';
 
 import ReaderSvg from '@assets/svg/Reader.svg';
 import PencilSvg from '@assets/svg/Pencil.svg';
-import SettingSvg from '@assets/svg/Setting.svg';
 import TimerSvg from '@assets/svg/Timer.svg';
 import Calendarvg from '@assets/svg/Calendar.svg';
 
 import useNotes from '@state/notes';
+import SettingsButton from './settingsButton';
 
 const HeaderStyled = styled('header', {
   width: '100%',
@@ -37,19 +37,6 @@ const HeaderNav = styled('div', {
 
 const HeaderLogo = styled(Image, {
   marginRight: '2rem',
-});
-
-const SettingsStyledSvg = styled(SettingSvg, {
-  width: 25,
-  height: 25,
-  fill: '$grey-700',
-
-  transition: '$medium',
-
-  '&:hover': {
-    cursor: 'pointer',
-    transform: 'rotate(40deg)',
-  },
 });
 
 declare global {
@@ -127,10 +114,29 @@ const Header: React.FC = () => {
           name="Notes"
           icon={<ReaderSvg />}
           href={`/notes/${currentCollection}`}
+          active={router.pathname.startsWith('/notes')}
         />
-        <IconBox name="Todo" icon={<PencilSvg />} href="/todo" soon />
-        <IconBox name="Calender" icon={<Calendarvg />} href="/calendar" soon />
-        <IconBox name="Pomodoro" icon={<TimerSvg />} href="/pomodoro" soon />
+        <IconBox
+          name="Todo"
+          icon={<PencilSvg />}
+          href="/todo"
+          soon
+          active={router.pathname === '/todo'}
+        />
+        <IconBox
+          name="Calender"
+          icon={<Calendarvg />}
+          href="/calendar"
+          soon
+          active={router.pathname === '/calendar'}
+        />
+        <IconBox
+          name="Pomodoro"
+          icon={<TimerSvg />}
+          href="/pomodoro"
+          soon
+          active={router.pathname === '/pomodoro'}
+        />
       </HeaderNav>
 
       {process.env.NEXT_PUBLIC_VERSION_ALPHA ? (
@@ -172,12 +178,7 @@ const Header: React.FC = () => {
       ) : null}
 
       <ThemeButton />
-
-      <Link href="/settings" passHref>
-        <a>
-          <SettingsStyledSvg />
-        </a>
-      </Link>
+      <SettingsButton />
     </HeaderStyled>
   );
 };
