@@ -21,6 +21,8 @@ const StyledOverlay = styled(Overlay, {
   right: 0,
   bottom: 0,
   left: 0,
+
+  backdropFilter: 'blur(2px)',
 });
 
 const StyledContent = styled(Content, {
@@ -33,6 +35,7 @@ const StyledContent = styled(Content, {
   backgroundColor: '$grey-100',
   borderRadius: '1.6rem',
   padding: '4rem 3.5rem',
+
 
   [`.${darkTheme} &`]: {
     backgroundColor: '$grey-100',
