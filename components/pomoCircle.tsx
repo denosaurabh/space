@@ -1,15 +1,61 @@
+import { useEffect } from 'react';
 import { styled } from '@styled';
 
-interface PomoCircleProps {
-  time: string;
-}
+import usePomodoro from '@state/pomodoro';
 
-const PomoCircle: React.FC<PomoCircleProps> = ({ time }) => {
+const PomoCircle: React.FC = () => {
+  const { currentPomo, setCurrentPomoTime } = usePomodoro((state) => ({
+    currentPomo: state.currentPomo,
+    setCurrentPomoTime: state.setCurrentPomoTime,
+  }));
+
+  const {
+    currentTime,
+    noOfPomos,
+    currentPomo: currentPomoNumber,
+    title,
+    isRunning,
+  } = currentPomo();
+
+  useEffect(() => {
+    if (isRunning) {
+      const interval = setInterval(() => {
+        if (currentTime > 0) {
+          const newTime = currentTime - 1000;
+          setCurrentPomoTime(newTime);
+        }
+      }, 1000);
+
+      return () => {
+        clearInterval(interval);
+      };
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [title, currentTime, isRunning]);
+
+  if (!currentPomo()) {
+    return (
+      <PomoCircleContainer>
+        <Title>task</Title>
+        <Time>25:00</Time>
+        <Span>1 / 1</Span>
+      </PomoCircleContainer>
+    );
+  }
+
+  const minutes = Math.floor(currentTime / 60000);
+  const seconds = ((currentTime % 60000) / 1000).toFixed(0);
+
   return (
     <PomoCircleContainer>
-      <Title>Adding dark theme to app</Title>
-      <Time>{time}</Time>
-      <Span>1 / 3</Span>
+      <Title>{title}</Title>
+      <Time>
+        {minutes}:{seconds}
+      </Time>
+      <Span>
+        {currentPomoNumber} / {noOfPomos}
+      </Span>
     </PomoCircleContainer>
   );
 };

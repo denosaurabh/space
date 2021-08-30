@@ -65,6 +65,10 @@ const PomoBoxStyled = styled('div', {
 
   transition: '$medium',
 
+  '@mobile': {
+    padding: '2.8rem',
+  },
+
   '&:hover': {
     cursor: 'pointer',
     backgroundColor: '$grey-200',
