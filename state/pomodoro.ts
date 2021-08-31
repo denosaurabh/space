@@ -16,6 +16,8 @@ const usePomodoro = create<PomodoroState>(
         if (!get().pomos.length) {
           return {
             id: nanoid(),
+            state: 'action',
+
             title: 'pomo',
             description: '',
             noOfPomos: 1,
@@ -50,20 +52,57 @@ const usePomodoro = create<PomodoroState>(
           })
         );
       },
+      finishPomo: () => {
+        set(
+          produce((draft) => {
+            const { pomodoro } = useSettings.getState();
+            const { actionTime, restTime } = pomodoro;
+
+            const currentPomoObj = get().currentPomo();
+
+            const isLastPomo =
+              currentPomoObj.currentPomo === currentPomoObj.noOfPomos;
+            const { state } = currentPomoObj;
+
+            if (isLastPomo) {
+              if (state === 'rest') {
+                draft.pomos.shift();
+              } else {
+                draft.pomos[0].state = 'rest';
+                draft.pomos[0].currentTime = restTime * 60 * 1000;
+              }
+            } else {
+              if (state === 'action') {
+                draft.pomos[0].state = 'rest';
+                draft.pomos[0].currentTime = restTime * 60 * 1000;
+              } else {
+                draft.pomos[0].state = 'action';
+                draft.pomos[0].currentTime = actionTime * 60 * 1000;
+
+                draft.pomos[0].currentPomo++;
+              }
+            }
+          })
+        );
+      },
 
       createPomo: ({ title, noOfPomos }) => {
         set(
           produce((draft) => {
+            const { pomodoro } = useSettings.getState();
+            const { actionTime } = pomodoro;
+
             const pomoId = nanoid();
 
             draft.pomos.push({
               id: pomoId,
+              state: 'action',
 
               title,
               description: '',
               noOfPomos,
 
-              currentTime: 25 * 60 * 1000,
+              currentTime: actionTime * 60 * 1000,
               currentPomo: 1,
 
               isRunning: false,

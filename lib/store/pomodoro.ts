@@ -1,5 +1,6 @@
 export interface Pomodoro {
   id: string;
+  state: 'action' | 'rest';
 
   title: string;
   description: string;
@@ -23,6 +24,8 @@ export interface PomodoroState {
     title: string;
     noOfPomos: number;
   }) => void;
+  finishPomo: () => void;
+
   setCurrentPomoTime: (time: number) => void;
   startCurrentPomo: () => void;
   pauseCurrentPomo: () => void;

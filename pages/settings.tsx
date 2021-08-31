@@ -11,6 +11,7 @@ import KeyboardSettings from '@shared/settings/keyboard';
 import DataSettings from '@shared/settings/data';
 
 import Page from '@container';
+import PomodoroSettings from '@shared/settings/pomodoro';
 
 const SettingsContainer = styled('div', {
   width: '100%',
@@ -60,6 +61,7 @@ const Settings: React.FC = () => {
           <Heading>Settings</Heading>
 
           <NotesSettings />
+          <PomodoroSettings />
           <Seperator />
           <KeyboardSettings />
           <DataSettings />

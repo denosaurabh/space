@@ -4,9 +4,16 @@ import { styled } from '@styled';
 import usePomodoro from '@state/pomodoro';
 
 const PomoCircle: React.FC = () => {
-  const { currentPomo, setCurrentPomoTime } = usePomodoro((state) => ({
+  const {
+    currentPomo,
+    setCurrentPomoTime,
+    finishCurrentPomo,
+    pauseCurrentPomo,
+  } = usePomodoro((state) => ({
     currentPomo: state.currentPomo,
     setCurrentPomoTime: state.setCurrentPomoTime,
+    finishCurrentPomo: state.finishPomo,
+    pauseCurrentPomo: state.pauseCurrentPomo,
   }));
 
   const {
@@ -15,6 +22,7 @@ const PomoCircle: React.FC = () => {
     currentPomo: currentPomoNumber,
     title,
     isRunning,
+    state,
   } = currentPomo();
 
   useEffect(() => {
@@ -23,6 +31,9 @@ const PomoCircle: React.FC = () => {
         if (currentTime > 0) {
           const newTime = currentTime - 1000;
           setCurrentPomoTime(newTime);
+        } else {
+          finishCurrentPomo();
+          pauseCurrentPomo();
         }
       }, 1000);
 
@@ -54,7 +65,7 @@ const PomoCircle: React.FC = () => {
         {minutes}:{seconds}
       </Time>
       <Span>
-        {currentPomoNumber} / {noOfPomos}
+        {currentPomoNumber} / {noOfPomos} | {state}
       </Span>
     </PomoCircleContainer>
   );

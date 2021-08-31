@@ -23,7 +23,7 @@ const AllPomos: React.FC = () => {
     <PomoRightBox>
       {isRunning && (
         <PomoBoxContainer>
-          <PomoBoxContainerHeading>continuing -&gt;</PomoBoxContainerHeading>
+          <PomoBoxContainerHeading>current -&gt;</PomoBoxContainerHeading>
 
           <PomoBox
             key={id}
