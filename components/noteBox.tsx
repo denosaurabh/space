@@ -15,102 +15,6 @@ import {
 
 import mRound from '@utils/mRound';
 
-const NoteContainer = styled('div', {
-  width: '100%',
-  height: '100%',
-  border: '1px solid $grey-700',
-  borderRadius: '$small',
-  display: 'flex',
-  flexDirection: 'column',
-  transition: 'box-shadow 0.25s',
-  zIndex: 1,
-  userSelect: 'none',
-
-  '&:active': {
-    boxShadow: '5px 5px 10px 0px $grey-100',
-  },
-});
-
-const NoteHeader = styled('div', {
-  display: 'flex',
-  justifyContent: 'flex-end',
-  width: '100%',
-  height: '2.4rem',
-  padding: '0 0.4rem',
-  borderBottom: '1px solid $grey-700',
-  backgroundColor: '$grey-100',
-
-  borderTopLeftRadius: '$small',
-  borderTopRightRadius: '$small',
-
-  '&:hover': {
-    cursor: 'grab',
-  },
-  '&:active': {
-    cursor: 'grabbing',
-  },
-  '.note-header-dot:hover': {
-    cursor: 'pointer',
-  },
-});
-
-const NoteContent = styled('textarea', {
-  width: '100%',
-  height: '100%',
-  padding: '1.2rem',
-  fontFamily: '$mono',
-  fontSize: '1.4rem',
-  borderRadius: '$small',
-  resize: 'none',
-  border: 'none',
-  outline: 'none',
-
-  backgroundColor: '$grey-100',
-  color: '$grey-900',
-});
-
-const CircleContainer = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-
-  width: '2rem',
-  height: '100%',
-
-  '&:hover': {
-    cursor: 'pointer',
-  },
-});
-
-const Circle = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-
-  width: '2rem',
-  height: '100%',
-
-  margin: '0 5px',
-
-  '&:after': {
-    content: '',
-
-    width: '0.6rem',
-    height: '0.6rem',
-
-    border: '0.5px solid $grey-700',
-    borderRadius: '9999px',
-  },
-});
-
-const ResizeBtn = styled('div', {
-  width: '100%',
-  height: '100%',
-
-  border: '1px solid $grey-600',
-  borderBottomRightRadius: '$small',
-});
-
 interface NoteBoxProps extends Note {
   boundClassName: string;
   gridSize: number;
@@ -236,3 +140,99 @@ const NoteBox: React.FC<NoteBoxProps> = ({
 };
 
 export default memo(NoteBox);
+
+const NoteContainer = styled('div', {
+  width: '100%',
+  height: '100%',
+  border: '1px solid $grey-700',
+  borderRadius: '$small',
+  display: 'flex',
+  flexDirection: 'column',
+  transition: 'box-shadow 0.25s',
+  zIndex: 1,
+  userSelect: 'none',
+
+  '&:active': {
+    boxShadow: '5px 5px 10px 0px $grey-100',
+  },
+});
+
+const NoteHeader = styled('div', {
+  display: 'flex',
+  justifyContent: 'flex-end',
+  width: '100%',
+  height: '2.4rem',
+  padding: '0 0.4rem',
+  borderBottom: '1px solid $grey-700',
+  backgroundColor: '$grey-100',
+
+  borderTopLeftRadius: '$small',
+  borderTopRightRadius: '$small',
+
+  '&:hover': {
+    cursor: 'grab',
+  },
+  '&:active': {
+    cursor: 'grabbing',
+  },
+  '.note-header-dot:hover': {
+    cursor: 'pointer',
+  },
+});
+
+const NoteContent = styled('textarea', {
+  width: '100%',
+  height: '100%',
+  padding: '1.2rem',
+  fontFamily: '$mono',
+  fontSize: '1.4rem',
+  borderRadius: '$small',
+  resize: 'none',
+  border: 'none',
+  outline: 'none',
+
+  backgroundColor: '$grey-100',
+  color: '$grey-900',
+});
+
+const CircleContainer = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+
+  width: '2rem',
+  height: '100%',
+
+  '&:hover': {
+    cursor: 'pointer',
+  },
+});
+
+const Circle = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+
+  width: '2rem',
+  height: '100%',
+
+  margin: '0 5px',
+
+  '&:after': {
+    content: '',
+
+    width: '0.6rem',
+    height: '0.6rem',
+
+    border: '0.5px solid $grey-700',
+    borderRadius: '9999px',
+  },
+});
+
+const ResizeBtn = styled('div', {
+  width: '100%',
+  height: '100%',
+
+  border: '1px solid $grey-600',
+  borderBottomRightRadius: '$small',
+});

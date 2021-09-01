@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { styled } from '@styled';
 
 import usePomodoro from '@state/pomodoro';
+import Badge from './badge';
 
 const PomoCircle: React.FC = () => {
   const {
@@ -16,20 +17,13 @@ const PomoCircle: React.FC = () => {
     pauseCurrentPomo: state.pauseCurrentPomo,
   }));
 
-  const {
-    currentTime,
-    noOfPomos,
-    currentPomo: currentPomoNumber,
-    title,
-    isRunning,
-    state,
-  } = currentPomo();
+  const currentPomoObj = currentPomo();
 
   useEffect(() => {
-    if (isRunning) {
+    if (currentPomoObj?.isRunning) {
       const interval = setInterval(() => {
-        if (currentTime > 0) {
-          const newTime = currentTime - 1000;
+        if (currentPomoObj?.currentTime > 0) {
+          const newTime = currentPomoObj?.currentTime - 1000;
           setCurrentPomoTime(newTime);
         } else {
           finishCurrentPomo();
@@ -43,17 +37,29 @@ const PomoCircle: React.FC = () => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [title, currentTime, isRunning]);
+  }, [
+    currentPomoObj?.title,
+    currentPomoObj?.currentTime,
+    currentPomoObj?.isRunning,
+  ]);
 
   if (!currentPomo()) {
     return (
       <PomoCircleContainer>
-        <Title>task</Title>
-        <Time>25:00</Time>
-        <Span>1 / 1</Span>
+        <Title>--</Title>
+        <Time>--:--</Time>
+        <Span>-- / --</Span>
       </PomoCircleContainer>
     );
   }
+
+  const {
+    state,
+    title,
+    noOfPomos,
+    currentTime,
+    currentPomo: currentPomoNumber,
+  } = currentPomoObj;
 
   const minutes = Math.floor(currentTime / 60000);
   const seconds = ((currentTime % 60000) / 1000).toFixed(0);
@@ -65,8 +71,12 @@ const PomoCircle: React.FC = () => {
         {minutes}:{seconds}
       </Time>
       <Span>
-        {currentPomoNumber} / {noOfPomos} | {state}
+        {currentPomoNumber} out of {noOfPomos}
+        {noOfPomos == 1 ? ' pomo' : ' pomos'}
       </Span>
+      <Badge size="medium" color="grey" css={{ display: 'inline' }}>
+        {state}
+      </Badge>
     </PomoCircleContainer>
   );
 };
@@ -105,4 +115,6 @@ const Time = styled('span', {
 const Span = styled('span', {
   fontSize: '1.6rem',
   color: '$grey-600',
+
+  marginBottom: '1rem',
 });

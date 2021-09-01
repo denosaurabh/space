@@ -1,5 +1,14 @@
 import { styled } from '@styled';
 
+import {
+  Root as PopoverRoot,
+  StyledTrigger as PopoverTrigger,
+  Anchor as PopoverAnchor,
+  StyledContent as PopoverContent,
+  StyledClose as PopoverClose,
+  StyledArrow as PopoverArrow,
+} from '@components/popover';
+
 import Button from '@components/button';
 import PomoCircle from '@components/pomoCircle';
 
@@ -24,7 +33,7 @@ const CurrentPomo: React.FC = () => {
     <PomoLeftBox>
       <PomoCircle />
       <ButtonsBox>
-        {currentPomoObj.isRunning && (
+        {currentPomoObj?.isRunning && (
           <>
             <PomoCircleButton
               color="light"
@@ -34,14 +43,24 @@ const CurrentPomo: React.FC = () => {
               <PauseSvg />
               Pause
             </PomoCircleButton>
-            <PomoCircleButton color="light" size="medium">
-              <StopSvg />
-              Stop
-            </PomoCircleButton>
+            <PopoverRoot>
+              <PopoverTrigger>
+                <PomoCircleButton as="a" color="light" size="medium">
+                  <StopSvg />
+                  Stop
+                </PomoCircleButton>
+              </PopoverTrigger>
+              <PopoverAnchor />
+              <PopoverContent>
+                <PopoverArrow />
+                Are you sure you want to stop?
+                <PopoverClose>Stop</PopoverClose>
+              </PopoverContent>
+            </PopoverRoot>
           </>
         )}
 
-        {!currentPomoObj.isRunning && (
+        {currentPomoObj && !currentPomoObj?.isRunning && (
           <PomoCircleButton
             color="light"
             size="medium"

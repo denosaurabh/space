@@ -22,7 +22,7 @@ export default Pomodoro;
 
 const PomoContainer = styled('div', {
   display: 'flex',
-  alignItems: 'center',
+  alignItems: 'flex-start',
   justifyContent: 'center',
   gap: '16rem',
   flexWrap: 'wrap',

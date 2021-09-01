@@ -14,19 +14,7 @@ const usePomodoro = create<PomodoroState>(
       showCreatePomo: false,
       currentPomo: (): Pomodoro => {
         if (!get().pomos.length) {
-          return {
-            id: nanoid(),
-            state: 'action',
-
-            title: 'pomo',
-            description: '',
-            noOfPomos: 1,
-
-            currentTime: 25 * 60 * 1000,
-            currentPomo: 1,
-
-            isRunning: false,
-          };
+          return null;
         }
 
         return get().pomos[0];
@@ -48,6 +36,7 @@ const usePomodoro = create<PomodoroState>(
       pauseCurrentPomo: () => {
         set(
           produce((draft) => {
+            if (!draft.pomos[0]) return;
             draft.pomos[0].isRunning = false;
           })
         );
@@ -61,10 +50,12 @@ const usePomodoro = create<PomodoroState>(
             const currentPomoObj = get().currentPomo();
 
             const isLastPomo =
-              currentPomoObj.currentPomo === currentPomoObj.noOfPomos;
+              currentPomoObj.currentPomo == currentPomoObj.noOfPomos;
             const { state } = currentPomoObj;
 
             if (isLastPomo) {
+              console.log('final pomo');
+
               if (state === 'rest') {
                 draft.pomos.shift();
               } else {
@@ -100,7 +91,7 @@ const usePomodoro = create<PomodoroState>(
 
               title,
               description: '',
-              noOfPomos,
+              noOfPomos: Number(noOfPomos),
 
               currentTime: actionTime * 60 * 1000,
               currentPomo: 1,
@@ -110,6 +101,58 @@ const usePomodoro = create<PomodoroState>(
           })
         );
       },
+      switchPomoUp: (id: string) => {
+        set(
+          produce((draft) => {
+            const pomoIndex = draft.pomos.findIndex((pomo) => pomo.id === id);
+
+            if (pomoIndex <= 1) return;
+
+            const pomo = draft.pomos[pomoIndex];
+            draft.pomos[pomoIndex] = draft.pomos[pomoIndex - 1];
+            draft.pomos[pomoIndex - 1] = pomo;
+          })
+        );
+      },
+      switchPomoDown: (id: string) => {
+        set(
+          produce((draft) => {
+            const pomoIndex = draft.pomos.findIndex((pomo) => pomo.id === id);
+
+            if (pomoIndex === draft.pomos.length - 1) return;
+
+            const pomo = draft.pomos[pomoIndex];
+            draft.pomos[pomoIndex] = draft.pomos[pomoIndex + 1];
+            draft.pomos[pomoIndex + 1] = pomo;
+          })
+        );
+      },
+      stopCurrentPomo: () => {
+        set(
+          produce((draft) => {
+            const { pomodoro } = useSettings.getState();
+            const { actionTime, restTime } = pomodoro;
+
+            if (draft.pomos[0].state === 'action') {
+              draft.pomos[0].state = 'rest';
+              draft.pomos[0].currentTime = restTime * 60 * 1000;
+              draft.pomos[0].isRunning = false;
+            } else {
+              draft.pomos[0].state = 'action';
+              draft.pomos[0].currentTime = actionTime * 60 * 1000;
+              draft.pomos[0].isRunning = false;
+            }
+          })
+        );
+      },
+      deletePomo: (id: string) => {
+        set(
+          produce((draft) => {
+            draft.pomos = draft.pomos.filter((pomo) => pomo.id !== id);
+          })
+        );
+      },
+
       setShowCreatePomo: (showCreatePomo) => {
         set(
           produce((draft) => {

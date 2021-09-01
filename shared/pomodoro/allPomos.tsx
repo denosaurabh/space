@@ -11,27 +11,26 @@ const AllPomos: React.FC = () => {
   );
 
   const currentPomoObj = currentPomo();
-  const {
-    id,
-    title,
-    currentPomo: currentPomoNo,
-    noOfPomos,
-    isRunning,
-  } = currentPomoObj;
 
   return (
     <PomoRightBox>
-      {isRunning && (
-        <PomoBoxContainer>
-          <PomoBoxContainerHeading>current -&gt;</PomoBoxContainerHeading>
+      <PomoBoxContainer>
+        <PomoBoxContainerHeading>current -&gt;</PomoBoxContainerHeading>
 
+        {currentPomoObj ? (
           <PomoBox
-            key={id}
-            heading={title}
-            span={`${currentPomoNo} / ${noOfPomos}`}
+            id={currentPomoObj?.id}
+            key={currentPomoObj?.id}
+            heading={currentPomoObj?.title || '--'}
+            span={`${currentPomoObj?.currentPomo || '--'} / ${
+              currentPomoObj?.noOfPomos || '--'
+            }`}
+            hideMenu
           />
-        </PomoBoxContainer>
-      )}
+        ) : (
+          <NoCurrentPomo>No Current Pomo</NoCurrentPomo>
+        )}
+      </PomoBoxContainer>
 
       <PomoBoxContainer>
         {pomos.length > 1 && (
@@ -46,6 +45,7 @@ const AllPomos: React.FC = () => {
           return (
             <PomoBox
               key={id}
+              id={id}
               heading={title}
               span={`${noOfPomos} ${noOfPomos == 1 ? 'pomo' : 'pomos'}`}
             />
@@ -94,6 +94,18 @@ const PomoBoxContainerHeading = styled('h5', {
 
 const PomoCircleButton = styled(Button, {
   width: '12rem',
+  // backgroundColor: '$grey-200 !important',
   border: '1px solid $grey-400',
   boxShadow: 'none !important',
+});
+
+const NoCurrentPomo = styled('p', {
+  width: '40rem',
+  textAlign: 'center',
+
+  fontFamily: '$inter',
+  fontSize: '1.4rem',
+  fontWeight: 400,
+
+  color: '$grey-600',
 });
