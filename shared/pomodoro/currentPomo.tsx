@@ -19,13 +19,13 @@ import PlaySvg from '@assets/svg/Play.svg';
 import usePomodoro from '@state/pomodoro';
 
 const CurrentPomo: React.FC = () => {
-  const { currentPomo, pauseCurrentPomo, startCurrentPomo } = usePomodoro(
-    (state) => ({
+  const { currentPomo, pauseCurrentPomo, startCurrentPomo, stopCurrentPomo } =
+    usePomodoro((state) => ({
       currentPomo: state.currentPomo,
       startCurrentPomo: state.startCurrentPomo,
       pauseCurrentPomo: state.pauseCurrentPomo,
-    })
-  );
+      stopCurrentPomo: state.stopCurrentPomo,
+    }));
 
   const currentPomoObj = currentPomo();
 
@@ -54,7 +54,7 @@ const CurrentPomo: React.FC = () => {
               <PopoverContent>
                 <PopoverArrow />
                 Are you sure you want to stop?
-                <PopoverClose>Stop</PopoverClose>
+                <PopoverClose onClick={stopCurrentPomo}>Stop</PopoverClose>
               </PopoverContent>
             </PopoverRoot>
           </>

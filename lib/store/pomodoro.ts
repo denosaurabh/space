@@ -33,6 +33,7 @@ export interface PomodoroState {
   setCurrentPomoTime: (time: number) => void;
   startCurrentPomo: () => void;
   pauseCurrentPomo: () => void;
+  stopCurrentPomo: () => void;
 
   setShowCreatePomo: (showCreatePomo: boolean) => void;
 }

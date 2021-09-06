@@ -54,8 +54,6 @@ const usePomodoro = create<PomodoroState>(
             const { state } = currentPomoObj;
 
             if (isLastPomo) {
-              console.log('final pomo');
-
               if (state === 'rest') {
                 draft.pomos.shift();
               } else {
@@ -131,16 +129,21 @@ const usePomodoro = create<PomodoroState>(
         set(
           produce((draft) => {
             const { pomodoro } = useSettings.getState();
-            const { actionTime, restTime } = pomodoro;
+            const { actionTime } = pomodoro;
 
-            if (draft.pomos[0].state === 'action') {
-              draft.pomos[0].state = 'rest';
-              draft.pomos[0].currentTime = restTime * 60 * 1000;
-              draft.pomos[0].isRunning = false;
+            const currentPomoObj = get().currentPomo();
+
+            const isLastPomo =
+              currentPomoObj.currentPomo == currentPomoObj.noOfPomos;
+
+            if (isLastPomo) {
+              draft.pomos.shift();
             } else {
               draft.pomos[0].state = 'action';
               draft.pomos[0].currentTime = actionTime * 60 * 1000;
+
               draft.pomos[0].isRunning = false;
+              draft.pomos[0].currentPomo++;
             }
           })
         );

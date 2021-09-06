@@ -10,16 +10,32 @@ const PomoCircle: React.FC = () => {
     setCurrentPomoTime,
     finishCurrentPomo,
     pauseCurrentPomo,
+    // startCurrentPomo,
   } = usePomodoro((state) => ({
     currentPomo: state.currentPomo,
     setCurrentPomoTime: state.setCurrentPomoTime,
     finishCurrentPomo: state.finishPomo,
     pauseCurrentPomo: state.pauseCurrentPomo,
+    startCurrentPomo: state.startCurrentPomo,
   }));
 
   const currentPomoObj = currentPomo();
 
   useEffect(() => {
+    if (!window) return;
+
+    if (!Notification) {
+      alert(
+        'Desktop notifications not available in your browser. Try modern browsers like Firefox/Chrome.'
+      );
+
+      return;
+    }
+
+    if (Notification.permission !== 'granted') {
+      Notification.requestPermission();
+    }
+
     if (currentPomoObj?.isRunning) {
       const interval = setInterval(() => {
         if (currentPomoObj?.currentTime > 0) {
@@ -28,6 +44,30 @@ const PomoCircle: React.FC = () => {
         } else {
           finishCurrentPomo();
           pauseCurrentPomo();
+
+          // const worker = new window.Worker('/worker/index.js');
+          // worker.postMessage({
+          //   title: 'Pomo Complete',
+          //   message: 'You have completed your pomo',
+          // });
+
+          const pomoCompleteNotify = () => {
+            if (Notification.permission !== 'granted') {
+              Notification.requestPermission();
+            } else {
+              // const notification = 
+              new Notification('Pomodoro', {
+                icon: '/space.png',
+                body: `${currentPomoObj.title} Pomo Complete!`,
+              });
+
+              // notification.onclick = () => {
+                // window.open(window.location.href);
+              // };
+            }
+          };
+
+          pomoCompleteNotify();
         }
       }, 1000);
 
