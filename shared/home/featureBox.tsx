@@ -65,7 +65,7 @@ const Heading = styled('h1', {
 
   [`.${darkTheme} &`]: {
     color: '$grey-700',
-  }
+  },
 });
 
 const Text = styled('p', {
@@ -76,12 +76,13 @@ const Text = styled('p', {
 
   [`.${darkTheme} &`]: {
     color: '$grey-500',
-  }
+  },
 });
 
 interface MidBoxProps {
   heading: string;
   description: string;
+  soon?: boolean;
 }
 
 interface SideBoxProps {
@@ -96,10 +97,15 @@ const RightBox: React.FC<SideBoxProps> = ({ children, css }) => {
   return <RightBoxStyled css={css}>{children}</RightBoxStyled>;
 };
 
-const MidBox: React.FC<MidBoxProps> = ({ heading, description, children }) => {
+const MidBox: React.FC<MidBoxProps> = ({
+  heading,
+  description,
+  children,
+  soon,
+}) => {
   return (
     <MidBoxStyled>
-      <Ellipse>Coming Soon</Ellipse>
+      {soon ? <Ellipse>Coming Soon</Ellipse> : <Ellipse>NEW!</Ellipse>}
 
       <Heading>{heading}</Heading>
       <Text>{description}</Text>

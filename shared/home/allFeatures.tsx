@@ -112,6 +112,7 @@ const AllFeatures: React.FC = () => {
         <MidBox
           heading="Calender"
           description="A dot grid based calendar where you can make point your future goals and see your history of tasks."
+          soon
         >
           <Image
             src="/assets/annotations/Dots.webp"
@@ -180,6 +181,7 @@ const AllFeatures: React.FC = () => {
         <MidBox
           heading="Todo"
           description="Todo list maker for every day, week, month and even year. Got bored of typical Todo maker, So I will try my best to make something better and creative."
+          soon
         >
           <CheckMarkContainer>
             <Image
