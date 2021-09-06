@@ -117,6 +117,12 @@ const Header: React.FC = () => {
           active={router.pathname.startsWith('/notes')}
         />
         <IconBox
+          name="Pomodoro"
+          icon={<TimerSvg />}
+          href="/pomodoro"
+          active={router.pathname === '/pomodoro'}
+        />
+        <IconBox
           name="Todo"
           icon={<PencilSvg />}
           href="/todo"
@@ -129,13 +135,6 @@ const Header: React.FC = () => {
           href="/calendar"
           soon
           active={router.pathname === '/calendar'}
-        />
-        <IconBox
-          name="Pomodoro"
-          icon={<TimerSvg />}
-          href="/pomodoro"
-          soon
-          active={router.pathname === '/pomodoro'}
         />
       </HeaderNav>
 

@@ -33,6 +33,14 @@ const StyledBadge = styled('div', {
           backgroundColor: '#F1BBBB',
         },
       },
+      grey: {
+        backgroundColor: '$grey-200',
+        color: '$grey-800',
+
+        '&:hover': {
+          backgroundColor: '$grey-300',
+        },
+      },
     },
     size: {
       mini: {
@@ -61,7 +69,7 @@ const StyledBadge = styled('div', {
 
 interface BadgeProps {
   size?: 'mini' | 'medium' | 'large';
-  color?: 'green' | 'warning';
+  color?: 'green' | 'warning' | 'grey';
   css?: Record<string, unknown>;
 }
 

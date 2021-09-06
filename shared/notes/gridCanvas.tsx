@@ -3,7 +3,9 @@ import { useEffect, useRef, useState } from 'react';
 
 import { NotePosition, NoteSize } from '@lib/store/notes';
 import useSettings from '@state/settings';
+
 import isDblTouchTap from '@utils/doubleTouchTap';
+import mRound from '@utils/mRound';
 
 const Selection = styled('div', {
   position: 'fixed',
@@ -107,19 +109,15 @@ const GridCanvas: React.FC<GridCanvasI> = ({
       return;
     }
 
-    setSelection({
-      x: mouseDownPos.x,
-      y: mouseDownPos.y,
-      width: e.clientX - mouseDownPos.y,
-      height: e.clientY - mouseDownPos.x,
-    });
-
-    selectionBox = {
-      x: mouseDownPos.x,
-      y: mouseDownPos.y,
-      width: e.clientX - mouseDownPos.y,
-      height: e.clientY - mouseDownPos.x,
+    const selectionObj = {
+      x: mRound(mouseDownPos.x, gridSize),
+      y: mRound(mouseDownPos.y, gridSize),
+      width: mRound(e.clientX - mouseDownPos.y, gridSize),
+      height: mRound(e.clientY - mouseDownPos.x, gridSize),
     };
+
+    setSelection(selectionObj);
+    selectionBox = selectionObj;
   };
 
   const onDragStartHandler = (e) => {
@@ -130,8 +128,11 @@ const GridCanvas: React.FC<GridCanvasI> = ({
     document.body.style.cursor = 'crosshair';
     document.body.style.userSelect = 'none';
 
-    mouseDownPos = { x: e.clientY, y: e.clientX };
-    setSelection({ ...selection, x: e.clientY, y: e.clientX });
+    mouseDownPos = {
+      x: mRound(e.clientY, gridSize),
+      y: mRound(e.clientX, gridSize),
+    };
+    setSelection({ ...selection, ...mouseDownPos });
 
     document.addEventListener('mousemove', handleDragMove);
     document.addEventListener('mouseup', onDragEndHandler);
@@ -146,8 +147,14 @@ const GridCanvas: React.FC<GridCanvasI> = ({
 
     // Calling the Func
     onSelectionComplete({
-      position: { x: selectionBox.y - left, y: selectionBox.x - top },
-      size: { width: selectionBox.width, height: selectionBox.height },
+      position: {
+        x: mRound(selectionBox.y - left, gridSize),
+        y: mRound(selectionBox.x - top, gridSize),
+      },
+      size: {
+        width: mRound(selectionBox.width, gridSize),
+        height: mRound(selectionBox.height, gridSize),
+      },
     });
 
     mouseDownPos = { x: 0, y: 0 };
@@ -181,7 +188,7 @@ const GridCanvas: React.FC<GridCanvasI> = ({
     const x = type === 'mouse' ? e.clientX : e.touches[0].clientX;
     const y = type === 'mouse' ? e.clientY : e.touches[0].clientY;
 
-    const pos = { x: x - left, y: y - top };
+    const pos = { x: mRound(x - left, gridSize), y: mRound(y - top, gridSize) };
     onDoubleClick({ pos });
   };
 

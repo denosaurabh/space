@@ -45,10 +45,10 @@ const KbdShortcut: React.FC<KbdShortcutProps> = ({ title, shortcut }) => {
 
       <KBDBox>
         {shortcut.map((el, i, arr) => (
-          <>
-            <KBD key={i}>{el}</KBD>
-            {arr[arr.length - 1] !== el ? '+' : null}
-          </>
+          <div key={i}>
+            <KBD>{el}</KBD>
+            <span>{arr[arr.length - 1] !== el ? '+' : null}</span>
+          </div>
         ))}
       </KBDBox>
     </ShortcutContainer>

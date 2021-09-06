@@ -80,6 +80,50 @@ const StyledClose = styled(Close, {
   },
 });
 
+const StyledButton = styled('a', {
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.6rem',
+
+  width: '90%',
+  padding: '1rem 2rem',
+  paddingLeft: '1.2rem',
+
+  border: '1px solid $grey-300',
+  borderRadius: '0.8rem',
+
+  fontSize: '1.4rem',
+  fontWeight: '500',
+  color: '$grey-800',
+
+  transition: '$fast',
+
+  svg: {
+    width: '20',
+
+    fill: '$grey-600',
+  },
+
+  '&:hover': {
+    cursor: 'pointer',
+    backgroundColor: '$grey-200',
+    color: '$grey-800',
+
+    svg: {
+      fill: '$grey-700',
+    },
+
+    [`.${darkTheme} &`]: {
+      backgroundColor: '$grey-200',
+      color: '$grey-700',
+
+      svg: {
+        fill: '$grey-700',
+      },
+    },
+  },
+});
+
 const StyledArrow = styled(Arrow, {
   color: '$grey-800',
 
@@ -96,4 +140,12 @@ const StyledArrow = styled(Arrow, {
   },
 });
 
-export { Root, StyledTrigger, Anchor, StyledContent, StyledClose, StyledArrow };
+export {
+  Root,
+  StyledTrigger,
+  Anchor,
+  StyledButton,
+  StyledContent,
+  StyledClose,
+  StyledArrow,
+};
