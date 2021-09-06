@@ -116,7 +116,6 @@ const globalStyles = global({
     fontSize: '62.5%',
     fontFamily: '$inter',
     fontWeight: 400,
-    fontFeatureSettings: 'kern',
     textRendering: 'optimizeLegibility',
 
     overflowX: 'hidden',

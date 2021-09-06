@@ -16,6 +16,10 @@ const useSettings = create(
         gridSize: 10,
         gridColor: '#ccc',
       },
+      pomodoro: {
+        actionTime: 25,
+        restTime: 5,
+      },
       setUserOld: () => {
         set(
           produce((draft) => {
@@ -50,6 +54,20 @@ const useSettings = create(
         set(
           produce((draft) => {
             draft.notes.gridSize = size;
+          })
+        );
+      },
+      changePomodoroActionTime: (time: number) => {
+        set(
+          produce((draft) => {
+            draft.pomodoro.actionTime = time;
+          })
+        );
+      },
+      changePomodoroRestTime: (time: number) => {
+        set(
+          produce((draft) => {
+            draft.pomodoro.restTime = time;
           })
         );
       },

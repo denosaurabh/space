@@ -1,5 +1,7 @@
 // convert a string to slug
 const slugify = (str: string): string => {
+  if (!str || str === '') return;
+
   return str
     .toLowerCase()
     .replace(/\s+/g, '-')

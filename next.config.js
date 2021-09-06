@@ -19,8 +19,11 @@ module.exports = withPlugins([withPWA], {
       },
     ];
   },
-  webpack: (config /*{ dev, isServer }*/) => {
-    // Replace React with PReact only in client production build
+  webpack: (
+    config
+    // { dev, isServer }
+  ) => {
+    // // Replace React with PReact only in client production build
     // if (!dev && !isServer) {
     //   Object.assign(config.resolve.alias, {
     //     react: 'preact/compat',

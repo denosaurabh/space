@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-// import { useRouter } from 'next/router';
 import { useShortcuts } from 'react-shortcuts-hook';
 
 import { styled } from '@styled';

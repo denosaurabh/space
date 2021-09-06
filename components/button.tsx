@@ -5,6 +5,11 @@ const Button = styled('button', {
   fontSize: '1.4rem',
   fontWeight: 'bold',
 
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '0.5rem',
+
   borderRadius: '10000px',
 
   variants: {
@@ -13,6 +18,10 @@ const Button = styled('button', {
         backgroundColor: '$grey-800',
         color: '$grey-100',
         boxShadow: '0px 1.4rem 2rem rgba(0, 0, 0, 0.25)',
+
+        svg: {
+          fill: '$grey-800',
+        },
 
         '@mobile': {
           boxShadow: '0px 0.6rem 1rem rgba(0, 0, 0, 0.25)',
@@ -28,6 +37,10 @@ const Button = styled('button', {
         backgroundColor: '$grey-100',
         color: '$grey-800',
         boxShadow: '0px 1.4rem 2rem rgba(0, 0, 0, 0.25)',
+
+        svg: {
+          fill: '$grey-800',
+        },
 
         '@mobile': {
           boxShadow: '0px 0.6rem 1rem rgba(0, 0, 0, 0.25)',
