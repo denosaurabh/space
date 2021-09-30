@@ -15,8 +15,8 @@ const KeyboardSettings: React.FC = () => {
           Notes Shortcuts
         </SubHeading>
 
-        <KbdShortcut title="Top Category" shortcut={['ArrowUp']} />
-        <KbdShortcut title="Bottom Category" shortcut={['ArrowDown']} />
+        <KbdShortcut title="Top Category" shortcut={['Alt', 'ArrowUp']} />
+        <KbdShortcut title="Bottom Category" shortcut={['Alt', 'ArrowDown']} />
       </SettingBox>
     </Section>
   );

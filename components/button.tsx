@@ -20,6 +20,9 @@ const Button = styled('button', {
         boxShadow: '0px 1.4rem 2rem rgba(0, 0, 0, 0.25)',
 
         svg: {
+          width: 15,
+          height: 15,
+
           fill: '$grey-800',
         },
 
@@ -39,6 +42,9 @@ const Button = styled('button', {
         boxShadow: '0px 1.4rem 2rem rgba(0, 0, 0, 0.25)',
 
         svg: {
+          width: 15,
+          height: 15,
+          
           fill: '$grey-800',
         },
 
@@ -62,6 +68,11 @@ const Button = styled('button', {
       },
       small: {
         padding: '1rem 1.6rem',
+      },
+    },
+    shadow: {
+      small: {
+        boxShadow: '0px 0.2rem 1rem rgba(0, 0, 0, 0.15)',
       },
     },
   },
