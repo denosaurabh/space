@@ -42,6 +42,7 @@ const FeatureContainer = styled('div', {
       display: 'none',
     },
   },
+
   [`& ${RightBoxStyled}`]: {
     width: 'fit-content',
 
