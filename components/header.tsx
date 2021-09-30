@@ -123,18 +123,17 @@ const Header: React.FC = () => {
           active={router.pathname === '/pomodoro'}
         />
         <IconBox
+          name="Calender"
+          icon={<Calendarvg />}
+          href="/calendar"
+          active={router.pathname === '/calendar'}
+        />
+        <IconBox
           name="Todo"
           icon={<PencilSvg />}
           href="/todo"
           soon
           active={router.pathname === '/todo'}
-        />
-        <IconBox
-          name="Calender"
-          icon={<Calendarvg />}
-          href="/calendar"
-          soon
-          active={router.pathname === '/calendar'}
         />
       </HeaderNav>
 

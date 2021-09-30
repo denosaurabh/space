@@ -40,7 +40,7 @@ const NotesCollectionSidebar: React.FC = () => {
   };
 
   useShortcuts(
-    ['ArrowUp'],
+    ['alt', 'ArrowUp'],
     () => {
       console.log('up', currentCollection);
 
@@ -60,7 +60,7 @@ const NotesCollectionSidebar: React.FC = () => {
   );
 
   useShortcuts(
-    ['ArrowDown'],
+    ['alt', 'ArrowDown'],
     () => {
       console.log('down!', currentCollection);
 

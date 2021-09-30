@@ -42,6 +42,7 @@ const FeatureContainer = styled('div', {
       display: 'none',
     },
   },
+
   [`& ${RightBoxStyled}`]: {
     width: 'fit-content',
 
@@ -65,7 +66,7 @@ const Heading = styled('h1', {
 
   [`.${darkTheme} &`]: {
     color: '$grey-700',
-  }
+  },
 });
 
 const Text = styled('p', {
@@ -76,7 +77,7 @@ const Text = styled('p', {
 
   [`.${darkTheme} &`]: {
     color: '$grey-500',
-  }
+  },
 });
 
 interface MidBoxProps {
