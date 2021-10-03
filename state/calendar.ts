@@ -35,15 +35,17 @@ const useCalendar = create<CalendarState>(
       goals: {},
       showCreateNewGoal: false,
 
+      currentDate: new Date().getDate(),
       currentMonth: new Date().getMonth(),
       currentYear: new Date().getFullYear(),
-      currentDay: `${new Date().getDate()}-${new Date().getMonth()}-${new Date().getFullYear()}`,
 
-      activeDay: `${new Date().getDate()}-${new Date().getMonth()}-${new Date().getFullYear()}`,
+      currentFullDate: `${new Date().getDate()}-${new Date().getMonth()}-${new Date().getFullYear()}`,
+
+      activeFullDate: `${new Date().getDate()}-${new Date().getMonth()}-${new Date().getFullYear()}`,
 
       getTodayGoals: () => {
         const { goals } = get();
-        const { currentDay } = get();
+        const { currentFullDate: currentDay } = get();
 
         return goals[currentDay] || [];
       },
@@ -90,17 +92,17 @@ const useCalendar = create<CalendarState>(
       setActiveDay: (day: string) => {
         set(
           produce((draft) => {
-            draft.activeDay = day;
+            draft.activeFullDate = day;
           })
         );
       },
       createGoal: (goal) => {
         set(
           produce((draft) => {
-            const { goals, activeDay } = draft;
+            const { goals, activeFullDate } = draft;
 
-            if (!goals[activeDay]) {
-              goals[activeDay] = [];
+            if (!goals[activeFullDate]) {
+              goals[activeFullDate] = [];
             }
 
             const goalObj = {
@@ -108,7 +110,23 @@ const useCalendar = create<CalendarState>(
               ...goal,
             };
 
-            goals[activeDay].push(goalObj);
+            goals[activeFullDate].push(goalObj);
+          })
+        );
+      },
+
+      deleteGoal: (goalId) => {
+        set(
+          produce((draft) => {
+            const { goals, activeFullDate } = draft;
+
+            goals[activeFullDate] = goals[activeFullDate].filter(
+              (goal) => goal.id !== goalId
+            );
+
+            if (goals[activeFullDate].length === 0) {
+              delete goals[activeFullDate];
+            }
           })
         );
       },
@@ -119,8 +137,9 @@ const useCalendar = create<CalendarState>(
         'showCreateNewGoal',
         'currentMonth',
         'currentYear',
-        'currentDay',
-        'activeDay',
+        'currentDate',
+        'currentFullDate',
+        'activeFullDate',
       ],
       version: 1,
       getStorage: () => {
