@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import useCalendar from '@state/calendar';
 import { styled } from '@styled';
 
@@ -14,36 +15,54 @@ const MonthBox: React.FC<MonthBoxProps> = ({
   month,
   year,
 }) => {
-  const { currentDay, activeDay, setActiveDay } = useCalendar(
-    ({ currentDay, setActiveDay, activeDay }) => ({
+  const { currentDay, activeDay, setActiveDay, goals } = useCalendar(
+    ({
+      currentFullDate: currentDay,
+      setActiveDay,
+      activeFullDate: activeDay,
+      goals,
+    }) => ({
       currentDay,
       setActiveDay,
       activeDay,
+      goals,
     })
   );
 
+  const [localGoals, setLocalGoals] = useState({});
+
   const onDayClickHandler = (e) => {
     const date = e.target.dataset.date;
-    console.log(date);
 
     setActiveDay(date);
   };
+
+  useEffect(() => {
+    // console.log('goals', goals);
+    setLocalGoals(goals);
+  }, [, goals]);
 
   return (
     <MonthContainer>
       {title ? <MonthTitle>{title}</MonthTitle> : null}
       <DatesContainer>
-        {[...Array(noOfDays)].map((_, i) => (
-          <DateEl
-            key={i}
-            data-date={`${i + 1}-${month}-${year}`}
-            currentDay={`${i + 1}-${month}-${year}` === currentDay}
-            activeDay={`${i + 1}-${month}-${year}` === activeDay}
-            onClick={onDayClickHandler}
-          >
-            {i + 1}
-          </DateEl>
-        ))}
+        {[...Array(noOfDays)].map((_, i) => {
+          const date = `${i + 1}-${month}-${year}`;
+          const hasGoals = !!localGoals[date];
+
+          return (
+            <DateEl
+              key={i}
+              data-date={date}
+              currentDay={date === currentDay}
+              activeDay={date === activeDay}
+              hasGoals={hasGoals}
+              onClick={onDayClickHandler}
+            >
+              {i + 1}
+            </DateEl>
+          );
+        })}
       </DatesContainer>
     </MonthContainer>
   );
@@ -78,12 +97,16 @@ const DateEl = styled('span', {
   alignItems: 'center',
   justifyContent: 'center',
 
+  position: 'relative',
+
+  width: '3rem',
+  height: '3rem',
+
   fontFamily: '$inter',
   fontSize: '1.4rem',
   fontWeight: 'normal',
   color: '$grey-700',
 
-  padding: '1rem',
   borderRadius: '100px',
 
   transition: '$medium',
@@ -103,21 +126,6 @@ const DateEl = styled('span', {
         fontWeight: 500,
         backgroundColor: '$grey-200',
         border: '1px solid $grey-600',
-
-        '&::before': {
-          content: `''`,
-          // display: 'inline-block',
-
-          // position: 'relative',
-          // top: '-1.5rem',
-          // left: '1rem',
-
-          width: '6px',
-          height: '6px',
-
-          backgroundColor: '$grey-800',
-          borderRadius: '999px',
-        },
       },
     },
     activeDay: {
@@ -125,6 +133,26 @@ const DateEl = styled('span', {
         fontWeight: 500,
         backgroundColor: '$grey-200',
         outline: '1px solid $grey-500',
+      },
+    },
+    hasGoals: {
+      true: {
+        '&::before': {
+          content: `''`,
+          display: 'inline-block',
+
+          position: 'absolute',
+          top: '-10%',
+          left: '50%',
+
+          transform: 'translateX(-50%)',
+
+          width: '5px',
+          height: '5px',
+
+          backgroundColor: '$grey-700',
+          borderRadius: '999px',
+        },
       },
     },
   },

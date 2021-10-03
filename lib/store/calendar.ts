@@ -36,10 +36,13 @@ export interface Goals {
 export interface CalendarState {
   months: Months[];
   days: Days[];
-  currentDay: string;
+  currentFullDate: string;
 
   goals: Goals;
-  activeDay: string;
+  activeFullDate: string;
+
+  currentDate: number;
+
 
   currentMonth: number;
   cycleMonth: (inc: 1 | -1) => void;
@@ -60,4 +63,6 @@ export interface CalendarState {
     date: string;
     time: string;
   }) => void;
+
+  deleteGoal: (id: string) => void;
 }

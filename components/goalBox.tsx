@@ -1,12 +1,32 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { styled } from '@styled';
 
 import Input from '@components/input';
 import Button from '@components/button';
 
+import {
+  Root as PopoverRoot,
+  StyledTrigger as PopoverTrigger,
+  Anchor as PopoverAnchor,
+  StyledContent as PopoverContent,
+  StyledButton as PopoverButton,
+} from '@components/popover';
+
+import {
+  Root as AlertDialogRoot,
+  Trigger as AlertDialogTrigger,
+  StyledOverlay as AlertDialogStyledOverlay,
+  StyledContent as AlertDialogStyledContent,
+  StyledTitle as AlertDialogTitle,
+  StyledCancel as AlertDialogCancel,
+  StyledAction as AlertDialogAction,
+  StyledDescription as AlertDialogDescription,
+} from '@components/alertDialog';
+
 import MenuSvg from '@assets/svg/Menu.svg';
 import CalendarSvg from '@assets/svg/Calendar.svg';
 import ClockSvg from '@assets/svg/Clock.svg';
+import DeleteSvg from '@assets/svg/Trash.svg';
 
 import { Goal } from '@lib/store/calendar';
 import useCalendar from '@state/calendar';
@@ -16,16 +36,71 @@ import reverseDateStr from '@utils/reverseDate';
 type GoalBoxProps = Goal;
 
 const GoalBox: React.FC<GoalBoxProps> = ({
+  id,
   title,
   description,
   date,
   time,
 }) => {
+  const { deleteGoal } = useCalendar(({ deleteGoal }) => ({ deleteGoal }));
+
+  const onDeleteConfirmClick = () => {
+    deleteGoal(id);
+  };
+
   return (
     <GoalBoxContainer>
       <GoalHeaderBox>
         <GoalBoxHeading>{title}</GoalBoxHeading>
-        <MenuSvg />
+        <PopoverRoot>
+          <PopoverTrigger>
+            <MenuSvgStyled />
+          </PopoverTrigger>
+          <PopoverAnchor />
+
+          <PopoverContent
+            color="light"
+            dropShadow
+            css={{
+              width: '18rem',
+              padding: '1rem 0.4rem',
+              flexDirection: 'column',
+            }}
+          >
+            {/* <PopoverButton>
+              &uarr; Switch Up
+            </PopoverButton>
+            <PopoverButton>
+              &darr; Switch Down
+            </PopoverButton> */}
+
+            <AlertDialogRoot>
+              <AlertDialogTrigger css={{ width: '90%', marginRight: '0' }}>
+                <PopoverButton css={{ width: '100%', marginRight: '0' }}>
+                  <DeleteSvg width={15} height={15} />
+                  Delete
+                </PopoverButton>
+              </AlertDialogTrigger>
+              <AlertDialogStyledOverlay />
+              <AlertDialogStyledContent
+                className="goal-box-alert-dialog"
+                css={{ width: '60rem' }}
+              >
+                <AlertDialogTitle>
+                  Are you sure to delete &quot;{title}&quot; Goal
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  The action is NOT reversible
+                </AlertDialogDescription>
+
+                <AlertDialogAction onClick={onDeleteConfirmClick}>
+                  Delete Goal
+                </AlertDialogAction>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+              </AlertDialogStyledContent>
+            </AlertDialogRoot>
+          </PopoverContent>
+        </PopoverRoot>
       </GoalHeaderBox>
       <GoalBoxPara>{description}</GoalBoxPara>
       <InfoContainer>
@@ -48,7 +123,13 @@ const GoalBox: React.FC<GoalBoxProps> = ({
 };
 
 const CreateGoalBox: React.FC = () => {
-  const { createGoal } = useCalendar(({ createGoal }) => ({ createGoal }));
+  const { createGoal, activeFullDate, setShowCreateNewGoal } = useCalendar(
+    ({ createGoal, activeFullDate, setShowCreateNewGoal }) => ({
+      createGoal,
+      activeFullDate,
+      setShowCreateNewGoal,
+    })
+  );
 
   const [form, setForm] = useState({
     title: '',
@@ -67,7 +148,32 @@ const CreateGoalBox: React.FC = () => {
     console.log(form);
 
     createGoal({ ...form, date: reverseDateStr(form.date) });
+
+    setShowCreateNewGoal();
   };
+
+  useEffect(() => {
+    const [day, month, year] = activeFullDate
+      .split('-')
+      .map((e: string): number => parseInt(e));
+
+    const updatedDay = day.toLocaleString('en-US', {
+      minimumIntegerDigits: 2,
+      useGrouping: false,
+    });
+
+    const updatedMonth = (month + 1).toLocaleString('en-US', {
+      minimumIntegerDigits: 2,
+      useGrouping: false,
+    });
+
+    setForm({
+      ...form,
+      date: `${year}-${updatedMonth}-${updatedDay}`,
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeFullDate]);
 
   return (
     <GoalBoxContainer as="form" onSubmit={handleSubmit}>
@@ -95,7 +201,11 @@ const CreateGoalBox: React.FC = () => {
       />
       <InfoContainer>
         <InfoBox>
-          <Input
+          <InfoIcon>
+            <CalendarSvg />
+          </InfoIcon>
+          {form.date}
+          {/* <Input
             name="date"
             type="date"
             label="Pick Date"
@@ -103,7 +213,7 @@ const CreateGoalBox: React.FC = () => {
             onChange={handleInputChange}
             value={form.date}
             required
-          />
+          /> */}
         </InfoBox>
         <InfoBox>
           <Input
@@ -116,7 +226,9 @@ const CreateGoalBox: React.FC = () => {
             required
           />
         </InfoBox>
-        <Button type="submit">Save</Button>
+        <Button type="submit" css={{ marginLeft: 'auto' }}>
+          Save
+        </Button>
       </InfoContainer>
     </GoalBoxContainer>
   );
@@ -157,6 +269,8 @@ const GoalBoxHeading = styled('h6', {
   fontFamily: '$inter',
   fontSize: '2.4rem',
   color: '$grey-800',
+
+  marginRight: 'auto',
 });
 
 const GoalBoxPara = styled('h6', {
@@ -210,5 +324,13 @@ const InfoIcon = styled('div', {
     height: 18,
 
     fill: '$grey-700',
+  },
+});
+
+const MenuSvgStyled = styled(MenuSvg, {
+  fill: '$grey-800',
+
+  '&:hover': {
+    cursor: 'pointer',
   },
 });
