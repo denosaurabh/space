@@ -19,7 +19,7 @@ const AllGoals: React.FC = () => {
       ({
         showCreateNewGoal,
         setShowCreateNewGoal,
-        activeDay,
+        activeFullDate: activeDay,
         getDayGoals,
       }) => ({
         showCreateNewGoal,
@@ -64,7 +64,7 @@ const AllGoalsContainer = styled('div', {
   flexDirection: 'column',
   gap: '5rem',
 
-  minWidth: '40rem',
+  minWidth: '50rem',
 
   fontFamily: '$inter',
   fontSize: '1.5rem',

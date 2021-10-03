@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { styled } from '@styled';
 
 import Button from '@components/button';
@@ -10,14 +11,19 @@ import ArrowUpSvg from '@assets/svg/ArrowUp.svg';
 import ArrowDownSvg from '@assets/svg/ArrowDown.svg';
 
 const CalendarContainer: React.FC = () => {
-  const { months, currentMonth, currentYear, cycleMonth } = useCalendar(
-    ({ months, currentMonth, currentYear, cycleMonth }) => ({
+  const { months, currentMonth, currentYear, cycleMonth, goals } = useCalendar(
+    ({ months, currentMonth, currentYear, cycleMonth, goals }) => ({
       months,
       currentMonth,
       currentYear,
       cycleMonth,
+      goals,
     })
   );
+
+  useEffect(() => {
+    //
+  }, [, goals]);
 
   return (
     <CalendarContainerStyled>
