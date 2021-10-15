@@ -49,6 +49,19 @@ const CalendarContainer: React.FC = () => {
         </Button>
       </CalendarHeader>
 
+      <DaysContainer>
+        <span>M</span>
+        <span>T</span>
+        <span>W</span>
+        <span>T</span>
+        <span>F</span>
+        <span>S</span>
+        <span>S</span>
+        <span>M</span>
+        <span>T</span>
+        <span>W</span>
+      </DaysContainer>
+
       <MonthBox
         noOfDays={daysInMonth(currentMonth, currentYear)}
         month={currentMonth}
@@ -79,13 +92,13 @@ export default CalendarContainer;
 const CalendarContainerStyled = styled('div', {
   display: 'flex',
   flexDirection: 'column',
-  gap: '8rem',
 });
 
 const CalendarHeader = styled('div', {
   display: 'flex',
   alignItems: 'center',
   gap: '1rem',
+  marginBottom: '8rem',
 
   fontFamily: '$inter',
 
@@ -99,5 +112,22 @@ const CalendarHeader = styled('div', {
   button: {
     height: '4rem',
     padding: '0 1.2rem',
+  },
+});
+
+const DaysContainer = styled('div', {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(10, auto)',
+  gridTemplateRows: 'repeat(3, auto)',
+
+  gap: '1.6rem',
+
+  span: {
+    fontFamily: '$inter',
+    fontSize: '1.4rem',
+    color: '$grey-700',
+    fontWeight: '500',
+
+    textAlign: 'center',
   },
 });

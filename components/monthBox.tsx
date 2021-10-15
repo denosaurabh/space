@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import useCalendar from '@state/calendar';
 import { styled } from '@styled';
 
+import zeroPad from '@utils/zeroPad';
+
 interface MonthBoxProps {
   title?: string;
   noOfDays: number;
@@ -47,7 +49,7 @@ const MonthBox: React.FC<MonthBoxProps> = ({
       {title ? <MonthTitle>{title}</MonthTitle> : null}
       <DatesContainer>
         {[...Array(noOfDays)].map((_, i) => {
-          const date = `${i + 1}-${month}-${year}`;
+          const date = `${zeroPad(month)}-${zeroPad(i + 1)}-${year}`;
           const hasGoals = !!localGoals[date];
 
           return (
@@ -74,6 +76,8 @@ const MonthContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   gap: '2rem',
+
+  marginBottom: '8rem',
 });
 
 const MonthTitle = styled('h5', {
