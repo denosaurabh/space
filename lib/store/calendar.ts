@@ -42,12 +42,11 @@ export interface CalendarState {
   activeFullDate: string;
 
   currentDate: number;
-
-
   currentMonth: number;
+  currentYear: number;
+
   cycleMonth: (inc: 1 | -1) => void;
 
-  currentYear: number;
   cycleYear: (inc: 1 | -1) => void;
 
   showCreateNewGoal: boolean;

@@ -2,9 +2,41 @@ import create from 'zustand';
 import { persist } from 'zustand/middleware';
 import produce from 'immer';
 import { nanoid } from 'nanoid';
+import dayjs from 'dayjs';
+import calendar from 'dayjs/plugin/calendar';
+dayjs.extend(calendar);
 
 import useSettings from '@state/settings';
 import { CalendarState } from '@lib/store/calendar';
+import zeroPad from '@utils/zeroPad';
+
+console.log(dayjs().calendar(dayjs('2021-10-05')));
+console.log(dayjs().calendar());
+console.log(dayjs().calendar('2021-10-05 12:00 AM'));
+console.log(dayjs('10-10-2021 14:00', 'DD-MM-YYYY HH:mm').isValid());
+console.log(dayjs('10-10-2021 14:00').isValid());
+
+console.log(
+  dayjs('10-10-2021 14:00', 'DD-MM-YYYY HH:mm').calendar(null, {
+    // sameDay: '[Today]',
+    // nextDay: '[Tomorrow]',
+    // nextWeek: 'dddd',
+    // lastDay: '[Yesterday]',
+    // lastWeek: '[Last] dddd',
+    // sameElse: 'DD/MM/YYYY',
+  })
+);
+
+console.log(
+  dayjs().calendar('17-10-2021 18:00', {
+    // sameDay: '[Today]',
+    // nextDay: '[Tomorrow]',
+    // nextWeek: 'dddd',
+    // lastDay: '[Yesterday]',
+    // lastWeek: '[Last] dddd',
+    sameElse: 'DD/MM/YYYY',
+  })
+);
 
 const useCalendar = create<CalendarState>(
   persist(
@@ -39,9 +71,13 @@ const useCalendar = create<CalendarState>(
       currentMonth: new Date().getMonth(),
       currentYear: new Date().getFullYear(),
 
-      currentFullDate: `${new Date().getDate()}-${new Date().getMonth()}-${new Date().getFullYear()}`,
+      currentFullDate: `${zeroPad(new Date().getMonth())}-${zeroPad(
+        new Date().getDate()
+      )}-${new Date().getFullYear()}`,
 
-      activeFullDate: `${new Date().getDate()}-${new Date().getMonth()}-${new Date().getFullYear()}`,
+      activeFullDate: `${zeroPad(new Date().getMonth())}-${zeroPad(
+        new Date().getDate()
+      )}-${new Date().getFullYear()}`,
 
       getTodayGoals: () => {
         const { goals } = get();
@@ -159,7 +195,7 @@ const useCalendar = create<CalendarState>(
 
 useCalendar.subscribe((state) => {
   if (process.env.NODE_ENV === 'development') {
-    console.log(state.goals);
+    console.log(state);
   }
 });
 
