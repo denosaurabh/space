@@ -1,4 +1,9 @@
 import { useEffect, useState } from 'react';
+
+import dayjs from 'dayjs';
+import calendar from 'dayjs/plugin/calendar';
+dayjs.extend(calendar);
+
 import { styled } from '@styled';
 
 import Input from '@components/input';
@@ -31,7 +36,7 @@ import DeleteSvg from '@assets/svg/Trash.svg';
 import { Goal } from '@lib/store/calendar';
 import useCalendar from '@state/calendar';
 
-import reverseDateStr from '@utils/reverseDate';
+import zeroPad from '@utils/zeroPad';
 
 type GoalBoxProps = Goal;
 
@@ -43,6 +48,19 @@ const GoalBox: React.FC<GoalBoxProps> = ({
   time,
 }) => {
   const { deleteGoal } = useCalendar(({ deleteGoal }) => ({ deleteGoal }));
+
+  console.log(date, time);
+
+  const [month, day, year] = date.split('-');
+  const modifiedDate = `${zeroPad(Number(month) + 1)}-${day}-${year}`;
+
+  // const beautifyDate = dayjs().calendar(`${date} ${time}`);
+  const beautifyDate = dayjs(
+    `${Number(month) + 1}-${day}-${year} ${time}`,
+    'MM-DD-YYYY HH:mm'
+  ).calendar(null, {
+    sameElse: 'dddd [on] DD MMM YYYY',
+  });
 
   const onDeleteConfirmClick = () => {
     deleteGoal(id);
@@ -108,7 +126,7 @@ const GoalBox: React.FC<GoalBoxProps> = ({
           <InfoIcon>
             <CalendarSvg />
           </InfoIcon>
-          {date}
+          {dayjs(modifiedDate).format('DD-MMM-YYYY')}
         </InfoBox>
         <InfoBox>
           <InfoIcon>
@@ -116,7 +134,7 @@ const GoalBox: React.FC<GoalBoxProps> = ({
           </InfoIcon>
           {time}
         </InfoBox>
-        <GoalSpan css={{ marginLeft: 'auto' }}>2 days 12 hours</GoalSpan>
+        <GoalSpan css={{ marginLeft: 'auto' }}>{beautifyDate}</GoalSpan>
       </InfoContainer>
     </GoalBoxContainer>
   );
@@ -147,29 +165,32 @@ const CreateGoalBox: React.FC = () => {
     e.preventDefault();
     console.log(form);
 
-    createGoal({ ...form, date: reverseDateStr(form.date) });
+    createGoal({ ...form, date: activeFullDate });
 
     setShowCreateNewGoal();
   };
 
   useEffect(() => {
-    const [day, month, year] = activeFullDate
-      .split('-')
-      .map((e: string): number => parseInt(e));
+    const [month, day, year] = activeFullDate.split('-');
 
-    const updatedDay = day.toLocaleString('en-US', {
-      minimumIntegerDigits: 2,
-      useGrouping: false,
-    });
+    // const [day, month, year] = activeFullDate
+    //   .split('-')
+    //   .map((e: string): number => parseInt(e));
 
-    const updatedMonth = (month + 1).toLocaleString('en-US', {
-      minimumIntegerDigits: 2,
-      useGrouping: false,
-    });
+    // const updatedDay = day.toLocaleString('en-US', {
+    //   minimumIntegerDigits: 2,
+    //   useGrouping: false,
+    // });
+
+    // const updatedMonth = month.toLocaleString('en-US', {
+    //   minimumIntegerDigits: 2,
+    //   useGrouping: false,
+    // });
 
     setForm({
       ...form,
-      date: `${year}-${updatedMonth}-${updatedDay}`,
+      // date: activeFullDate,
+      date: `${zeroPad(Number(month) + 1)}-${day}-${year}`,
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -204,7 +225,7 @@ const CreateGoalBox: React.FC = () => {
           <InfoIcon>
             <CalendarSvg />
           </InfoIcon>
-          {form.date}
+          {dayjs(form.date).format('DD-MMM-YYYY')}
           {/* <Input
             name="date"
             type="date"
@@ -212,7 +233,7 @@ const CreateGoalBox: React.FC = () => {
             placeholder="Coffee Meet"
             onChange={handleInputChange}
             value={form.date}
-            required
+            disabled
           /> */}
         </InfoBox>
         <InfoBox>

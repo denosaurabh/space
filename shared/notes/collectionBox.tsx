@@ -197,7 +197,19 @@ const CollectionBox: React.FC<CollectionBoxProps> = ({
 
         <AlertDialogRoot>
           <AlertDialogTrigger css={{ width: '100%' }}>
-            <LI>
+            <LI
+              css={{
+                '&:hover': {
+                  // borderWidth: '1px',
+                  // borderColor: '$red',
+                  color: '$red',
+                  svg: {
+                    fill: '$red',
+                  },
+                  backgroundColor: '$grey-100',
+                },
+              }}
+            >
               <TrashSvg />
               Delete Collection
             </LI>
