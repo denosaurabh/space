@@ -8,35 +8,6 @@ dayjs.extend(calendar);
 
 import useSettings from '@state/settings';
 import { CalendarState } from '@lib/store/calendar';
-import zeroPad from '@utils/zeroPad';
-
-console.log(dayjs().calendar(dayjs('2021-10-05')));
-console.log(dayjs().calendar());
-console.log(dayjs().calendar('2021-10-05 12:00 AM'));
-console.log(dayjs('10-10-2021 14:00', 'DD-MM-YYYY HH:mm').isValid());
-console.log(dayjs('10-10-2021 14:00').isValid());
-
-console.log(
-  dayjs('10-10-2021 14:00', 'DD-MM-YYYY HH:mm').calendar(null, {
-    // sameDay: '[Today]',
-    // nextDay: '[Tomorrow]',
-    // nextWeek: 'dddd',
-    // lastDay: '[Yesterday]',
-    // lastWeek: '[Last] dddd',
-    // sameElse: 'DD/MM/YYYY',
-  })
-);
-
-console.log(
-  dayjs().calendar('17-10-2021 18:00', {
-    // sameDay: '[Today]',
-    // nextDay: '[Tomorrow]',
-    // nextWeek: 'dddd',
-    // lastDay: '[Yesterday]',
-    // lastWeek: '[Last] dddd',
-    sameElse: 'DD/MM/YYYY',
-  })
-);
 
 const useCalendar = create<CalendarState>(
   persist(
@@ -67,17 +38,22 @@ const useCalendar = create<CalendarState>(
       goals: {},
       showCreateNewGoal: false,
 
-      currentDate: new Date().getDate(),
-      currentMonth: new Date().getMonth(),
-      currentYear: new Date().getFullYear(),
+      // currentDate: new Date().getDate(),
+      // currentMonth: new Date().getMonth(),
+      // currentYear: new Date().getFullYear(),
+      currentDate: dayjs().date(),
+      currentMonth: dayjs().month(),
+      currentYear: dayjs().year(),
 
-      currentFullDate: `${zeroPad(new Date().getMonth())}-${zeroPad(
-        new Date().getDate()
-      )}-${new Date().getFullYear()}`,
+      // currentFullDate: `${zeroPad(new Date().getMonth())}-${zeroPad(
+      //   new Date().getDate()
+      // )}-${new Date().getFullYear()}`,
+      currentFullDate: dayjs().format('YYYY-M-D'),
 
-      activeFullDate: `${zeroPad(new Date().getMonth())}-${zeroPad(
-        new Date().getDate()
-      )}-${new Date().getFullYear()}`,
+      // activeFullDate: `${zeroPad(new Date().getMonth())}-${zeroPad(
+      //   new Date().getDate()
+      // )}-${new Date().getFullYear()}`,
+      activeFullDate: dayjs().format('YYYY-M-D'),
 
       getTodayGoals: () => {
         const { goals } = get();
@@ -125,10 +101,10 @@ const useCalendar = create<CalendarState>(
           })
         );
       },
-      setActiveDay: (day: string) => {
+      setActiveDay: (date: string) => {
         set(
           produce((draft) => {
-            draft.activeFullDate = day;
+            draft.activeFullDate = date;
           })
         );
       },
@@ -165,6 +141,21 @@ const useCalendar = create<CalendarState>(
             }
           })
         );
+      },
+      goalsInMonth: (month: number, year: number) => {
+        const { goals } = get();
+
+        const monthGoals = Object.keys(goals).filter((key) =>
+          key.includes(`${year}-${month}`)
+        );
+
+        const goalsInMonth = monthGoals.reduce((acc, key) => {
+          acc.push(goals[key]);
+
+          return acc;
+        }, []);
+
+        return goalsInMonth;
       },
     }),
     {

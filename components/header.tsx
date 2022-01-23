@@ -30,7 +30,7 @@ const HeaderStyled = styled('header', {
 });
 
 const HeaderNav = styled('div', {
-  flexRow: '',
+  display: 'flex',
   gap: '1.6rem',
   marginRight: 'auto',
 });

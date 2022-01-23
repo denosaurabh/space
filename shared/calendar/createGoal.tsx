@@ -4,7 +4,7 @@ import { CreateGoalBox } from '@components/goalBox';
 const CreateGoal: React.FC = () => {
   return (
     <CreateGoalContainer>
-      <h4>Create a new Goal</h4>
+      <h4>Add a new Event</h4>
       <CreateGoalBox />
     </CreateGoalContainer>
   );

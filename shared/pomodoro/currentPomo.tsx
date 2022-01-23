@@ -45,7 +45,7 @@ const CurrentPomo: React.FC = () => {
             </PomoCircleButton>
             <PopoverRoot>
               <PopoverTrigger>
-                <PomoCircleButton as="a" color="light" size="medium">
+                <PomoCircleButton color="light" size="medium">
                   <StopSvg />
                   Stop
                 </PomoCircleButton>
