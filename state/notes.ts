@@ -90,6 +90,13 @@ const useNotes = create<NotesState>(
           })
         );
       },
+      updateCollectionName: (id, name) => {
+        set(
+          produce((draft) => {
+            draft.notesState[id].name = name;
+          })
+        );
+      },
       deleteCollection: (slug) => {
         set(
           produce((draft) => {

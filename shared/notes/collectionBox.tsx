@@ -3,6 +3,7 @@ import { styled, darkTheme } from '@styled';
 
 import TrashSvg from '@assets/svg/Trash.svg';
 import CloseSvg from '@assets/svg/Close.svg';
+import CheckSvg from '@assets/svg/Check.svg';
 
 import {
   Root,
@@ -31,7 +32,11 @@ import {
 
 import Input from '@components/input';
 import DropIcon from '@components/dropIcon';
-import Badge from '@components/badge';
+// import Badge from '@components/badge';
+
+import useNotes from '@state/notes';
+import Seperator from '@components/separator';
+import useAssetsStorage from '@state/assetsStorage';
 
 interface CollectionBoxProps {
   slug?: string;
@@ -53,7 +58,20 @@ const CollectionBox: React.FC<CollectionBoxProps> = ({
   handleDeleteCollection,
   children,
 }) => {
+  const { updateCollectionName } = useNotes(({ updateCollectionName }) => ({
+    updateCollectionName,
+  }));
+
+  const { addNotesCollectionIcon } = useAssetsStorage(
+    ({ addNotesCollectionIcon }) => ({
+      addNotesCollectionIcon,
+    })
+  );
+
   const [showContextMenu, setShowContextMenu] = useState(false);
+  const [collectionNameInput, setCollectionNameInput] = useState(name);
+
+  const [saveButtonText, setSaveButtonText] = useState('Save');
 
   const handleContextMenu = (e) => {
     e.preventDefault();
@@ -79,19 +97,28 @@ const CollectionBox: React.FC<CollectionBoxProps> = ({
 
   const onCollectionNameChange = (e) => {
     const { value } = e.target;
-    console.log(value);
+    setCollectionNameInput(value);
   };
 
   const onIconUploadSuccess = (icon: File) => {
     console.log('icon uploaded', icon);
-    // addNotesCollectionIcon(icon);
 
-    // const { src } = collectionIcons[icon.name];
-    // updateCollectionIcon(slug, src);
+    addNotesCollectionIcon(slug, icon);
+    // setURLtoNotesCollection(slug);
   };
 
   const onIconUploadError = ({ message }) => {
     console.log(message);
+  };
+
+  const onSaveClickHandler = () => {
+    updateCollectionName(slug, collectionNameInput);
+
+    setSaveButtonText('Changes Saved!');
+
+    if (name === collectionNameInput) {
+      setSaveButtonText('No Changes were made!');
+    }
   };
 
   useEffect(() => {
@@ -122,6 +149,8 @@ const CollectionBox: React.FC<CollectionBoxProps> = ({
     return () => {
       window.document.removeEventListener('click', onDocumentClick);
       window.document.removeEventListener('contextmenu', onDocumentClick);
+
+      setSaveButtonText('Save');
     };
   }, [showContextMenu]);
 
@@ -184,17 +213,32 @@ const CollectionBox: React.FC<CollectionBoxProps> = ({
           <Input
             label="Name"
             type="name"
-            value={name}
             placeholder={`Name of Collection`}
             size="mini"
             css={{ width: '80%', input: { borderColor: '$grey-400' } }}
+            value={collectionNameInput}
             onChange={onCollectionNameChange}
           />
         </InputBox>
-        <Badge size="medium" css={{ margin: 0 }}>
-          Icon and Change Name soon
-        </Badge>
+        <LI
+          onClick={onSaveClickHandler}
+          css={{
+            justifyContent: 'center',
 
+            '&:hover': {
+              backgroundColor: '$grey-100',
+              borderColor: '$green',
+              color: '$green',
+
+              svg: {
+                stroke: '$green',
+              },
+            },
+          }}
+        >
+          <CheckSvg /> {saveButtonText}
+        </LI>
+        <Seperator css={{ margin: '1rem 0' }} />
         <AlertDialogRoot>
           <AlertDialogTrigger css={{ width: '100%' }}>
             <LI
@@ -245,7 +289,10 @@ const CollectionBox: React.FC<CollectionBoxProps> = ({
 export default CollectionBox;
 
 const CollectionBoxStyled = styled('div', {
+  // width: '5rem',
+  // height: '5rem',
   size: '5rem',
+
   borderRadius: '1rem',
   backgroundColor: '$grey-200',
 

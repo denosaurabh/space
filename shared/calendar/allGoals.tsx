@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 import { styled } from '@styled';
 
 import { GoalBox } from '@components/goalBox';
@@ -10,8 +12,6 @@ import CreateGoal from '@shared/calendar/createGoal';
 
 import PlusSvg from '@assets/svg/Plus.svg';
 import CloseSvg from '@assets/svg/Close.svg';
-
-import dateBeautify from '@utils/dateBeautify';
 
 const AllGoals: React.FC = () => {
   const { showCreateNewGoal, setShowCreateNewGoal, activeDay, getDayGoals } =
@@ -33,10 +33,10 @@ const AllGoals: React.FC = () => {
     <AllGoalsContainer>
       <AllGoalsHeader>
         <h3>
-          Goals
+          Events
           {!showCreateNewGoal ? (
             <Button color="light" size="small" onClick={setShowCreateNewGoal}>
-              New Goal <PlusSvg />
+              New Event <PlusSvg />
             </Button>
           ) : (
             <Button color="light" size="small" onClick={setShowCreateNewGoal}>
@@ -44,7 +44,7 @@ const AllGoals: React.FC = () => {
             </Button>
           )}
         </h3>
-        <span>{dateBeautify(activeDay)}</span>
+        <span>{dayjs(activeDay, 'YYYY-M-D').format('dddd, D MMMM YYYY')}</span>
       </AllGoalsHeader>
 
       {showCreateNewGoal && <CreateGoal />}
@@ -64,12 +64,17 @@ const AllGoalsContainer = styled('div', {
   flexDirection: 'column',
   gap: '5rem',
 
-  minWidth: '50rem',
+  minWidth: '45rem',
 
   fontFamily: '$inter',
   fontSize: '1.5rem',
   fontWeight: '400',
   color: '$grey-600',
+
+  '@tablet-big': {
+    width: '100%',
+    maxWidth: '50rem',
+  },
 });
 
 const AllGoalsHeader = styled('div', {

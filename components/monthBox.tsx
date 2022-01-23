@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
+
 import useCalendar from '@state/calendar';
 import { styled } from '@styled';
-
-import zeroPad from '@utils/zeroPad';
 
 interface MonthBoxProps {
   title?: string;
@@ -11,23 +11,18 @@ interface MonthBoxProps {
   year: number;
 }
 
-const MonthBox: React.FC<MonthBoxProps> = ({
-  title,
-  noOfDays,
-  month,
-  year,
-}) => {
-  const { currentDay, activeDay, setActiveDay, goals } = useCalendar(
+const MonthBox: React.FC<MonthBoxProps> = ({ title, month, year }) => {
+  const { currentDate, activeDate, goals, setActiveDay } = useCalendar(
     ({
-      currentFullDate: currentDay,
-      setActiveDay,
-      activeFullDate: activeDay,
+      currentFullDate: currentDate,
+      activeFullDate: activeDate,
       goals,
+      setActiveDay,
     }) => ({
-      currentDay,
-      setActiveDay,
-      activeDay,
+      activeDate,
+      currentDate,
       goals,
+      setActiveDay,
     })
   );
 
@@ -35,33 +30,44 @@ const MonthBox: React.FC<MonthBoxProps> = ({
 
   const onDayClickHandler = (e) => {
     const date = e.target.dataset.date;
-
     setActiveDay(date);
   };
 
   useEffect(() => {
-    // console.log('goals', goals);
     setLocalGoals(goals);
   }, [, goals]);
+
+  const realMonthNo = month + 1;
+  const firstDayOfMonth = dayjs(`${year}-${realMonthNo}-1`, 'YYYY-M-D').day();
+  const noOfDays = dayjs(`${year}-${realMonthNo}-1`, 'YYYY-M-D').daysInMonth();
 
   return (
     <MonthContainer>
       {title ? <MonthTitle>{title}</MonthTitle> : null}
       <DatesContainer>
-        {[...Array(noOfDays)].map((_, i) => {
-          const date = `${zeroPad(month)}-${zeroPad(i + 1)}-${year}`;
-          const hasGoals = !!localGoals[date];
+        {[...Array(firstDayOfMonth)].map((_, index) => (
+          <DateEl key={index} hidden>
+            -
+          </DateEl>
+        ))}
+        {[...Array(noOfDays)].map((_, index) => {
+          const date = index + 1;
+          const fullDate = `${year}-${realMonthNo}-${date}`;
+
+          const hasGoals = !!localGoals[fullDate];
+          const isActive = fullDate === activeDate;
+          const isToday = fullDate === currentDate;
 
           return (
             <DateEl
-              key={i}
-              data-date={date}
-              currentDay={date === currentDay}
-              activeDay={date === activeDay}
-              hasGoals={hasGoals}
+              key={index}
               onClick={onDayClickHandler}
+              data-date={fullDate}
+              activeDay={isActive}
+              currentDay={isToday}
+              hasGoals={hasGoals}
             >
-              {i + 1}
+              {date}
             </DateEl>
           );
         })}
@@ -86,12 +92,13 @@ const MonthTitle = styled('h5', {
 
   color: '$grey-800',
   marginLeft: '1rem',
+  marginBottom: '1rem',
 });
 
 const DatesContainer = styled('div', {
   display: 'grid',
-  gridTemplateColumns: 'repeat(10, auto)',
-  gridTemplateRows: 'repeat(3, auto)',
+  gridTemplateColumns: 'repeat(7, auto)',
+  gridTemplateRows: 'repeat(5, auto)',
 
   gap: '1.6rem',
 });
@@ -157,6 +164,11 @@ const DateEl = styled('span', {
           backgroundColor: '$grey-700',
           borderRadius: '999px',
         },
+      },
+    },
+    hidden: {
+      true: {
+        visibility: 'hidden',
       },
     },
   },

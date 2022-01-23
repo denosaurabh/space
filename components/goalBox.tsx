@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 
 import dayjs from 'dayjs';
 import calendar from 'dayjs/plugin/calendar';
+import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(calendar);
+dayjs.extend(relativeTime);
 
 import { styled } from '@styled';
 
@@ -32,11 +34,11 @@ import MenuSvg from '@assets/svg/Menu.svg';
 import CalendarSvg from '@assets/svg/Calendar.svg';
 import ClockSvg from '@assets/svg/Clock.svg';
 import DeleteSvg from '@assets/svg/Trash.svg';
+import CounterClockwiseSvg from '@assets/svg/CounterClockwise.svg';
+import BellSvg from '@assets/svg/Bell.svg';
 
 import { Goal } from '@lib/store/calendar';
 import useCalendar from '@state/calendar';
-
-import zeroPad from '@utils/zeroPad';
 
 type GoalBoxProps = Goal;
 
@@ -49,76 +51,171 @@ const GoalBox: React.FC<GoalBoxProps> = ({
 }) => {
   const { deleteGoal } = useCalendar(({ deleteGoal }) => ({ deleteGoal }));
 
-  console.log(date, time);
-
-  const [month, day, year] = date.split('-');
-  const modifiedDate = `${zeroPad(Number(month) + 1)}-${day}-${year}`;
-
-  // const beautifyDate = dayjs().calendar(`${date} ${time}`);
-  const beautifyDate = dayjs(
-    `${Number(month) + 1}-${day}-${year} ${time}`,
-    'MM-DD-YYYY HH:mm'
-  ).calendar(null, {
-    sameElse: 'dddd [on] DD MMM YYYY',
-  });
-
   const onDeleteConfirmClick = () => {
     deleteGoal(id);
   };
+
+  const onNotificationTimeClick = async (e) => {
+    const { time, text } = e.target.dataset;
+    console.log(time, text);
+
+    const registration = await navigator.serviceWorker.ready;
+
+    if ('periodicSync' in registration) {
+      try {
+        // @ts-expect-error: Ignore this
+        await registration.periodicSync.register('notification' + time, {
+          minInterval: dayjs(time).subtract(dayjs().valueOf(), 'millisecond'),
+        });
+      } catch (error) {
+        console.log('Periodic background sync cannot be used.');
+      }
+    }
+  };
+
+  const day = dayjs(`${date} ${time}`, 'YYYY-M-D HH:mm');
 
   return (
     <GoalBoxContainer>
       <GoalHeaderBox>
         <GoalBoxHeading>{title}</GoalBoxHeading>
-        <PopoverRoot>
-          <PopoverTrigger>
-            <MenuSvgStyled />
-          </PopoverTrigger>
-          <PopoverAnchor />
 
-          <PopoverContent
-            color="light"
-            dropShadow
-            css={{
-              width: '18rem',
-              padding: '1rem 0.4rem',
-              flexDirection: 'column',
-            }}
-          >
-            {/* <PopoverButton>
+        <MenuIconsContainer>
+          <PopoverRoot>
+            <PopoverTrigger
+              css={{
+                backgroundColor: '$grey-200',
+                padding: '0.75rem',
+                borderRadius: '1rem',
+
+                transition: 'all 0.2s',
+
+                '&:hover': {
+                  cursor: 'pointer',
+                  backgroundColor: '$grey-300',
+                },
+
+                '& svg': {
+                  transform: 'rotateZ(0deg)',
+                },
+              }}
+            >
+              <BellSvg />
+            </PopoverTrigger>
+            <PopoverAnchor />
+
+            <PopoverContent
+              color="light"
+              dropShadow
+              css={{
+                marginTop: '1rem',
+                width: '10rem',
+                padding: '1rem 0.4rem',
+                flexDirection: 'column',
+              }}
+            >
+              {/* <PopoverButton>
               &uarr; Switch Up
             </PopoverButton>
             <PopoverButton>
               &darr; Switch Down
             </PopoverButton> */}
 
-            <AlertDialogRoot>
-              <AlertDialogTrigger css={{ width: '90%', marginRight: '0' }}>
-                <PopoverButton css={{ width: '100%', marginRight: '0' }}>
-                  <DeleteSvg width={15} height={15} />
-                  Delete
-                </PopoverButton>
-              </AlertDialogTrigger>
-              <AlertDialogStyledOverlay />
-              <AlertDialogStyledContent
-                className="goal-box-alert-dialog"
-                css={{ width: '60rem' }}
+              <PopoverButton
+                data-time={day.subtract(10, 'minute').valueOf()}
+                data-text={`Your Event (${title}) will begin in 10mins`}
+                onClick={onNotificationTimeClick}
               >
-                <AlertDialogTitle>
-                  Are you sure to delete &quot;{title}&quot; Goal
-                </AlertDialogTitle>
-                <AlertDialogDescription>
-                  The action is NOT reversible
-                </AlertDialogDescription>
+                10mins
+              </PopoverButton>
+              <PopoverButton
+                data-time={day.subtract(30, 'minute').valueOf()}
+                data-text={`Your Event (${title}) will begin in 30mins`}
+                onClick={onNotificationTimeClick}
+              >
+                30mins
+              </PopoverButton>
+              <PopoverButton
+                data-time={day.subtract(1, 'hour').valueOf()}
+                data-text={`Your Event (${title}) will begin in 1hour`}
+                onClick={onNotificationTimeClick}
+              >
+                1 hour
+              </PopoverButton>
+              <PopoverButton
+                data-time={day.subtract(1, 'day').valueOf()}
+                data-text={`Your Event (${title}) will begin in 1day`}
+                onClick={onNotificationTimeClick}
+              >
+                1 day
+              </PopoverButton>
+            </PopoverContent>
+          </PopoverRoot>
 
-                <AlertDialogAction onClick={onDeleteConfirmClick}>
-                  Delete Goal
-                </AlertDialogAction>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-              </AlertDialogStyledContent>
-            </AlertDialogRoot>
-          </PopoverContent>
-        </PopoverRoot>
+          <PopoverRoot>
+            <PopoverTrigger
+              css={{
+                backgroundColor: '$grey-200',
+                padding: '1rem 1rem 0.5rem 0.5rem',
+                borderRadius: '1rem',
+
+                transition: 'all 0.2s',
+
+                '&:hover': {
+                  cursor: 'pointer',
+                  backgroundColor: '$grey-300',
+                },
+              }}
+            >
+              <MenuSvgStyled />
+            </PopoverTrigger>
+            <PopoverAnchor />
+
+            <PopoverContent
+              color="light"
+              dropShadow
+              css={{
+                width: '18rem',
+                padding: '1rem 0.4rem',
+                marginTop: '1rem',
+                flexDirection: 'column',
+              }}
+            >
+              {/* <PopoverButton>
+              &uarr; Switch Up
+            </PopoverButton>
+            <PopoverButton>
+              &darr; Switch Down
+            </PopoverButton> */}
+
+              <AlertDialogRoot>
+                <AlertDialogTrigger css={{ width: '90%', marginRight: '0' }}>
+                  <PopoverButton css={{ width: '100%', marginRight: '0' }}>
+                    <DeleteSvg width={15} height={15} />
+                    Delete
+                  </PopoverButton>
+                </AlertDialogTrigger>
+                <AlertDialogStyledOverlay />
+                <AlertDialogStyledContent
+                  className="goal-box-alert-dialog"
+                  css={{ width: '60rem' }}
+                >
+                  <AlertDialogTitle>
+                    Are you sure to delete &quot;{title}&quot; Goal
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    The action is NOT reversible
+                  </AlertDialogDescription>
+
+                  <AlertDialogAction onClick={onDeleteConfirmClick}>
+                    Delete Goal
+                  </AlertDialogAction>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                </AlertDialogStyledContent>
+              </AlertDialogRoot>
+            </PopoverContent>
+          </PopoverRoot>
+        </MenuIconsContainer>
       </GoalHeaderBox>
       <GoalBoxPara>{description}</GoalBoxPara>
       <InfoContainer>
@@ -126,15 +223,19 @@ const GoalBox: React.FC<GoalBoxProps> = ({
           <InfoIcon>
             <CalendarSvg />
           </InfoIcon>
-          {dayjs(modifiedDate).format('DD-MMM-YYYY')}
+          {day.format('DD MMM YYYY')}
         </InfoBox>
         <InfoBox>
           <InfoIcon>
             <ClockSvg />
           </InfoIcon>
-          {time}
+          {day.format('hh:mm A')}
         </InfoBox>
-        <GoalSpan css={{ marginLeft: 'auto' }}>{beautifyDate}</GoalSpan>
+        <GoalSpan css={{ marginLeft: 'auto' }}>
+          <CounterClockwiseSvg />
+
+          {day.fromNow()}
+        </GoalSpan>
       </InfoContainer>
     </GoalBoxContainer>
   );
@@ -171,26 +272,13 @@ const CreateGoalBox: React.FC = () => {
   };
 
   useEffect(() => {
-    const [month, day, year] = activeFullDate.split('-');
-
-    // const [day, month, year] = activeFullDate
-    //   .split('-')
-    //   .map((e: string): number => parseInt(e));
-
-    // const updatedDay = day.toLocaleString('en-US', {
-    //   minimumIntegerDigits: 2,
-    //   useGrouping: false,
-    // });
-
-    // const updatedMonth = month.toLocaleString('en-US', {
-    //   minimumIntegerDigits: 2,
-    //   useGrouping: false,
-    // });
+    const beautifyDate = dayjs(activeFullDate, 'YYYY-M-D').format(
+      'D MMMM YYYY'
+    );
 
     setForm({
       ...form,
-      // date: activeFullDate,
-      date: `${zeroPad(Number(month) + 1)}-${day}-${year}`,
+      date: beautifyDate,
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -225,7 +313,7 @@ const CreateGoalBox: React.FC = () => {
           <InfoIcon>
             <CalendarSvg />
           </InfoIcon>
-          {dayjs(form.date).format('DD-MMM-YYYY')}
+          {form.date}
           {/* <Input
             name="date"
             type="date"
@@ -236,7 +324,7 @@ const CreateGoalBox: React.FC = () => {
             disabled
           /> */}
         </InfoBox>
-        <InfoBox>
+        <InfoBox css={{ borderWidth: 0 }}>
           <Input
             name="time"
             type="time"
@@ -262,13 +350,23 @@ const GoalBoxContainer = styled('div', {
   flexDirection: 'column',
   gap: '2rem',
 
-  width: '50rem',
+  // width: '50rem',
   height: 'auto',
 
   padding: '2rem',
 
   border: '1px solid $grey-300',
   borderRadius: '10px',
+
+  '@mobile': {
+    width: '100%',
+  },
+
+  // transition: 'all 0.2s',
+
+  // '&:hover': {
+  //   boxShadow: '0rem 0.5rem 1rem rgba(0,0,0,0.05)',
+  // },
 });
 
 const GoalHeaderBox = styled('div', {
@@ -307,20 +405,40 @@ const GoalBoxPara = styled('h6', {
 });
 
 const GoalSpan = styled('span', {
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.7rem',
+
   fontFamily: '$inter',
   fontSize: '1.4rem',
   color: '$grey-600',
+
+  width: '100%',
+
+  '& svg': {
+    width: 18,
+    height: 18,
+
+    fill: '$grey-700',
+  },
+
+  '@mobile': {
+    flex: '1',
+  },
 });
 
 const InfoContainer = styled('div', {
   display: 'flex',
   alignItems: 'center',
-  gap: '3rem',
+  flexWrap: 'wrap',
+  gap: '2rem',
 
   width: '100%',
 });
 
 const InfoBox = styled('div', {
+  width: 'fit-content',
+
   display: 'flex',
   alignItems: 'center',
   gap: '1rem',
@@ -328,6 +446,11 @@ const InfoBox = styled('div', {
   fontFamily: '$inter',
   fontSize: '1.4rem',
   color: '$grey-700',
+
+  paddingRight: '1rem',
+
+  border: '1px solid $grey-300',
+  borderRadius: '10px',
 });
 
 const InfoIcon = styled('div', {
@@ -338,7 +461,7 @@ const InfoIcon = styled('div', {
   padding: '1rem',
 
   backgroundColor: '$grey-200',
-  borderRadius: '10px',
+  borderRadius: '10px 0 0 10px',
 
   '& svg': {
     width: 18,
@@ -354,4 +477,9 @@ const MenuSvgStyled = styled(MenuSvg, {
   '&:hover': {
     cursor: 'pointer',
   },
+});
+
+const MenuIconsContainer = styled('div', {
+  display: 'flex',
+  gap: '0.5rem',
 });

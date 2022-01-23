@@ -10,6 +10,7 @@ import Footer from '@shared/home/footer';
 import LandingPageSEO from '@shared/home/seo';
 
 import DreamyGradient from '@components/dreamyGradient';
+import { useRouter } from 'next/router';
 
 const Container = styled('div', {
   display: 'flex',
@@ -32,6 +33,9 @@ const Container = styled('div', {
 });
 
 const Home: React.FC = () => {
+  const router = useRouter();
+  console.log(router.pathname, router.asPath);
+
   useEffect(() => {
     if (!window) return;
 

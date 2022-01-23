@@ -1,0 +1,1 @@
+(()=>{"use strict";var e={r:e=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})}};e.r({}),self.addEventListener("message",(e=>{console.log(null==e?void 0:e.data)})),self.addEventListener("periodicsync",(e=>{console.log(e)}))})();
