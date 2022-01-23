@@ -8,6 +8,7 @@ import CollectionBox from '@shared/notes/collectionBox';
 
 import useNotes from '@state/notes';
 import { NotesCollection } from '@lib/store/notes';
+// import useAssetsStorage from '@state/assetsStorage';
 
 const CreateCollection = dynamic(
   () => import('@shared/notes/createCollection'),
@@ -83,6 +84,8 @@ const NotesCollectionSidebar: React.FC = () => {
         const firstString = el.name[0].toUpperCase();
 
         const isCurrentCollection = el.slug === router?.query?.id;
+
+        // const iconURL = useAssetsStorage.getState().readAndSetIconURL(el.slug);
 
         return (
           <CollectionBox

@@ -55,6 +55,7 @@ export interface CalendarState {
 
   getDayGoals: (day: string) => Goal[];
   getTodayGoals: () => Goal[];
+  goalsInMonth: (month: number, year: number) => Goal[];
 
   createGoal: (goal: {
     title: string;

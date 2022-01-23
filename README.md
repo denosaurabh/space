@@ -32,12 +32,11 @@ Space is a completely open source project, so here's the source code for the pro
 
 - Dark Theme
 - Fully Offline (PWA & LocalStorage)
-- No Ads, analytics or auth required 
+- No Ads, analytics or auth required
 - Flexible, Custom Theming (COMING SOON!)
 
 &nbsp;
 &nbsp;
-
 
 ## 🍕 Stack
 
@@ -51,8 +50,8 @@ Space is a completely open source project, so here's the source code for the pro
 
 ## 🥅 Goal
 
-The goal is to make a very simple and minimal productivity, notes making & life management app. 
-The project is aimed to be very flexible, easy to use and community oriented in a long run. 
+The goal is to make a very simple and minimal productivity, notes making & life management app.
+The project is aimed to be very flexible, easy to use and community oriented in a long run.
 The Performance, size, accessibility of this application are also marked as high priority.
 
 &nbsp;
@@ -79,7 +78,7 @@ You can ask question, report issues and share your ideas here too..
 
 ## 👷‍♂️ Contributing
 
-We hearly welcome new contributers to the project. When contributing to this repository, please first discuss the change you wish to make via [issue](https://github.com/DenoSaurabh/space/issues/new) or [discussions](https://github.com/DenoSaurabh/space/discussions/new). 
+We hearly welcome new contributers to the project. When contributing to this repository, please first discuss the change you wish to make via [issue](https://github.com/DenoSaurabh/space/issues/new) or [discussions](https://github.com/DenoSaurabh/space/discussions/new).
 
 We have a [code of conduct](https://github.com/DenoSaurabh/space/blob/master/CODE_OF_CONDUCT.md) so please read and follow it in all your interactions with the project.
 
@@ -88,13 +87,16 @@ We have a [code of conduct](https://github.com/DenoSaurabh/space/blob/master/COD
 ## ❔ FAQ
 
 ### 1. Does this has a dark theme?
+
 YES, it has a dark theme, you can enable it from top right section of page by clicking on a moon icon.
 
 ### 2. What platforms are supported?
+
 The project is completely responsive, and work for almost all screen sizes. Though I do not have any plans currently to make native app for android & ios. But, the web app is PWA so it is installable in almost all devices. You can install it from "Install" button beside the Bookmark "Star" button on url bar. In mobile you can go to the menu in top right section.
 IMPORTANT! Mark that full support for touch devcies is still ongoing and also your data will not be synced, more down below.
 
 ### 3. Custom database?
+
 The database is totally local stored as "LocalStorage". Though, it arise some concerns of accidently deleting your data and cannot be reverted. Also you can't sync the data in multiple devices. So, I have to plan to add features like import & export data, using advance Browser API like FileSystem (very experimental in browsers), and support for custom databases which may add additional things like authentication.
 
 ### 4. Custom Themes

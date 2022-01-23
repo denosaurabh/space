@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import NextDocument, { Html, Head, Main, NextScript } from 'next/document';
-import { getCssString } from '@styled';
+import { getCssText } from '@styled';
 
 export default class Document extends NextDocument {
   render(): ReactElement {
@@ -9,7 +9,7 @@ export default class Document extends NextDocument {
         <Head>
           <style
             id="stitches"
-            dangerouslySetInnerHTML={{ __html: getCssString() }}
+            dangerouslySetInnerHTML={{ __html: getCssText() }}
           />
 
           <meta name="application-name" content="Space" />

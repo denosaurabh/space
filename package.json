@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "start-https": "local-ssl-proxy --key localhost-key.pem --cert localhost.pem --source 4001 --target 3001",
     "analyze": "cross-env ANALYZE=true next build",
     "analyze:server": "cross-env BUNDLE_ANALYZE=server next build",
     "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build"
@@ -21,7 +22,7 @@
     "@radix-ui/react-slider": "^0.0.16",
     "@radix-ui/react-switch": "^0.0.14",
     "@radix-ui/react-tooltip": "^0.0.20",
-    "@stitches/react": "latest",
+    "@stitches/react": "^1.2.5",
     "@svgr/webpack": "^5.5.0",
     "cross-env": "^7.0.3",
     "dayjs": "^1.10.7",

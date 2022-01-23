@@ -39,7 +39,7 @@ const DropIcon: React.FC<DropIconI> = ({ onError, onUpload }) => {
 
   return (
     <DropContainer>
-      <p>Icon</p>
+      <label htmlFor="input">Icon</label>
       <Input
         label={
           uploadedIconURL ? (
@@ -67,9 +67,9 @@ const DropIcon: React.FC<DropIconI> = ({ onError, onUpload }) => {
 export default DropIcon;
 
 const DropContainer = styled('div', {
-  p: {
+  label: {
     fontFamily: '$inter',
-    fontSize: '1.4rem',
+    fontSize: '1.3rem',
     marginBottom: '0.6rem',
     color: '$grey-700',
   },
