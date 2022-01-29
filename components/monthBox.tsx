@@ -128,22 +128,22 @@ const DateEl = styled('span', {
   },
 
   variants: {
+    activeDay: {
+      true: {
+        fontWeight: 500,
+        backgroundColor: '$grey-200',
+        outline: '1px solid $grey-500',
+      },
+    },
     currentDay: {
       true: {
         display: 'flex',
         flexDirection: 'column',
         gap: '0.2rem',
 
-        fontWeight: 500,
+        fontWeight: 800,
         backgroundColor: '$grey-200',
         border: '1px solid $grey-600',
-      },
-    },
-    activeDay: {
-      true: {
-        fontWeight: 500,
-        backgroundColor: '$grey-200',
-        outline: '1px solid $grey-500',
       },
     },
     hasGoals: {

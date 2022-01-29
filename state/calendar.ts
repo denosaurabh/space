@@ -36,23 +36,14 @@ const useCalendar = create<CalendarState>(
         'Saturday',
       ],
       goals: {},
+      journals: {},
       showCreateNewGoal: false,
 
-      // currentDate: new Date().getDate(),
-      // currentMonth: new Date().getMonth(),
-      // currentYear: new Date().getFullYear(),
       currentDate: dayjs().date(),
       currentMonth: dayjs().month(),
       currentYear: dayjs().year(),
 
-      // currentFullDate: `${zeroPad(new Date().getMonth())}-${zeroPad(
-      //   new Date().getDate()
-      // )}-${new Date().getFullYear()}`,
       currentFullDate: dayjs().format('YYYY-M-D'),
-
-      // activeFullDate: `${zeroPad(new Date().getMonth())}-${zeroPad(
-      //   new Date().getDate()
-      // )}-${new Date().getFullYear()}`,
       activeFullDate: dayjs().format('YYYY-M-D'),
 
       getTodayGoals: () => {
@@ -126,7 +117,14 @@ const useCalendar = create<CalendarState>(
           })
         );
       },
-
+      addOrUpdateJournal: (text) => {
+        set(
+          produce((draft) => {
+            const { journals, activeFullDate } = draft;
+            journals[activeFullDate] = text;
+          })
+        );
+      },
       deleteGoal: (goalId) => {
         set(
           produce((draft) => {
