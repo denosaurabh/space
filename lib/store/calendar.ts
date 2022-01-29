@@ -33,12 +33,18 @@ export interface Goals {
   [key: string]: Goal[];
 }
 
+export interface Journals {
+  [key: string]: string;
+}
+
 export interface CalendarState {
   months: Months[];
   days: Days[];
   currentFullDate: string;
 
   goals: Goals;
+  journals: Journals;
+
   activeFullDate: string;
 
   currentDate: number;
@@ -63,6 +69,7 @@ export interface CalendarState {
     date: string;
     time: string;
   }) => void;
+  addOrUpdateJournal: (text: string) => void;
 
   deleteGoal: (id: string) => void;
 }

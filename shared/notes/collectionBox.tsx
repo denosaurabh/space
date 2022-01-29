@@ -167,6 +167,17 @@ const CollectionBox: React.FC<CollectionBoxProps> = ({
                   ? '$grey-300'
                   : '$grey-200',
               }}
+              draggable
+              
+              onDragStart={(e) => {
+                console.log('drag start');
+              }}
+              onDragEnd={(e) => {
+                console.log('drag end', e);
+              }}
+              onDrop={(e) => {
+                console.log('dropped', e);
+              }}
             >
               {!icon ? (
                 firstString || children

@@ -12,6 +12,8 @@ import CreateGoal from '@shared/calendar/createGoal';
 
 import PlusSvg from '@assets/svg/Plus.svg';
 import CloseSvg from '@assets/svg/Close.svg';
+import JournalBox from '@components/journalBox';
+import Seperator from '@components/separator';
 
 const AllGoals: React.FC = () => {
   const { showCreateNewGoal, setShowCreateNewGoal, activeDay, getDayGoals } =
@@ -49,10 +51,16 @@ const AllGoals: React.FC = () => {
 
       {showCreateNewGoal && <CreateGoal />}
 
-      {getDayGoals(activeDay).map((goal: Goal) => (
-        <GoalBox key={goal.id} {...goal} />
-      ))}
-      {!getDayGoals(activeDay).length && 'No Goals'}
+      <GoalsContainer>
+        {getDayGoals(activeDay).map((goal: Goal) => (
+          <GoalBox key={goal.id} {...goal} />
+        ))}
+      </GoalsContainer>
+
+      {!getDayGoals(activeDay).length ? <p>No Goals</p> : null}
+
+      <Seperator />
+      <JournalBox />
     </AllGoalsContainer>
   );
 };
@@ -75,6 +83,12 @@ const AllGoalsContainer = styled('div', {
     width: '100%',
     maxWidth: '50rem',
   },
+});
+
+const GoalsContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '2rem',
 });
 
 const AllGoalsHeader = styled('div', {
