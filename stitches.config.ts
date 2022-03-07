@@ -43,6 +43,7 @@ const { css, styled, createTheme, getCssText, globalCss, theme } =
       },
       radii: {
         small: '1.1rem',
+        medium: '1.5rem',
       },
       transitions: {
         slow: '0.45s',
