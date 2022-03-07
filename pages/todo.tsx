@@ -3,15 +3,17 @@ import { styled } from '@styled';
 
 import Page from '@layouts/page';
 import TodoCollection from '@shared/todo/todoCollectionBox';
+import useTodo from '@state/todo';
 
 const Todo: React.FC = () => {
+  const { todosState } = useTodo((state) => state);
+
   return (
     <Page>
       <TodoContainer className="todo-container">
-        <TodoCollection placeholder="Day" heading="Day" />
-        <TodoCollection placeholder="Week" heading="Week" />
-        <TodoCollection placeholder="Month" heading="Month" />
-        <TodoCollection placeholder="Year" heading="Year" />
+        {Object.values(todosState).map((todoContainer) => {
+          return <TodoCollection key={todoContainer.id} {...todoContainer} />;
+        })}
       </TodoContainer>
     </Page>
   );
