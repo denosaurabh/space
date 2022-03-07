@@ -132,7 +132,6 @@ const Header: React.FC = () => {
           name="Todo"
           icon={<PencilSvg />}
           href="/todo"
-          soon
           active={router.pathname === '/todo'}
         />
       </HeaderNav>

@@ -63,7 +63,9 @@ const CalendarContainer: React.FC = () => {
       </CalendarHeader>
       <CalendarSubTitle>
         {goalsInCurrentMonth.length
-          ? `${goalsInCurrentMonth.length} Events`
+          ? `${goalsInCurrentMonth.length} Event${
+              goalsInCurrentMonth.length > 1 ? 's' : ''
+            }`
           : 'No events this month :('}{' '}
       </CalendarSubTitle>
 
