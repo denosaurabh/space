@@ -9,29 +9,30 @@ import { useTodoState } from '@lib/store/todo';
 const useTodo = create<useTodoState>(
   persist(
     (set) => ({
+      grabbedTodo: null,
       todosState: {
-        0: {
+        day: {
           id: 'day',
           heading: 'Day',
           placeholder: 'day',
           todos: {},
         },
-        1: {
-          id: 'day',
-          heading: 'Day',
-          placeholder: 'day',
+        week: {
+          id: 'week',
+          heading: 'Week',
+          placeholder: 'week',
           todos: {},
         },
-        2: {
-          id: 'day',
-          heading: 'Day',
-          placeholder: 'day',
+        month: {
+          id: 'month',
+          heading: 'Month',
+          placeholder: 'month',
           todos: {},
         },
-        3: {
-          id: 'day',
-          heading: 'Day',
-          placeholder: 'day',
+        year: {
+          id: 'year',
+          heading: 'Year',
+          placeholder: 'year',
           todos: {},
         },
       },
@@ -45,6 +46,7 @@ const useTodo = create<useTodoState>(
 
             draft.todosState[collectionId].todos[newTodoID] = {
               id: newTodoID,
+              collectionId,
               order,
               text: '',
             };
@@ -61,10 +63,13 @@ const useTodo = create<useTodoState>(
       updateTodoCollection: (collectionId, todoId, collectionId2) => {
         set(
           produce((draft: useTodoState) => {
-            const todo = draft.todosState[collectionId].todos[todoId];
+            const todo = draft.todosState[collectionId]?.todos[todoId];
+
+            if (!todo) return;
 
             draft.todosState[collectionId2].todos[todoId] = {
               id: todo.id,
+              collectionId: collectionId2,
               order: Object.keys(draft.todosState[collectionId2].todos).length,
               text: todo.text,
             };
@@ -79,6 +84,16 @@ const useTodo = create<useTodoState>(
             delete draft.todosState[collectionId].todos[todoId];
           })
         );
+      },
+      setGrabbedTodo: (todo) => {
+        set((draft: useTodoState) => {
+          draft.grabbedTodo = todo;
+        });
+      },
+      removeGrabbedTodo: () => {
+        set((draft: useTodoState) => {
+          draft.grabbedTodo = null;
+        });
       },
     }),
     {
@@ -101,7 +116,7 @@ const useTodo = create<useTodoState>(
 
 useTodo.subscribe((state) => {
   if (process.env.NODE_ENV === 'development') {
-    console.log(state.notesState, state.currentCollection);
+    console.log(state.todosState);
   }
 });
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { styled } from '@styled';
 import { Todo } from '@lib/store/todo';
+import useTodo from '@state/todo';
 
 // import {
 //   Root as PopoverRoot,
@@ -13,17 +14,25 @@ import { Todo } from '@lib/store/todo';
 
 type TodoBoxProps = Todo;
 
-const TodoBox: React.FC<TodoBoxProps> = () => {
+const TodoBox: React.FC<TodoBoxProps> = ({ id, text, collectionId }) => {
   const [isDragging, setIsDragging] = useState(false);
+  const { updateTodoText } = useTodo(({ updateTodoText }) => ({
+    updateTodoText,
+  }));
 
-  const onDragStartHandler = () => {
+  const onDragStartHandler = (e) => {
     console.log('onDragStartHandler');
     setIsDragging(true);
+
+    e.dataTransfer.setData('data', `${id}-${collectionId}`);
   };
 
-  const onDragEndHandler = () => {
+  const onDragEndHandler = (e) => {
     console.log('onDragEndHandler');
     setIsDragging(false);
+
+    console.log('e.target', e, e.target);
+    // console.log('e.target.dataset', e.target.dataset, e.dataTransfer.getData());
   };
 
   return (
@@ -32,8 +41,12 @@ const TodoBox: React.FC<TodoBoxProps> = () => {
       onDragStart={onDragStartHandler}
       onDragEnd={onDragEndHandler}
       isDragging={isDragging}
+      value={text}
       placeholder="Type something here ....."
       spellCheck={false}
+      onChange={(e) => {
+        updateTodoText(collectionId, id, e.target.value);
+      }}
     >
       {/* <TodoHeader>
         <PopoverRoot>

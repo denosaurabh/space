@@ -1,31 +1,55 @@
 import React, { useState } from 'react';
 import { styled } from '@styled';
 import TodoBox from './todoBox';
-import { TodoCollection } from '@lib/store/todo';
+import { TodoCollection as TodoCollectionI } from '@lib/store/todo';
 import useTodo from '@state/todo';
 
-type TodoContainerProps = TodoCollection;
+type TodoContainerProps = TodoCollectionI;
 
 const TodoCollection: React.FC<TodoContainerProps> = ({
-  id,
+  id: collectionId,
   heading,
   placeholder,
   todos,
 }) => {
   const [hover, setHover] = useState(false);
-  const { addTodo } = useTodo((state) => state);
+  const { addTodo, grabbedTodo, updateTodoCollection } = useTodo(
+    (state) => state
+  );
 
   const onAddTodoClick = () => {
-    addTodo();
+    addTodo(collectionId);
   };
 
   const onDragEnterHandler = () => {
     console.log('onDragEnterHandler');
-    
   };
 
   const onDragLeaveHandler = () => {
-    // console.log('onDragLeaveHandler');
+    console.log('onDragLeaveHandler');
+
+    if (grabbedTodo && hover) {
+      updateTodoCollection(
+        grabbedTodo.collectionId,
+        grabbedTodo.id,
+        collectionId
+      );
+    } else {
+    }
+  };
+
+  const onDropHandler = (e) => {
+    e.preventDefault();
+
+    const [todoId, todoCollectionId] = e.dataTransfer
+      .getData('data')
+      .split('-');
+
+    console.log('onDropHandler', todoId, todoCollectionId);
+
+    if (!todoId || !todoCollectionId) return;
+
+    updateTodoCollection(todoCollectionId, todoId, collectionId);
   };
 
   const onHeadingChange = (e) => {
@@ -34,9 +58,12 @@ const TodoCollection: React.FC<TodoContainerProps> = ({
 
   return (
     <TodoCollectionStyled
-      data-todoCollectionId={id}
       onDragEnter={onDragEnterHandler}
       onDragLeave={onDragLeaveHandler}
+      onDragOver={(e) => {
+        e.preventDefault();
+      }}
+      onDrop={onDropHandler}
       onMouseEnter={() => {
         setHover(true);
       }}

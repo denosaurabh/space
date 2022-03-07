@@ -1,5 +1,6 @@
 export interface Todo {
   id: string;
+  collectionId: string;
   order: number;
   text: string;
 }
@@ -32,4 +33,7 @@ export interface useTodoState {
     collectionId2: string
   ) => void;
   removeTodo: (collectionId: string, todoId: string) => void;
+
+  setGrabbedTodo: (todo: GrabbedTodo) => void;
+  removeGrabbedTodo: () => void;
 }
