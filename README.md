@@ -24,9 +24,9 @@ Space is a completely open source project, so here's the source code for the pro
 #### 🍎 Apps
 
 - Make simple Board Notes
-- Planning Calendar (COMING SOON!)
+- Pomodoro
+- Planning Calendar
 - Daily TODO (COMING SOON!)
-- Pomodoro (COMNG SOON!)
 
 #### ✏️ Features
 

@@ -39,5 +39,4 @@ export function reportWebVitals(metric: NextWebVitalsMetric): void {
   console.log(`${metric.name}: ${metric.value}`);
 }
 
-
 export default MyApp;
