@@ -11,12 +11,13 @@ const KeyboardSettings: React.FC = () => {
         <KbdShortcut title="Changing Apps" shortcut={['Alt', 'number']} />
         <KbdShortcut title="Tooggle Theme" shortcut={['Alt', 't']} />
         <KbdShortcut title="Back to Home" shortcut={['esc']} />
-        <SubHeading css={{ fontSize: '2rem', margin: '4rem 0' }}>
+    
+        {/* <SubHeading css={{ fontSize: '2rem', margin: '4rem 0' }}>
           Notes Shortcuts
         </SubHeading>
 
         <KbdShortcut title="Top Category" shortcut={['Alt', 'ArrowUp']} />
-        <KbdShortcut title="Bottom Category" shortcut={['Alt', 'ArrowDown']} />
+        <KbdShortcut title="Bottom Category" shortcut={['Alt', 'ArrowDown']} /> */}
       </SettingBox>
     </Section>
   );
