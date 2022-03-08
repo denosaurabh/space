@@ -3,6 +3,7 @@ export interface Todo {
   collectionId: string;
   order: number;
   text: string;
+  isComplete: boolean;
 }
 
 export interface GrabbedTodo {
@@ -27,12 +28,15 @@ export interface useTodoState {
 
   addTodo: (collectionId: string) => void;
   updateTodoText: (collectionId: string, todoId: string, text: string) => void;
+  toggleTodoComplete: (collectionId: string, todoId: string) => void;
   updateTodoCollection: (
     collectionId: string,
     todoId: string,
     collectionId2: string
   ) => void;
   removeTodo: (collectionId: string, todoId: string) => void;
+
+  updateCollectionHeading: (collectionId: string, heading: string) => void;
 
   setGrabbedTodo: (todo: GrabbedTodo) => void;
   removeGrabbedTodo: () => void;

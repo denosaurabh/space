@@ -49,6 +49,7 @@ const useTodo = create<useTodoState>(
               collectionId,
               order,
               text: '',
+              isComplete: false,
             };
           })
         );
@@ -60,18 +61,31 @@ const useTodo = create<useTodoState>(
           })
         );
       },
+      toggleTodoComplete: (collectionId, todoId) => {
+        set(
+          produce((draft: useTodoState) => {
+            const toggleComplete =
+              !draft.todosState[collectionId].todos[todoId].isComplete;
+
+            draft.todosState[collectionId].todos[todoId].isComplete =
+              toggleComplete;
+          })
+        );
+      },
       updateTodoCollection: (collectionId, todoId, collectionId2) => {
         set(
           produce((draft: useTodoState) => {
             const todo = draft.todosState[collectionId]?.todos[todoId];
 
             if (!todo) return;
+            if (collectionId === collectionId2) return;
 
             draft.todosState[collectionId2].todos[todoId] = {
               id: todo.id,
               collectionId: collectionId2,
               order: Object.keys(draft.todosState[collectionId2].todos).length,
               text: todo.text,
+              isComplete: todo.isComplete,
             };
 
             delete draft.todosState[collectionId].todos[todoId];
@@ -82,6 +96,13 @@ const useTodo = create<useTodoState>(
         set(
           produce((draft: useTodoState) => {
             delete draft.todosState[collectionId].todos[todoId];
+          })
+        );
+      },
+      updateCollectionHeading: (collectionId, heading) => {
+        set(
+          produce((draft: useTodoState) => {
+            draft.todosState[collectionId].heading = heading;
           })
         );
       },

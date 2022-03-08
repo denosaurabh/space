@@ -27,8 +27,10 @@ const TodoContainer = styled('div', {
   justifyContent: 'flex-start',
   gap: '2rem',
 
-  width: '100%',
+  width: '100vw',
   height: '100vh',
+
+  overflowX: 'scroll',
 
   padding: '2rem',
 
