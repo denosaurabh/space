@@ -13,7 +13,9 @@ const TodoCollection: React.FC<TodoContainerProps> = ({
   todos,
 }) => {
   const [hover, setHover] = useState(false);
-  const { addTodo, grabbedTodo, updateTodoCollection } = useTodo(
+  const [dragEnter, setDragEnter] = useState(false);
+
+  const { addTodo, updateTodoCollection, updateCollectionHeading } = useTodo(
     (state) => state
   );
 
@@ -22,20 +24,11 @@ const TodoCollection: React.FC<TodoContainerProps> = ({
   };
 
   const onDragEnterHandler = () => {
-    console.log('onDragEnterHandler');
+    setDragEnter(true);
   };
 
   const onDragLeaveHandler = () => {
-    console.log('onDragLeaveHandler');
-
-    if (grabbedTodo && hover) {
-      updateTodoCollection(
-        grabbedTodo.collectionId,
-        grabbedTodo.id,
-        collectionId
-      );
-    } else {
-    }
+    setDragEnter(false);
   };
 
   const onDropHandler = (e) => {
@@ -45,15 +38,15 @@ const TodoCollection: React.FC<TodoContainerProps> = ({
       .getData('data')
       .split('-');
 
-    console.log('onDropHandler', todoId, todoCollectionId);
-
     if (!todoId || !todoCollectionId) return;
 
     updateTodoCollection(todoCollectionId, todoId, collectionId);
+
+    setDragEnter(false);
   };
 
   const onHeadingChange = (e) => {
-    console.log('onHeadingChange', e.target.value);
+    updateCollectionHeading(collectionId, e.target.value);
   };
 
   return (
@@ -86,15 +79,50 @@ const TodoCollection: React.FC<TodoContainerProps> = ({
             return <TodoBox key={todo.id} {...todo} />;
           })}
 
+        {!Object.values(todos).length ? (
+          <Text>No Todo in this Collection!</Text>
+        ) : null}
+
         <AddTodo onClick={onAddTodoClick} collectionHovered={hover}>
           + New Todo
         </AddTodo>
+
+        {dragEnter ? <Text>Drop Todo</Text> : null}
       </TodoDroppable>
     </TodoCollectionStyled>
   );
 };
 
 export default TodoCollection;
+
+const TodoCollectionStyled = styled('div', {
+  flex: 1,
+  height: '100%',
+
+  // overflowY: 'scroll',
+
+  padding: '2rem',
+  borderRadius: '$medium',
+
+  '&:last-child': {
+    borderRight: 'none',
+  },
+});
+
+const TodoCollectionHeading = styled('input', {
+  fontFamily: '$mono',
+  fontSize: '1.5rem',
+  fontWeight: '500',
+  color: '$grey-800',
+  marginBottom: '2rem',
+
+  backgroundColor: 'transparent',
+});
+
+const TodoDroppable = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+});
 
 const AddTodo = styled('button', {
   background: 'none',
@@ -128,26 +156,13 @@ const AddTodo = styled('button', {
   },
 });
 
-const TodoCollectionStyled = styled('div', {
-  flex: 1,
-  height: '100%',
+const Text = styled('p', {
+  margin: '2rem 0',
 
-  padding: '2rem',
-  borderRadius: '$medium',
-
-  '&:last-child': {
-    borderRight: 'none',
-  },
-});
-
-const TodoCollectionHeading = styled('input', {
   fontFamily: '$mono',
-  fontSize: '1.5rem',
-  fontWeight: '500',
-  color: '$grey-800',
-  marginBottom: '2rem',
+  fontSize: '1.4rem',
+  color: '$grey-400',
 
-  backgroundColor: 'transparent',
+  width: '100%',
+  textAlign: 'center',
 });
-
-const TodoDroppable = styled('div', {});

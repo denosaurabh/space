@@ -19,6 +19,7 @@ const Icon = styled('div', {
   placeItems: 'center',
   fontSize: '1.4rem',
   transition: 'background-color $medium',
+
   '&:hover': {
     cursor: 'pointer',
     backgroundColor: '$grey-300',
