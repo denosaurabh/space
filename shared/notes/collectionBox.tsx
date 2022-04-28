@@ -168,7 +168,6 @@ const CollectionBox: React.FC<CollectionBoxProps> = ({
                   : '$grey-200',
               }}
               draggable
-              
               onDragStart={(e) => {
                 console.log('drag start');
               }}
