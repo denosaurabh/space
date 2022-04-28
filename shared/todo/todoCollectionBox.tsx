@@ -15,9 +15,12 @@ const TodoCollection: React.FC<TodoContainerProps> = ({
   const [hover, setHover] = useState(false);
   const [dragEnter, setDragEnter] = useState(false);
 
-  const { addTodo, updateTodoCollection, updateCollectionHeading } = useTodo(
-    (state) => state
-  );
+  const {
+    addTodo,
+    grabbedTodo,
+    updateTodoCollection,
+    updateCollectionHeading,
+  } = useTodo((state) => state);
 
   const onAddTodoClick = () => {
     addTodo(collectionId);
@@ -78,16 +81,13 @@ const TodoCollection: React.FC<TodoContainerProps> = ({
           .map((todo) => {
             return <TodoBox key={todo.id} {...todo} />;
           })}
-
         {!Object.values(todos).length ? (
           <Text>No Todo in this Collection!</Text>
         ) : null}
-
         <AddTodo onClick={onAddTodoClick} collectionHovered={hover}>
           + New Todo
         </AddTodo>
-
-        {dragEnter ? <Text>Drop Todo</Text> : null}
+        {dragEnter ? <BoldText>Drop Todo</BoldText> : null}
       </TodoDroppable>
     </TodoCollectionStyled>
   );
@@ -165,4 +165,8 @@ const Text = styled('p', {
 
   width: '100%',
   textAlign: 'center',
+});
+
+const BoldText = styled(Text, {
+  fontWeight: '600',
 });
