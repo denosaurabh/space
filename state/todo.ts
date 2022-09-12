@@ -15,60 +15,59 @@ const useTodo = create<useTodoState>(
           id: 'day',
           heading: 'Day',
           placeholder: 'day',
-          todos: {},
+          todos: [],
         },
         week: {
           id: 'week',
           heading: 'Week',
           placeholder: 'week',
-          todos: {},
+          todos: [],
         },
         month: {
           id: 'month',
           heading: 'Month',
           placeholder: 'month',
-          todos: {},
+          todos: [],
         },
         year: {
           id: 'year',
           heading: 'Year',
           placeholder: 'year',
-          todos: {},
+          todos: [],
         },
       },
       addTodo: (collectionId) => {
         set(
           produce((draft: useTodoState) => {
             const newTodoID = nanoid();
-            const order = Object.keys(
-              draft.todosState[collectionId].todos
-            ).length;
 
-            draft.todosState[collectionId].todos[newTodoID] = {
+            draft.todosState[collectionId].todos.push({
               id: newTodoID,
-              collectionId,
-              order,
               text: '',
               isComplete: false,
-            };
+            });
           })
         );
       },
       updateTodoText: (collectionId, todoId, text) => {
         set(
           produce((draft: useTodoState) => {
-            draft.todosState[collectionId].todos[todoId].text = text;
+            draft.todosState[collectionId].todos.find(
+              (t) => t.id === todoId
+            ).text = text;
           })
         );
       },
       toggleTodoComplete: (collectionId, todoId) => {
         set(
           produce((draft: useTodoState) => {
-            const toggleComplete =
-              !draft.todosState[collectionId].todos[todoId].isComplete;
+            const toggleComplete = !draft.todosState[collectionId].todos.find(
+              (t) => t.id === todoId
+            ).isComplete;
 
-            draft.todosState[collectionId].todos[todoId].isComplete =
-              toggleComplete;
+            draft.todosState[collectionId].todos.find(
+              (t) => t.id === todoId
+            ).isComplete = toggleComplete;
           })
         );
       },
@@ -80,22 +79,66 @@ const useTodo = create<useTodoState>(
             if (!todo) return;
             if (collectionId === collectionId2) return;
 
-            draft.todosState[collectionId2].todos[todoId] = {
+            draft.todosState[collectionId2].todos.push({
               id: todo.id,
-              collectionId: collectionId2,
-              order: Object.keys(draft.todosState[collectionId2].todos).length,
               text: todo.text,
               isComplete: todo.isComplete,
-            };
+            });
 
-            delete draft.todosState[collectionId].todos[todoId];
+            draft.removeTodo(collectionId, todoId);
+          })
+        );
+      },
+      reorderCollection: (collectionId, startIndex, endIndex) => {
+        set(
+          produce((draft: useTodoState) => {
+            const todos = draft.todosState[collectionId].todos;
+
+            const [removed] = todos.splice(startIndex, 1);
+            todos.splice(endIndex, 0, removed);
+
+            draft.todosState[collectionId].todos = todos;
+          })
+        );
+      },
+      moveTodo: (
+        fromCollectionId,
+        toCollectionId,
+        droppableSource,
+        droppableDestination
+      ) => {
+        set(
+          produce((draft: useTodoState) => {
+            console.log('moveTodo', {
+              fromCollectionId,
+              toCollectionId,
+              droppableSource,
+              droppableDestination,
+            });
+
+            const sourceClone = Array.from(
+              draft.todosState[fromCollectionId].todos
+            );
+            const destClone = Array.from(
+              draft.todosState[toCollectionId].todos
+            );
+            const [removed] = sourceClone.splice(droppableSource.index, 1);
+
+            destClone.splice(droppableDestination.index, 0, removed);
+
+            draft.todosState[fromCollectionId].todos = sourceClone;
+            draft.todosState[toCollectionId].todos = destClone;
           })
         );
       },
       removeTodo: (collectionId, todoId) => {
         set(
           produce((draft: useTodoState) => {
-            delete draft.todosState[collectionId].todos[todoId];
+            const elIndex = draft.todosState[collectionId].todos.findIndex(
+              (t) => t.id === todoId
+            );
+
+            draft.todosState[collectionId].todos.splice(elIndex, 1);
           })
         );
       },

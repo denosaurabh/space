@@ -3,6 +3,7 @@ import { styled } from '@styled';
 import TodoBox from './todoBox';
 import { TodoCollection as TodoCollectionI } from '@lib/store/todo';
 import useTodo from '@state/todo';
+import { Droppable } from 'react-beautiful-dnd';
 
 type TodoContainerProps = TodoCollectionI;
 
@@ -12,40 +13,11 @@ const TodoCollection: React.FC<TodoContainerProps> = ({
   placeholder,
   todos,
 }) => {
-  const [hover, setHover] = useState(false);
-  const [dragEnter, setDragEnter] = useState(false);
-
-  const {
-    addTodo,
-    grabbedTodo,
-    updateTodoCollection,
-    updateCollectionHeading,
-  } = useTodo((state) => state);
+  const [hovered, setHovered] = useState(false);
+  const { addTodo, updateCollectionHeading } = useTodo((state) => state);
 
   const onAddTodoClick = () => {
     addTodo(collectionId);
-  };
-
-  const onDragEnterHandler = () => {
-    setDragEnter(true);
-  };
-
-  const onDragLeaveHandler = () => {
-    setDragEnter(false);
-  };
-
-  const onDropHandler = (e) => {
-    e.preventDefault();
-
-    const [todoId, todoCollectionId] = e.dataTransfer
-      .getData('data')
-      .split('-');
-
-    if (!todoId || !todoCollectionId) return;
-
-    updateTodoCollection(todoCollectionId, todoId, collectionId);
-
-    setDragEnter(false);
   };
 
   const onHeadingChange = (e) => {
@@ -54,41 +26,46 @@ const TodoCollection: React.FC<TodoContainerProps> = ({
 
   return (
     <TodoCollectionStyled
-      onDragEnter={onDragEnterHandler}
-      onDragLeave={onDragLeaveHandler}
-      onDragOver={(e) => {
-        e.preventDefault();
-      }}
-      onDrop={onDropHandler}
-      onMouseEnter={() => {
-        setHover(true);
-      }}
-      onMouseLeave={() => {
-        setHover(false);
-      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
-      <TodoCollectionHeading
-        contentEditable
-        onChange={onHeadingChange}
-        value={heading}
-        placeholder={placeholder}
-      />
-      <TodoDroppable>
-        {Object.values(todos)
-          .sort((a, b) => {
-            return a.order - b.order;
-          })
-          .map((todo) => {
-            return <TodoBox key={todo.id} {...todo} />;
-          })}
-        {!Object.values(todos).length ? (
-          <Text>No Todo in this Collection!</Text>
+      <HeadingRow>
+        <TodoCollectionHeading
+          contentEditable
+          onChange={onHeadingChange}
+          value={heading}
+          placeholder={placeholder}
+        />
+
+        {hovered && <AddTodo onClick={onAddTodoClick}>+</AddTodo>}
+
+        {!hovered && !Object.values(todos).length ? (
+          <Text>No Todos</Text>
         ) : null}
-        <AddTodo onClick={onAddTodoClick} collectionHovered={hover}>
-          + New Todo
-        </AddTodo>
-        {dragEnter ? <BoldText>Drop Todo</BoldText> : null}
-      </TodoDroppable>
+      </HeadingRow>
+
+      <Droppable key={collectionId} droppableId={collectionId}>
+        {(provided, snapshot) => (
+          <TodoDroppable
+            ref={provided.innerRef}
+            isDraggingOver={snapshot.isDraggingOver}
+            {...provided.droppableProps}
+          >
+            {todos.map((todo, i) => {
+              return (
+                <TodoBox
+                  key={todo.id}
+                  {...todo}
+                  collectionId={collectionId}
+                  index={i}
+                />
+              );
+            })}
+
+            {provided.placeholder}
+          </TodoDroppable>
+        )}
+      </Droppable>
     </TodoCollectionStyled>
   );
 };
@@ -98,8 +75,6 @@ export default TodoCollection;
 const TodoCollectionStyled = styled('div', {
   flex: 1,
   height: '100%',
-
-  // overflowY: 'scroll',
 
   padding: '2rem',
   borderRadius: '$medium',
@@ -114,14 +89,37 @@ const TodoCollectionHeading = styled('input', {
   fontSize: '1.5rem',
   fontWeight: '500',
   color: '$grey-800',
-  marginBottom: '2rem',
+  height: 30,
 
   backgroundColor: 'transparent',
 });
 
-const TodoDroppable = styled('div', {
+const Row = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-between',
+});
+
+const HeadingRow = styled(Row, {
+  marginBottom: '2rem',
+});
+
+const Column = styled('div', {
   display: 'flex',
   flexDirection: 'column',
+});
+
+const TodoDroppable = styled(Column, {
+  height: '100%',
+  overflowY: 'scroll',
+  borderRadius: '$small',
+
+  variants: {
+    isDraggingOver: {
+      true: {
+        backgroundColor: '$grey-200',
+      },
+    },
+  },
 });
 
 const AddTodo = styled('button', {
@@ -129,26 +127,12 @@ const AddTodo = styled('button', {
   border: 'none',
 
   fontFamily: '$mono',
-  fontSize: '1.5rem',
+  fontSize: '2.5rem',
   fontWeight: '500',
-  color: '$grey-400',
+  color: '$grey-500',
   textAlign: 'center',
 
-  width: '100%',
-
-  marginTop: '2rem',
-
   transition: 'all 0.2s ease-in-out',
-
-  opacity: 0,
-
-  variants: {
-    collectionHovered: {
-      true: {
-        opacity: 1,
-      },
-    },
-  },
 
   '&:hover': {
     cursor: 'pointer',
@@ -157,16 +141,17 @@ const AddTodo = styled('button', {
 });
 
 const Text = styled('p', {
-  margin: '2rem 0',
+  margin: 'auto 0',
 
   fontFamily: '$mono',
   fontSize: '1.4rem',
   color: '$grey-400',
 
-  width: '100%',
+  height: 'fit-content',
+  minWidth: 'max-content',
   textAlign: 'center',
 });
 
-const BoldText = styled(Text, {
-  fontWeight: '600',
-});
+// const BoldText = styled(Text, {
+//   fontWeight: '600',
+// });

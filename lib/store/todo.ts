@@ -1,7 +1,5 @@
 export interface Todo {
   id: string;
-  collectionId: string;
-  order: number;
   text: string;
   isComplete: boolean;
 }
@@ -15,7 +13,7 @@ export interface TodoCollection {
   id: string;
   heading: string;
   placeholder: string;
-  todos: Record<string, Todo>;
+  todos: Todo[];
 }
 
 export interface TodoState {
@@ -35,6 +33,14 @@ export interface useTodoState {
     collectionId2: string
   ) => void;
   removeTodo: (collectionId: string, todoId: string) => void;
+
+  reorderCollection: (list, startIndex, endIndex) => void;
+  moveTodo: (
+    source,
+    destination,
+    droppableSource,
+    droppableDestination
+  ) => void;
 
   updateCollectionHeading: (collectionId: string, heading: string) => void;
 

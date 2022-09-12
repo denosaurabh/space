@@ -36,14 +36,15 @@ const Page: React.FC = ({ children }) => {
 
   useShortcuts(['alt', 't'], toggleTheme, []);
 
-  return (
-    <ErrorBoundary>
-      <Container>
-        <Header />
+  //  <ErrorBoundary>
+  // </ErrorBoundary>
 
-        <Box className="main-content">{children}</Box>
-      </Container>
-    </ErrorBoundary>
+  return (
+    <Container>
+      <Header />
+
+      <Box className="main-content">{children}</Box>
+    </Container>
   );
 };
 

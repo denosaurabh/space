@@ -36,7 +36,6 @@ const StyledContent = styled(Content, {
   borderRadius: '1.6rem',
   padding: '4rem 3.5rem',
 
-
   [`.${darkTheme} &`]: {
     backgroundColor: '$grey-100',
   },
