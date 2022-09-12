@@ -1,4 +1,5 @@
 import { Root } from '@radix-ui/react-label';
+import type * as Stitches from '@stitches/react';
 import { styled } from '@styled';
 
 const LabelStyled = styled(Root, {
@@ -20,11 +21,12 @@ const LabelStyled = styled(Root, {
 interface LabelProps {
   htmlFor: string;
   color?: 'light';
+  css?: Stitches.CSS;
 }
 
-const Label: React.FC<LabelProps> = ({ children, htmlFor, color }) => {
+const Label: React.FC<LabelProps> = ({ children, htmlFor, color, css }) => {
   return (
-    <LabelStyled className="label" color={color} htmlFor={htmlFor}>
+    <LabelStyled className="label" color={color} htmlFor={htmlFor} css={css}>
       {children}
     </LabelStyled>
   );

@@ -1,24 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { styled } from '@styled';
 import { Todo } from '@lib/store/todo';
 import useTodo from '@state/todo';
+import { Draggable } from 'react-beautiful-dnd';
 
 import CheckSvg from '@assets/svg/Check.svg';
 import PencilSvg from '@assets/svg/Pencil.svg';
 
 import CloseSvg from '@assets/svg/Close.svg';
 
-type TodoBoxProps = Todo;
+interface TodoBoxProps extends Todo {
+  collectionId: string;
+  index: number;
+}
 
 const TodoBox: React.FC<TodoBoxProps> = ({
   id,
-  text,
   collectionId,
+  index,
+  text,
   isComplete,
 }) => {
-  const [isDragging, setIsDragging] = useState(false);
-  const [inFocus, setInFocus] = useState(false);
-
   const { updateTodoText, toggleTodoComplete, removeTodo } = useTodo(
     ({ updateTodoText, toggleTodoComplete, removeTodo }) => ({
       updateTodoText,
@@ -26,16 +28,6 @@ const TodoBox: React.FC<TodoBoxProps> = ({
       removeTodo,
     })
   );
-
-  const onDragStartHandler = (e) => {
-    setIsDragging(true);
-
-    e.dataTransfer.setData('data', `${id}-${collectionId}`);
-  };
-
-  const onDragEndHandler = () => {
-    setIsDragging(false);
-  };
 
   const onToggleCompleteClick = () => {
     toggleTodoComplete(collectionId, id);
@@ -46,66 +38,74 @@ const TodoBox: React.FC<TodoBoxProps> = ({
   };
 
   return (
-    <TodoContainer isDragging={isDragging} inFocus={inFocus}>
-      <TodoHeader
-        draggable
-        onDragStart={onDragStartHandler}
-        onDragEnd={onDragEndHandler}
-        isDragging={isDragging}
-      >
-        <CheckBox onClick={onToggleCompleteClick} isComplete={isComplete}>
-          {isComplete ? <PencilSvg /> : <CheckSvg />}
-        </CheckBox>
-
-        <ActionBox
-          onClick={onRemoveIconClick}
-          className="remove-todo-button"
-          css={{
-            marginLeft: 'auto',
-            svg: {
-              width: '18px',
-            },
-          }}
+    <Draggable key={id} draggableId={id} index={index}>
+      {(provided, snapshot) => (
+        <TodoContainer
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          // isDragging={snapshot.isDragging}
+          css={provided.draggableProps.style}
+          draggableId={id}
+          index={index}
         >
-          <CloseSvg />
-        </ActionBox>
-      </TodoHeader>
+          <TodoHeader
+          // isDragging={snapshot.isDragging}
+          >
+            <CheckBox onClick={onToggleCompleteClick} isComplete={isComplete}>
+              {isComplete ? <PencilSvg /> : <CheckSvg />}
+            </CheckBox>
 
-      <TodoContent
-        value={text}
-        placeholder="Type something here ....."
-        spellCheck={false}
-        onChange={(e) => {
-          updateTodoText(collectionId, id, e.target.value);
-        }}
-        isComplete={isComplete}
-        onFocus={() => setInFocus(true)}
-        onBlur={() => setInFocus(false)}
-      />
-    </TodoContainer>
+            <ActionBox
+              onClick={onRemoveIconClick}
+              className="remove-todo-button"
+              css={{
+                marginLeft: 'auto',
+                svg: {
+                  width: '18px',
+                },
+              }}
+            >
+              <CloseSvg />
+            </ActionBox>
+          </TodoHeader>
+
+          <TodoContent
+            value={text}
+            placeholder="Type something here ....."
+            spellCheck={false}
+            onChange={(e) => {
+              updateTodoText(collectionId, id, e.target.value);
+            }}
+            isComplete={isComplete}
+          />
+        </TodoContainer>
+      )}
+    </Draggable>
   );
 };
 
 export default TodoBox;
 
 const TodoContainer = styled('div', {
-  position: 'relative',
   margin: '1rem',
+
   border: '1px solid $grey-400',
   borderRadius: '$small',
 
   transition: 'transform, margin 0.18s cubic-bezier(0.4, 0.0, 0.2, 1)',
+
+  backgroundColor: '$grey-100',
+
+  '&:focus-within': {
+    outline: '2px solid $grey-600',
+  },
 
   variants: {
     isDragging: {
       true: {
         transform: 'scale(0.98)',
         marginTop: '4rem',
-      },
-    },
-    inFocus: {
-      true: {
-        outline: '2px solid $grey-600',
       },
     },
   },
@@ -210,6 +210,12 @@ const TodoContent = styled('textarea', {
   transition: 'color 0.18s cubic-bezier(0.4, 0.0, 0.2, 1)',
 
   variants: {
+    isDragging: {
+      true: {
+        transform: `translateY(-50px)`,
+      },
+    },
+
     isComplete: {
       true: {
         color: '$grey-500',

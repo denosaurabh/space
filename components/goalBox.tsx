@@ -39,6 +39,7 @@ import BellSvg from '@assets/svg/Bell.svg';
 
 import { Goal } from '@lib/store/calendar';
 import useCalendar from '@state/calendar';
+import Label from './label';
 
 type GoalBoxProps = Goal;
 
@@ -264,7 +265,8 @@ const CreateGoalBox: React.FC = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(form);
+
+    if (!form.title || !form.date || !form.time) return;
 
     createGoal({ ...form, date: activeFullDate });
 
@@ -286,34 +288,42 @@ const CreateGoalBox: React.FC = () => {
 
   return (
     <GoalBoxContainer as="form" onSubmit={handleSubmit}>
-      <GoalHeaderBox>
+      <FormBox>
+        <GoalHeaderBox>
+          <Input
+            name="title"
+            label="Title"
+            type="text"
+            placeholder="Coffee Meet"
+            css={{ width: '100%' }}
+            onChange={handleInputChange}
+            value={form.title}
+            required
+          />
+        </GoalHeaderBox>
         <Input
-          name="title"
-          label="Title"
+          name="description"
           type="text"
+          label="Small Description"
           placeholder="Coffee Meet"
-          css={{ width: '100%' }}
+          css={{ width: '100%', input: { height: '10rem' } }}
           onChange={handleInputChange}
-          value={form.title}
-          required
+          value={form.description}
         />
-      </GoalHeaderBox>
-      <Input
-        name="description"
-        type="text"
-        label="Small Description"
-        placeholder="Coffee Meet"
-        css={{ width: '100%', input: { height: '10rem' } }}
-        onChange={handleInputChange}
-        value={form.description}
-        required
-      />
-      <InfoContainer>
-        <InfoBox>
-          <InfoIcon>
-            <CalendarSvg />
-          </InfoIcon>
-          {form.date}
+        <InfoContainer>
+          <Column>
+            <Label htmlFor="" css={{ fontWeight: 400 }}>
+              Date
+            </Label>
+
+            <InfoBox>
+              <InfoIcon>
+                <CalendarSvg />
+              </InfoIcon>
+              {form.date}
+            </InfoBox>
+          </Column>
+
           {/* <Input
             name="date"
             type="date"
@@ -323,22 +333,32 @@ const CreateGoalBox: React.FC = () => {
             value={form.date}
             disabled
           /> */}
-        </InfoBox>
-        <InfoBox css={{ borderWidth: 0 }}>
-          <Input
-            name="time"
-            type="time"
-            label="Pick Time"
-            placeholder="Coffee Meet"
-            onChange={handleInputChange}
-            value={form.time}
-            required
-          />
-        </InfoBox>
-        <Button type="submit" css={{ marginLeft: 'auto' }}>
-          Save
+          <InfoBox css={{ borderWidth: 0, flex: 1 }}>
+            <Input
+              name="time"
+              type="time"
+              label="Pick Time"
+              placeholder="Coffee Meet"
+              onChange={handleInputChange}
+              value={form.time}
+              css={{ width: '100%' }}
+              required
+            />
+          </InfoBox>
+        </InfoContainer>
+      </FormBox>
+
+      <ActionBox>
+        <Button type="submit">Save</Button>
+
+        <Button
+          color="light"
+          css={{ boxShadow: 'none !important' }}
+          onClick={setShowCreateNewGoal}
+        >
+          Cancel
         </Button>
-      </InfoContainer>
+      </ActionBox>
     </GoalBoxContainer>
   );
 };
@@ -353,11 +373,6 @@ const GoalBoxContainer = styled('div', {
   // width: '50rem',
   height: 'auto',
 
-  padding: '2rem',
-
-  border: '1px solid $grey-300',
-  borderRadius: '10px',
-
   '@mobile': {
     width: '100%',
   },
@@ -367,6 +382,29 @@ const GoalBoxContainer = styled('div', {
   // '&:hover': {
   //   boxShadow: '0rem 0.5rem 1rem rgba(0,0,0,0.05)',
   // },
+});
+
+const FormBox = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '2rem',
+  padding: '2rem',
+
+  border: '1px solid $grey-300',
+  borderRadius: '10px',
+
+  borderBottomLeftRadius: 0,
+  borderBottomRightRadius: 0,
+});
+
+const ActionBox = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '2rem',
+
+  button: {
+    width: '100%',
+  },
 });
 
 const GoalHeaderBox = styled('div', {
@@ -482,4 +520,10 @@ const MenuSvgStyled = styled(MenuSvg, {
 const MenuIconsContainer = styled('div', {
   display: 'flex',
   gap: '0.5rem',
+});
+
+const Column = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 10,
 });
