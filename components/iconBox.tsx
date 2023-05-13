@@ -43,7 +43,7 @@ const Icon = styled('div', {
 
 const IconBox: React.FC<IconBoxI> = ({ name, icon, href, soon, active }) => {
   return (
-    <Root delayDuration={300}>
+    <Root>
       <TooltipTrigger>
         <Link href={soon ? '/soon' : href}>
           <a>

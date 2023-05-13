@@ -28,7 +28,7 @@ const Center = styled('div', {
   },
 });
 
-const Ellipse: React.FC = ({ children }) => {
+const Ellipse = ({ children }: { children?: React.ReactNode }) => {
   return (
     <Center className="annotation">
       <Image

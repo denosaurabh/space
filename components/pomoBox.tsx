@@ -1,7 +1,7 @@
 import { styled } from '@styled';
 
 import {
-  Root as PopoverRoot,
+  StyledRoot as PopoverRoot,
   StyledTrigger as PopoverTrigger,
   Anchor as PopoverAnchor,
   StyledContent as PopoverContent,
@@ -30,12 +30,7 @@ interface PomoBoxProps {
   hideMenu?: boolean;
 }
 
-const PomoBox: React.FC<PomoBoxProps> = ({
-  id,
-  heading,
-  span,
-  hideMenu = false,
-}) => {
+const PomoBox = ({ id, heading, span, hideMenu = false }: PomoBoxProps) => {
   const { deletePomo, switchPomoUp, switchPomoDown } = usePomodoro((state) => ({
     deletePomo: state.deletePomo,
     switchPomoUp: state.switchPomoUp,

@@ -84,26 +84,23 @@ interface MidBoxProps {
   heading: string;
   description: string;
   soon?: boolean;
+  children?: React.ReactNode;
 }
 
 interface SideBoxProps {
   css?: Record<string, unknown>;
+  children?: React.ReactNode;
 }
 
-const LeftBox: React.FC<SideBoxProps> = ({ children, css }) => {
+const LeftBox = ({ children, css }: SideBoxProps) => {
   return <LeftBoxStyled css={css}>{children}</LeftBoxStyled>;
 };
 
-const RightBox: React.FC<SideBoxProps> = ({ children, css }) => {
+const RightBox = ({ children, css }: SideBoxProps) => {
   return <RightBoxStyled css={css}>{children}</RightBoxStyled>;
 };
 
-const MidBox: React.FC<MidBoxProps> = ({
-  heading,
-  description,
-  children,
-  soon,
-}) => {
+const MidBox = ({ heading, description, children }: MidBoxProps) => {
   return (
     <MidBoxStyled>
       {soon ? <Ellipse>Coming Soon</Ellipse> : <Ellipse>NEW!</Ellipse>}
@@ -126,7 +123,7 @@ const MidBox: React.FC<MidBoxProps> = ({
   );
 };
 
-const FeatureBox: React.FC = ({ children }) => {
+const FeatureBox = ({ children }: { children?: React.ReactNode }) => {
   return <FeatureContainer>{children}</FeatureContainer>;
 };
 

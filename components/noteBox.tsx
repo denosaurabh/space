@@ -5,7 +5,7 @@ import { styled } from '@styled';
 import { NewNote, Note } from '@lib/store/notes';
 
 import {
-  Root as PopoverRoot,
+  StyledRoot as PopoverRoot,
   StyledTrigger as PopoverTrigger,
   Anchor as PopoverAnchor,
   StyledContent as PopoverContent,

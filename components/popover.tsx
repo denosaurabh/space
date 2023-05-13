@@ -9,6 +9,8 @@ import {
 
 import { darkTheme, styled } from '@styled';
 
+const StyledRoot = styled(Root, {});
+
 const StyledTrigger = styled(Trigger, {
   display: 'grid',
   placeItems: 'center',
@@ -141,7 +143,7 @@ const StyledArrow = styled(Arrow, {
 });
 
 export {
-  Root,
+  StyledRoot,
   StyledTrigger,
   Anchor,
   StyledButton,

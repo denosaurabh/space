@@ -5,7 +5,7 @@ import { styled } from '@styled';
 
 import Header from '@components/header';
 import useSettings from '@state/settings';
-import ErrorBoundary from '@components/errorBoundary';
+// import ErrorBoundary from '@components/errorBoundary';
 
 const Container = styled('div', {
   width: '100%',
@@ -24,7 +24,7 @@ const Box = styled('main', {
   minHeight: '100vh',
 });
 
-const Page: React.FC = ({ children }) => {
+const Page = ({ children }: { children: React.ReactNode }) => {
   const { theme, toggleTheme } = useSettings((state) => ({
     theme: state.darkTheme,
     toggleTheme: state.toggleTheme,
