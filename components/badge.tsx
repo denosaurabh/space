@@ -71,9 +71,11 @@ interface BadgeProps {
   size?: 'mini' | 'medium' | 'large';
   color?: 'green' | 'warning' | 'grey';
   css?: Record<string, unknown>;
+
+  children: React.ReactNode;
 }
 
-const Badge: React.FC<BadgeProps> = ({ children, size, color, css }) => {
+const Badge = ({ children, size, color, css }: BadgeProps) => {
   return (
     <StyledBadge size={size} color={color} css={css}>
       {children}

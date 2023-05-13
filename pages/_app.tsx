@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { IdProvider } from '@radix-ui/react-id';
 import { AppProps, NextWebVitalsMetric } from 'next/app';
 
 import { globalStyles } from '@styled';
 import useSettings from '@state/settings';
+import * as Tooltip from '@radix-ui/react-tooltip';
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   const { isDarkTheme, setUserOld } = useSettings((state) => ({
@@ -29,9 +29,9 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   }, [isDarkTheme, setUserOld]);
 
   return (
-    <IdProvider>
+    <Tooltip.Provider>
       <Component {...pageProps} />
-    </IdProvider>
+    </Tooltip.Provider>
   );
 };
 

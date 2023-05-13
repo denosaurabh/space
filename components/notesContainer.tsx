@@ -26,9 +26,10 @@ interface AllNotesContainerI {
     position: NotePosition;
     size: NoteSize;
   }) => void;
+  children?: React.ReactNode;
 }
 
-const AllNotesContainer: React.FC<AllNotesContainerI> = ({
+const AllNotesContainer = ({
   css,
   canvasClassName,
   containerClassName,
@@ -37,7 +38,7 @@ const AllNotesContainer: React.FC<AllNotesContainerI> = ({
   enableCanvas,
   gridSize,
   children,
-}) => {
+}: AllNotesContainerI) => {
   const notesContainerRef = useRef<HTMLDivElement>();
   const [size, setSize] = useState({ width: 0, height: 0 });
 

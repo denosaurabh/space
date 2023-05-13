@@ -29,9 +29,10 @@ const Span = styled('span', {
 
 interface CircularArrowProps {
   css?: { [key: string]: unknown };
+  children?: React.ReactNode;
 }
 
-const CircularArow: React.FC<CircularArrowProps> = ({ children, css }) => {
+const CircularArow = ({ children, css }: CircularArrowProps) => {
   return (
     <Center css={css} className="annotation">
       <Image

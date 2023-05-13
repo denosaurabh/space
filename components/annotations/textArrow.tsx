@@ -18,6 +18,7 @@ const Container = styled('div', {
 });
 
 interface TextArrowI {
+  children: React.ReactNode;
   arrow: JSX.Element;
   text: string;
   annoPos: string;
@@ -30,13 +31,7 @@ interface TextArrowI {
   };
 }
 
-const TextArrow: React.FC<TextArrowI> = ({
-  children,
-  arrow,
-  annoPos,
-  textPos,
-  text,
-}) => {
+const TextArrow = ({ children, arrow, annoPos, textPos, text }: TextArrowI) => {
   const { top, right, bottom, left, width } = textPos;
 
   return (

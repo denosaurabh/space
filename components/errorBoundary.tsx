@@ -18,6 +18,7 @@ class ErrorBoundary extends Component<Props, State> {
     error: null,
     errorInfo: null,
   };
+  props: Props;
 
   public static getDerivedStateFromError(error: Error): State {
     // Update state so the next render will show the fallback UI.
@@ -29,7 +30,7 @@ class ErrorBoundary extends Component<Props, State> {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('Uncaught error:', error, errorInfo);
-    this.setState({ error, errorInfo });
+    // this.setState({ error, errorInfo });
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

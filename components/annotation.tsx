@@ -17,10 +17,11 @@ const AnnoGroupStyled = styled('div', {
 });
 
 interface AnnoGroupProps {
+  children?: React.ReactNode;
   css?: Record<string, unknown>;
 }
 
-const AnnoGroup: React.FC<AnnoGroupProps> = ({ children, css }) => {
+const AnnoGroup = ({ children, css }: AnnoGroupProps) => {
   return (
     <AnnoGroupStyled className="anno" css={css}>
       {children}

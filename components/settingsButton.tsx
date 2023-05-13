@@ -14,7 +14,7 @@ import DiscordSvg from '@assets/svg/Discord.svg';
 import TwitterSvg from '@assets/svg/Twitter.svg';
 
 import {
-  Root,
+  StyledRoot as Root,
   StyledTrigger,
   Anchor,
   StyledContent,

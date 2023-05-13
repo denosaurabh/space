@@ -29,9 +29,10 @@ const Container = styled('div', {
 
 interface WarningBox {
   status: 'warning' | 'success';
+  children?: React.ReactNode;
 }
 
-const WarningBox: React.FC<WarningBox> = ({ children, status }) => {
+const WarningBox = ({ children, status }: WarningBox) => {
   return <Container color={status}>{children}</Container>;
 };
 

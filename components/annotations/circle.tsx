@@ -31,10 +31,11 @@ const Span = styled('span', {
 });
 
 interface CircleProps {
+  children?: React.ReactNode;
   css?: Record<string, unknown>;
 }
 
-const Circle: React.FC<CircleProps> = ({ children, css }) => {
+const Circle: React.FC<CircleProps> = ({ children, css }: CircleProps) => {
   return (
     <Center className="annotation" css={css}>
       <Image

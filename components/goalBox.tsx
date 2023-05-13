@@ -12,7 +12,7 @@ import Input from '@components/input';
 import Button from '@components/button';
 
 import {
-  Root as PopoverRoot,
+  StyledRoot as PopoverRoot,
   StyledTrigger as PopoverTrigger,
   Anchor as PopoverAnchor,
   StyledContent as PopoverContent,
