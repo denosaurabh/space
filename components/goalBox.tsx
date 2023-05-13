@@ -85,6 +85,9 @@ const GoalBox: React.FC<GoalBoxProps> = ({
           <PopoverRoot>
             <PopoverTrigger
               css={{
+                // TODO: notification
+                display: 'none',
+
                 backgroundColor: '$grey-200',
                 padding: '0.75rem',
                 borderRadius: '1rem',
@@ -369,6 +372,13 @@ const GoalBoxContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   gap: '2rem',
+
+  padding: '1rem',
+  // backgroundColor: '$grey-200',
+
+  borderRadius: '10px',
+
+  border: '1px solid $grey-300',
 
   // width: '50rem',
   height: 'auto',
