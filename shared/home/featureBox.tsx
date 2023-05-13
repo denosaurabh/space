@@ -100,7 +100,7 @@ const RightBox = ({ children, css }: SideBoxProps) => {
   return <RightBoxStyled css={css}>{children}</RightBoxStyled>;
 };
 
-const MidBox = ({ heading, description, children }: MidBoxProps) => {
+const MidBox = ({ heading, description, soon, children }: MidBoxProps) => {
   return (
     <MidBoxStyled>
       {soon ? <Ellipse>Coming Soon</Ellipse> : <Ellipse>NEW!</Ellipse>}
