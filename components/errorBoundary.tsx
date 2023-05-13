@@ -44,10 +44,7 @@ class ErrorBoundary extends Component<Props, State> {
             our email at <b>denosaurabh@gmail.com</b> with this a screenshot of
             the error given below!
           </Text>
-          <code>
-            {this.state.error}
-            {this.state.errorInfo}
-          </code>
+          <code>{`${this.state.error?.message} ${this.state.errorInfo}`}</code>
         </Container>
       );
     }
