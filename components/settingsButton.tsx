@@ -32,6 +32,7 @@ const SettingsButton: React.FC = () => {
         dropShadow
         alignOffset={10}
         sideOffset={20}
+        css={{ zIndex: 999 }}
       >
         <Link href="/settings" passHref>
           <LI>
