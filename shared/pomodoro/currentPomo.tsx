@@ -1,7 +1,7 @@
 import { styled } from '@styled';
 
 import {
-  Root as PopoverRoot,
+  StyledRoot as PopoverRoot,
   StyledTrigger as PopoverTrigger,
   Anchor as PopoverAnchor,
   StyledContent as PopoverContent,
@@ -18,7 +18,7 @@ import PlaySvg from '@assets/svg/Play.svg';
 
 import usePomodoro from '@state/pomodoro';
 
-const CurrentPomo: React.FC = () => {
+const CurrentPomo = () => {
   const { currentPomo, pauseCurrentPomo, startCurrentPomo, stopCurrentPomo } =
     usePomodoro((state) => ({
       currentPomo: state.currentPomo,

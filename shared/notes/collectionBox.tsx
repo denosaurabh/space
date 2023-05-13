@@ -13,7 +13,7 @@ import {
 } from '@components/tooltip';
 
 import {
-  Root as PopoverRoot,
+  StyledRoot as PopoverRoot,
   StyledTrigger as PopoverTrigger,
   Anchor as PopoverAnchor,
   StyledContent as PopoverContent,
@@ -46,9 +46,10 @@ interface CollectionBoxProps {
   isCurrentCollection?: boolean;
   onClickHandler?: () => void;
   handleDeleteCollection?: (id: string) => void;
+  children?: React.ReactNode;
 }
 
-const CollectionBox: React.FC<CollectionBoxProps> = ({
+const CollectionBox = ({
   name,
   slug,
   icon,
@@ -57,7 +58,7 @@ const CollectionBox: React.FC<CollectionBoxProps> = ({
   onClickHandler,
   handleDeleteCollection,
   children,
-}) => {
+}: CollectionBoxProps) => {
   const { updateCollectionName } = useNotes(({ updateCollectionName }) => ({
     updateCollectionName,
   }));
